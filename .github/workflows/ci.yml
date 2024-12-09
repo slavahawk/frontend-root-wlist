@@ -55,12 +55,16 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           USERNAME: ${{ secrets.USERNAME }}
         run: |
-          # Копируем файлы на сервер
-          scp -o StrictHostKeyChecking=no -r ./path/to/your/build user@${{ secrets.SERVER_IP }}:/path/on/server
+          # Verify SSH connection
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
 
-          # Выполняем удаленный деплой
-          ssh -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} << 'EOF'
+          # Copy files to server
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./path/to/your/build $USERNAME@$SERVER_IP:/path/on/server
+
+          # Execute remote deployment
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP << 'EOF'
             cd /path/on/server
             docker-compose down
             docker-compose up -d --build
           EOF
+  
