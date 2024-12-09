@@ -1,6 +1,5 @@
-// src/stores/authStore.js
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import {defineStore} from 'pinia';
+import {ref} from 'vue';
 import {useToast} from "primevue/usetoast";
 import {useRouter} from "vue-router";
 import {AppRoutes} from "@/router";
@@ -8,35 +7,50 @@ import {AppRoutes} from "@/router";
 export const useAuthStore = defineStore('auth', () => {
     const user = ref(null);
     const isAuthenticated = ref(false);
-    const toast =  useToast()
-    const router = useRouter()
+    const toast = useToast();
+    const router = useRouter();
+
+    // Загружаем состояние аутентификации из localStorage при монтировании
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+        user.value = JSON.parse(storedUser);
+        isAuthenticated.value = true;
+    }
 
     const login = async (email, password) => {
+        if (!email || !password) {
+            toast.add({
+                severity: 'error',
+                summary: 'Пожалуйста, заполните все поля',
+                life: 3000
+            });
+            return;
+        }
 
-        console.log(email, password);
         if (email === 'test@mail.ru' && password === '123') {
             user.value = { email };
+            isAuthenticated.value = true;
+            localStorage.setItem('user', JSON.stringify(user.value));
             toast.add({
                 severity: 'success',
                 summary: 'Успешный вход',
                 life: 3000
-            })
-            isAuthenticated.value = true;
-            await router.push({name: AppRoutes.HOME});
+            });
+            await router.push({ name: AppRoutes.HOME });
         } else {
             toast.add({
                 severity: 'error',
                 summary: 'Неверные учетные данные',
                 life: 3000
-            })
-            return
+            });
         }
     };
 
     const logout = () => {
         user.value = null;
         isAuthenticated.value = false;
-         router.push({name: AppRoutes.AUTH});
+        localStorage.removeItem('user');
+        router.push({ name: AppRoutes.AUTH });
     };
 
     const checkAuth = () => {

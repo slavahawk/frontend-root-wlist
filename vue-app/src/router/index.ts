@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import {useAuthStore} from "@/stores/authStore.ts";
 
 
 export enum LayoutEnum {
@@ -22,13 +23,13 @@ const routes = [
     path: RoutePath.Home,
     name: AppRoutes.HOME,
     component: HomeView,
-    meta: { layout: LayoutEnum.DEFAULT_LAYOUT }
+    meta: { layout: LayoutEnum.DEFAULT_LAYOUT, requiresAuth: true }
   },
   {
     path: RoutePath.Auth,
     name: AppRoutes.AUTH,
     component: () => import('@/views/AuthView.vue'),
-    meta: { layout: LayoutEnum.AUTH_LAYOUT }
+    meta: { layout: LayoutEnum.AUTH_LAYOUT, requiresAuth: false }
   },
 ];
 
@@ -37,5 +38,23 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
+
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  // Обновляем состояние аутентификации
+  authStore.checkAuth();
+
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!authStore.isAuthenticated) {
+      next({ name: AppRoutes.AUTH });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
