@@ -55,16 +55,17 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           USERNAME: ${{ secrets.USERNAME }}
         run: |
-          # Verify SSH connection
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
+          # Verify SSH connection with verbose output
+          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
 
-          # Copy files to server
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./path/to/your/build $USERNAME@$SERVER_IP:/path/on/server
+          # Copy files to server with verbose output
+          scp -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./path/to/your/build $USERNAME@$SERVER_IP:/path/on/server
 
-          # Execute remote deployment
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP << 'EOF'
+          # Execute remote deployment with verbose output
+          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP << 'EOF'
             cd /path/on/server
             docker-compose down
             docker-compose up -d --build
           EOF
+
   
