@@ -63,7 +63,8 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           USERNAME: ${{ secrets.USERNAME }}
         run: |
-          set -e  # Прекращение выполнения при ошибках
+          set -e  # Stop execution on error
+          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
           scp -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./path/to/your/build $USERNAME@$SERVER_IP:/path/on/server
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP << 'EOF'
@@ -71,4 +72,5 @@ jobs:
             docker-compose down
             docker-compose up -d --build
           EOF
+
     
