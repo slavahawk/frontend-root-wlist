@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="fix work start">
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layouts/AuthLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layouts/DefaultLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/service/ProductService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/stores/authStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/AuthView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/assets/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/assets/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/assets/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/assets/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/assets/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/TheWelcome.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/WelcomeItem.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/icons/IconCommunity.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/icons/IconDocumentation.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/icons/IconEcosystem.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/icons/IconSupport.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/components/icons/IconTooling.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/stores/counter.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/views/AboutView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/views/HomeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/views/HomeView.vue" afterDir="false" />
-    </list>
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="fix work start" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1733763564899</updated>
       <workItem from="1733763566675" duration="785000" />
-      <workItem from="1733764358731" duration="17060000" />
+      <workItem from="1733764358731" duration="17270000" />
     </task>
     <task id="LOCAL-00001" summary="fix nginx">
       <option name="closed" value="true" />
@@ -338,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733774384397</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fix work start">
+      <option name="closed" value="true" />
+      <created>1733781486106</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1733781486106</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
