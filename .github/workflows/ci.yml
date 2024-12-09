@@ -49,6 +49,8 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          echo "SERVER_IP: $SERVER_IP"
+          echo "USERNAME: $USERNAME"
 
       - name: Deploy to Server
         env:
