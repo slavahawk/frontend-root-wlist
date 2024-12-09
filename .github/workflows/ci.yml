@@ -44,21 +44,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
       - name: Deploy to Server
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
           USERNAME: ${{ secrets.USERNAME }}
         run: |
-          # Убедитесь, что sshpass установлен
-          sudo apt-get update
-          sudo apt-get install -y sshpass
-
           # Копируем файлы на сервер
-          sshpass -e scp -o StrictHostKeyChecking=no -r ./path/to/your/build user@${{ secrets.SERVER_IP }}:/path/on/server
+          scp -o StrictHostKeyChecking=no -r ./path/to/your/build user@${{ secrets.SERVER_IP }}:/path/on/server
 
           # Выполняем удаленный деплой
-          sshpass -e ssh -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no user@${{ secrets.SERVER_IP }} << 'EOF'
             cd /path/on/server
             docker-compose down
             docker-compose up -d --build
