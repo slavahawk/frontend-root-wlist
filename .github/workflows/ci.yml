@@ -36,6 +36,10 @@ jobs:
           # Build and run the Docker Compose services
           docker-compose -f docker-compose.yml up --build --abort-on-container-exit
 
+      - name: Debug
+        run: |
+          ls -la ./path/to/your/build  # Add your debug command here
+
   deploy:
     runs-on: ubuntu-latest
     needs: build  # Wait for the build job to complete successfully
