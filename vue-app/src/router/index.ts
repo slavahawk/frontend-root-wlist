@@ -11,14 +11,22 @@ export enum LayoutEnum {
 export enum AppRoutes {
   HOME = 'Home',
   AUTH = 'Auth',
+  ABOUT = 'About',
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.HOME]: '/',
   [AppRoutes.AUTH]: '/auth',
+  [AppRoutes.ABOUT]: '/about',
 }
 
 const routes = [
+  {
+    path: RoutePath.Auth,
+    name: AppRoutes.AUTH,
+    component: () => import('@/views/AuthView.vue'),
+    meta: { layout: LayoutEnum.AUTH_LAYOUT, requiresAuth: false }
+  },
   {
     path: RoutePath.Home,
     name: AppRoutes.HOME,
@@ -26,10 +34,10 @@ const routes = [
     meta: { layout: LayoutEnum.DEFAULT_LAYOUT, requiresAuth: true }
   },
   {
-    path: RoutePath.Auth,
-    name: AppRoutes.AUTH,
-    component: () => import('@/views/AuthView.vue'),
-    meta: { layout: LayoutEnum.AUTH_LAYOUT, requiresAuth: false }
+    path: RoutePath.About,
+    name: AppRoutes.ABOUT,
+    component: () => import('@/views/AboutView.vue'),
+    meta: { layout: LayoutEnum.DEFAULT_LAYOUT, requiresAuth: true }
   },
 ];
 

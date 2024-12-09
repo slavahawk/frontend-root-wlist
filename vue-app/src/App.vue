@@ -22,7 +22,7 @@ function toggleDarkMode() {
   </Suspense>
   <Toast />
   <Button
-      label="Toggle Dark Mode"
+      label="Сменить тему"
       @click="toggleDarkMode()"
       class="fixed-button"
   />
