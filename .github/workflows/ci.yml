@@ -47,10 +47,11 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_rsa
+          echo "Private key length: $(wc -c < ~/.ssh/id_rsa)"
 
       - name: Print Server Info
         env:
@@ -67,4 +68,5 @@ jobs:
         run: |
           set -e  # Stop execution on error
           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-          ssh -v -o StrictHostKeyChecking=no $USERNAME@$SERVER_IP "echo 'SSH Connection
+          ssh -v -o StrictHostKeyChecking=no $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
+  
