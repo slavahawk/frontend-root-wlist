@@ -52,6 +52,8 @@ jobs:
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_rsa
           echo "Private key length: $(wc -c < ~/.ssh/id_rsa)"
+          # Debugging: print the first few lines of the private key (be careful with secrets)
+          head -n 3 ~/.ssh/id_rsa
 
       - name: Print Server Info
         env:
@@ -68,5 +70,4 @@ jobs:
         run: |
           set -e  # Stop execution on error
           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-          ssh -v -o StrictHostKeyChecking=no $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
-  
+          ssh -vvv -o StrictHostKeyChecking=no $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
