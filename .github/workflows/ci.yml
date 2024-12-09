@@ -1,0 +1,54 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Укажите вашу основную ветку
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+        ports:
+          - 80:80
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: lts  # Укажите нужную версию Node.js
+
+      - name: Install dependencies
+        run: |
+          cd vue-app
+          npm install
+
+      - name: Build the application
+        run: |
+          cd vue-app
+          npm run build
+
+      - name: Build Docker image
+        run: |
+          docker build -t your-dockerhub-username/your-image-name:latest .
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        run: |
+          echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+
+      - name: Push Docker image
+        run: |
+          docker push your-dockerhub-username/your-image-name:latest
