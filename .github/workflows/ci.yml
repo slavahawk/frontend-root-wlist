@@ -14,7 +14,7 @@ jobs:
 
     services:
       docker:
-        image: docker:19.03.12
+        image: docker:20.10.20
         options: --privileged
         ports:
           - 80:80
@@ -26,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: lts  # Укажите нужную версию Node.js
+          node-version: 'node'  # Укажите нужную версию Node.js (например, 16)
 
       - name: Install dependencies
         run: |
