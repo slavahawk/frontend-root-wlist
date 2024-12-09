@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="check cd/11">
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="check cd/12">
       <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +72,7 @@
       <option name="presentableId" value="Default" />
       <updated>1733763564899</updated>
       <workItem from="1733763566675" duration="785000" />
-      <workItem from="1733764358731" duration="7901000" />
+      <workItem from="1733764358731" duration="7998000" />
     </task>
     <task id="LOCAL-00001" summary="fix nginx">
       <option name="closed" value="true" />
@@ -242,7 +242,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733772104128</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="check cd/12">
+      <option name="closed" value="true" />
+      <created>1733772280225</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1733772280225</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +278,7 @@
     <MESSAGE value="check cd/9" />
     <MESSAGE value="check cd/10" />
     <MESSAGE value="check cd/11" />
-    <option name="LAST_COMMIT_MESSAGE" value="check cd/11" />
+    <MESSAGE value="check cd/12" />
+    <option name="LAST_COMMIT_MESSAGE" value="check cd/12" />
   </component>
 </project>
