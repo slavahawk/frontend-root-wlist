@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="check ci">
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="check ci/2">
       <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/.vscode/extensions.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +72,7 @@
       <option name="presentableId" value="Default" />
       <updated>1733763564899</updated>
       <workItem from="1733763566675" duration="785000" />
-      <workItem from="1733764358731" duration="4284000" />
+      <workItem from="1733764358731" duration="4348000" />
     </task>
     <task id="LOCAL-00001" summary="fix nginx">
       <option name="closed" value="true" />
@@ -100,7 +98,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733768426409</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="check ci/2">
+      <option name="closed" value="true" />
+      <created>1733768657803</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733768657803</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,6 +116,7 @@
     <MESSAGE value="fix nginx" />
     <MESSAGE value="check build" />
     <MESSAGE value="check ci" />
-    <option name="LAST_COMMIT_MESSAGE" value="check ci" />
+    <MESSAGE value="check ci/2" />
+    <option name="LAST_COMMIT_MESSAGE" value="check ci/2" />
   </component>
 </project>
