@@ -49,6 +49,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+
+      - name: Print Server Info
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          USERNAME: ${{ secrets.USERNAME }}
+        run: |
           echo "SERVER_IP: $SERVER_IP"
           echo "USERNAME: $USERNAME"
 
@@ -57,17 +63,12 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           USERNAME: ${{ secrets.USERNAME }}
         run: |
-          # Verify SSH connection with verbose output
+          set -e  # Прекращение выполнения при ошибках
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP "echo 'SSH Connection Successful'"
-
-          # Copy files to server with verbose output
           scp -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./path/to/your/build $USERNAME@$SERVER_IP:/path/on/server
-
-          # Execute remote deployment with verbose output
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $USERNAME@$SERVER_IP << 'EOF'
             cd /path/on/server
             docker-compose down
             docker-compose up -d --build
           EOF
-
-  
+    
