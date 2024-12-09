@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main  # Specify your main branch
+      - main
   pull_request:
     branches:
       - main
@@ -40,7 +40,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t your-dockerhub-username/your-image-name:latest .
+          cd vue-app  # Navigate to the directory containing the Dockerfile
+          docker build -t your-dockerhub-username/your-image-name:latest .  # Use '.' as the context to refer to the current directory (vue-app)
 
       - name: Log in to Docker Hub
         env:
