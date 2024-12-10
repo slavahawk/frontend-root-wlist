@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
                 summary: 'Успешный вход',
                 life: 3000
             });
-            await router.push({ name: AppRoutes.HOME });
+            await router.push({ name: AppRoutes.DASHBOARD });
         } else {
             toast.add({
                 severity: 'error',
