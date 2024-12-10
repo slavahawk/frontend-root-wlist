@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="test new docker/3">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="test new docker/4">
+      <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.template.conf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,15 +87,7 @@
       <workItem from="1733764358731" duration="19158000" />
       <workItem from="1733789060429" duration="5038000" />
       <workItem from="1733831088939" duration="2209000" />
-      <workItem from="1733839260259" duration="7824000" />
-    </task>
-    <task id="LOCAL-00003" summary="check ci">
-      <option name="closed" value="true" />
-      <created>1733768426409</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1733768426409</updated>
+      <workItem from="1733839260259" duration="7890000" />
     </task>
     <task id="LOCAL-00004" summary="check ci/2">
       <option name="closed" value="true" />
@@ -483,7 +473,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733846994282</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="test new docker/4">
+      <option name="closed" value="true" />
+      <created>1733847141551</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1733847141551</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +499,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="check cd/17" />
     <MESSAGE value="check cd/18" />
     <MESSAGE value="check cd/19" />
     <MESSAGE value="fix work start" />
@@ -526,6 +523,7 @@
     <MESSAGE value="test new docker/1" />
     <MESSAGE value="test new docker/2" />
     <MESSAGE value="test new docker/3" />
-    <option name="LAST_COMMIT_MESSAGE" value="test new docker/3" />
+    <MESSAGE value="test new docker/4" />
+    <option name="LAST_COMMIT_MESSAGE" value="test new docker/4" />
   </component>
 </project>
