@@ -5,102 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="fix work">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/components.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/postcss.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/public/android-chrome-192x192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/public/android-chrome-512x512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/public/apple-touch-icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/public/favicon-16x16.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/public/favicon-32x32.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/public/site.webmanifest" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/demo/code.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/demo/demo.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/demo/flags/flags.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/demo/flags/flags_responsive.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/images/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_core.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_footer.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_main.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_menu.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_mixins.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_preloading.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_responsive.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_topbar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_typography.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/_utils.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/layout.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/variables/_common.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/variables/_dark.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/layout/variables/_light.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/main.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/tailwind.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/FloatingConfigurator.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/dashboard/BestSellingWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/dashboard/NotificationsWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/dashboard/RecentSalesWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/dashboard/RevenueStreamWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/dashboard/StatsWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/landing/FeaturesWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/landing/FooterWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/landing/HeroWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/landing/HighlightsWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/landing/PricingWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/components/landing/TopbarWidget.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/AppConfigurator.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/AppFooter.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/AppLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/AppMenu.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/AppMenuItem.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/AppSidebar.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/AppTopbar.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/layout/composables/layout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/service/CountryService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/service/CustomerService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/service/NodeService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/service/PhotoService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/Dashboard.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/Crud.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/Documentation.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/Empty.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/Landing.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/NotFound.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/auth/Access.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/auth/Error.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/pages/auth/Login.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/ButtonDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/ChartDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/FileDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/FormLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/InputDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/ListDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/MediaDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/MenuDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/MessagesDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/MiscDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/OverlayDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/PanelsDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/TableDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/TimelineDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/src/views/uikit/TreeDoc.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vue-app/tailwind.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue-app/src/assets/images/logo.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue-app/components.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/components.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue-app/public/android-chrome-192x192.png" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/public/android-chrome-192x192.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue-app/public/android-chrome-512x512.png" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/public/android-chrome-512x512.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue-app/public/apple-touch-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/public/apple-touch-icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue-app/public/favicon-16x16.png" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/public/favicon-16x16.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue-app/public/favicon-32x32.png" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/public/favicon-32x32.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vue-app/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/assets/base.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/assets/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/layouts/AuthLayout.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/layouts/DefaultLayout.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/service/ProductService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/service/ProductService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/stores/authStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/stores/authStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/views/AboutView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/views/AuthView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/src/views/HomeView.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue-app/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue-app/src/assets/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/vue-app/src/assets/images/logo.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,29 +48,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/vaceslav/Desktop/frontend-admin-wlist/vue-app/src/views",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "web-ide.project.structure",
-    "ts.external.directory.path": "/Users/vaceslav/Desktop/frontend-admin-wlist/vue-app/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/vaceslav/Desktop/frontend-admin-wlist/vue-app/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;web-ide.project.structure&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/vaceslav/Desktop/frontend-admin-wlist/vue-app/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/vue-app/public" />
+      <recent name="$PROJECT_DIR$/vue-app/src/assets/images" />
       <recent name="$PROJECT_DIR$/vue-app/src/views" />
       <recent name="$PROJECT_DIR$/vue-app/src/assets" />
       <recent name="$PROJECT_DIR$/vue-app/src/components" />
-      <recent name="$PROJECT_DIR$/vue-app/src/service" />
-      <recent name="$PROJECT_DIR$/vue-app/src/assets/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -180,7 +95,9 @@
       <updated>1733763564899</updated>
       <workItem from="1733763566675" duration="785000" />
       <workItem from="1733764358731" duration="19158000" />
-      <workItem from="1733789060429" duration="4338000" />
+      <workItem from="1733789060429" duration="5038000" />
+      <workItem from="1733831088939" duration="2209000" />
+      <workItem from="1733839260259" duration="137000" />
     </task>
     <task id="LOCAL-00001" summary="fix nginx">
       <option name="closed" value="true" />
@@ -446,7 +363,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733782694206</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="fix work">
+      <option name="closed" value="true" />
+      <created>1733793487948</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1733793487948</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
