@@ -11,7 +11,7 @@ services:
       - "80:80"   # HTTP
       - "443:443" # HTTPS
     volumes:
-      - ./vue-app/dist:/usr/share/nginx/html # Подключаем директорию с собранным приложением
+      #- ./vue-app/dist:/usr/share/nginx/html # Подключаем директорию с собранным приложением
       - ./certs:/etc/letsencrypt # Хранение сертификатов
       - ./logs:/var/log/nginx # Логи Nginx
     environment:
