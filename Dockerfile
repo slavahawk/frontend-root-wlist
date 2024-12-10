@@ -3,12 +3,10 @@ FROM nginx:latest
 
 # Устанавливаем Certbot и другие необходимые утилиты
 RUN apt-get update && apt-get install -y \
-    software-properties-common && \
-    add-apt-repository ppa:certbot/certbot && \
-    apt-get update && \
-    apt-get install -y certbot python3-certbot-nginx cron && \
+    certbot \
+    python3-certbot-nginx \
+    cron && \
     rm -rf /var/lib/apt/lists/*
-
 
 # Копируем статический Nginx конфиг
 COPY nginx.template.conf /etc/nginx/nginx.template.conf
