@@ -2,37 +2,19 @@ version: '3.8'
 
 services:
   nginx:
-    image: nginx:latest
-    container_name: nginx-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nginx
     ports:
       - "5173:80" # Пробрасываем порт 5173 на порт 80 внутри контейнера
       - "80:80"   # HTTP
       - "443:443" # HTTPS
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro # Подключаем конфигурационный файл Nginx
       - ./vue-app/dist:/usr/share/nginx/html # Подключаем директорию с собранным приложением
-      - certbot-etc:/etc/letsencrypt # Хранение сертификатов
-      - certbot-var:/var/lib/letsencrypt # Хранение конфигурации Certbot
+      - ./certs:/etc/letsencrypt # Хранение сертификатов
+      - ./logs:/var/log/nginx # Логи Nginx
+    environment:
+      - DOMAIN=admin.w-list.ru
+      - SUBDOMAINS=www.admin.w-list.ru
     restart: always
-
-  vue-builder:
-    image: node:latest
-    container_name: vue-builder
-    working_dir: /usr/src/app
-    volumes:
-      - ./vue-app:/usr/src/app # Подключаем локальную папку с приложением
-    command: sh -c "npm install && npm run build-only" # Устанавливаем зависимости и запускаем сборку приложения
-    restart: "no" # Не перезапускаем после завершения сборки
-
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro # Подключаем конфигурационный файл Nginx
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-
-volumes:
-  certbot-etc:
-  certbot-var:
