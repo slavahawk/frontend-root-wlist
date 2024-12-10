@@ -5,7 +5,7 @@ services:
     image: nginx:latest
     container_name: nginx-container
     ports:
-      - "5173:80" # Пробрасываем порт 5173 на порт 80 внутри контейнера
+      - "80:80" # Пробрасываем порт 5173 на порт 80 внутри контейнера
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro # Подключаем конфигурационный файл Nginx
       - ./vue-app/dist:/usr/share/nginx/html # Подключаем директорию с собранным приложением
