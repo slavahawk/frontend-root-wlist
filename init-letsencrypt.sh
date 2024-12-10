@@ -1,9 +1,8 @@
 #!/bin/bash
-
 set -e
 
 DOMAINS=("${DOMAIN}" ${SUBDOMAINS//,/ })
-EMAIL="your-email@example.com"
+EMAIL="krylov_s10@mail.ru"  # Убедитесь, что здесь правильный адрес электронной почты
 WEBROOT="/var/www/certbot"
 
 # Создаем директории для сертификатов и веб-ресурсов

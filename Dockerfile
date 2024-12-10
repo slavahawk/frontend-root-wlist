@@ -16,4 +16,4 @@ COPY init-letsencrypt.sh /init-letsencrypt.sh
 RUN chmod +x /init-letsencrypt.sh
 
 # Настраиваем запуск Nginx и обновление сертификатов
-CMD ["/bin/bash", "-c", "/init-letsencrypt.sh && nginx -g 'daemon off;'"]
+ENTRYPOINT ["/bin/bash", "-c", "/init-letsencrypt.sh && exec nginx -g 'daemon off;'"]

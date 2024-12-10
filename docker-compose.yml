@@ -8,16 +8,16 @@ services:
     container_name: nginx
     ports:
       - "5173:80" # Пробрасываем порт 5173 на порт 80 внутри контейнера
-      - "80:80"   # HTTP
-      - "443:443" # HTTPS
     volumes:
-      #- ./vue-app/dist:/usr/share/nginx/html # Подключаем директорию с собранным приложением
       - ./certs:/etc/letsencrypt # Хранение сертификатов
       - ./logs:/var/log/nginx # Логи Nginx
+      - ./vue-app/dist:/usr/share/nginx/html # Подключаем директорию с собранным приложением
     environment:
       - DOMAIN=admin.w-list.ru
       - SUBDOMAINS=www.admin.w-list.ru
     restart: always
+    depends_on:
+      - vue-builder
 
   vue-builder:
     image: node:latest
