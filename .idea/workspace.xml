@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="test new docker/8">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="test new docker/9">
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/init-letsencrypt.sh" beforeDir="false" afterPath="$PROJECT_DIR$/init-letsencrypt.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,15 +88,7 @@
       <workItem from="1733764358731" duration="19158000" />
       <workItem from="1733789060429" duration="5038000" />
       <workItem from="1733831088939" duration="2209000" />
-      <workItem from="1733839260259" duration="9081000" />
-    </task>
-    <task id="LOCAL-00008" summary="check ci/6">
-      <option name="closed" value="true" />
-      <created>1733769403941</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1733769403941</updated>
+      <workItem from="1733839260259" duration="9199000" />
     </task>
     <task id="LOCAL-00009" summary="check ci/7">
       <option name="closed" value="true" />
@@ -482,7 +474,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733847657290</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="test new docker/9">
+      <option name="closed" value="true" />
+      <created>1733851452155</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1733851452155</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +500,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix work start/2" />
     <MESSAGE value="fix work start/3" />
     <MESSAGE value="fix work" />
     <MESSAGE value="change logo, favicon and nginx.conf" />
@@ -525,6 +524,7 @@
     <MESSAGE value="test new docker/6" />
     <MESSAGE value="test new docker/7" />
     <MESSAGE value="test new docker/8" />
-    <option name="LAST_COMMIT_MESSAGE" value="test new docker/8" />
+    <MESSAGE value="test new docker/9" />
+    <option name="LAST_COMMIT_MESSAGE" value="test new docker/9" />
   </component>
 </project>
