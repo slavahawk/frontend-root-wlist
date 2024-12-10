@@ -1,3 +1,6 @@
+echo "Ожидание запуска Nginx..."
+sleep 10
+
 #!/bin/bash
 set -e
 
