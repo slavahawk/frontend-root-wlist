@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="test domen" />
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="test domen/2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,7 +85,7 @@
       <workItem from="1733764358731" duration="19158000" />
       <workItem from="1733789060429" duration="5038000" />
       <workItem from="1733831088939" duration="2209000" />
-      <workItem from="1733839260259" duration="638000" />
+      <workItem from="1733839260259" duration="857000" />
     </task>
     <task id="LOCAL-00001" summary="fix nginx">
       <option name="closed" value="true" />
@@ -375,14 +375,21 @@
       <option name="project" value="LOCAL" />
       <updated>1733839840672</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="test domen/2">
+      <option name="closed" value="true" />
+      <created>1733840097160</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1733840097160</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="check cd/2" />
     <MESSAGE value="check cd/3" />
     <MESSAGE value="check cd/4" />
     <MESSAGE value="check cd/5" />
@@ -407,6 +414,7 @@
     <MESSAGE value="fix work" />
     <MESSAGE value="change logo, favicon and nginx.conf" />
     <MESSAGE value="test domen" />
-    <option name="LAST_COMMIT_MESSAGE" value="test domen" />
+    <MESSAGE value="test domen/2" />
+    <option name="LAST_COMMIT_MESSAGE" value="test domen/2" />
   </component>
 </project>

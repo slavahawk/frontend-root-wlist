@@ -9,7 +9,7 @@
             <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Добро пожаловать в W-List!</div>
             <span class="text-muted-color font-medium">Войдите, чтобы продолжить</span>
           </div>
-            {{'test@mail.ru / 123'}}
+            {{'test@mail.ru // 123'}}
           <Form v-slot="$form" :initialValues="initialValues" :resolver="resolver" @submit="handleSubmit" class="form">
             <div class="input-container">
               <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
