@@ -1,0 +1,10 @@
+2024-12-10 20:38:35,859:DEBUG:certbot._internal.main:certbot version: 2.1.0
+2024-12-10 20:38:35,859:DEBUG:certbot._internal.main:Location of certbot entry point: /usr/bin/certbot
+2024-12-10 20:38:35,859:DEBUG:certbot._internal.main:Arguments: []
+2024-12-10 20:38:35,859:DEBUG:certbot._internal.main:Discovered plugins: PluginsRegistry(PluginEntryPoint#manual,PluginEntryPoint#nginx,PluginEntryPoint#null,PluginEntryPoint#standalone,PluginEntryPoint#webroot)
+2024-12-10 20:38:35,877:DEBUG:certbot._internal.log:Root logging level set at 30
+2024-12-10 20:38:35,879:DEBUG:certbot._internal.display.obj:Notifying user: 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+2024-12-10 20:38:35,880:DEBUG:certbot._internal.display.obj:Notifying user: No renewals were attempted.
+2024-12-10 20:38:35,882:DEBUG:certbot._internal.display.obj:Notifying user: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+2024-12-10 20:38:35,884:DEBUG:certbot._internal.renewal:no renewal failures

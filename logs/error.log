@@ -1,0 +1,120 @@
+2024/12/10 20:34:58 [emerg] 7#7: unknown "domain" variable
+2024/12/10 20:34:59 [emerg] 9#9: unknown "domain" variable
+2024/12/10 20:35:00 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:35:01 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:35:02 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:35:04 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:35:08 [emerg] 7#7: unknown "domain" variable
+2024/12/10 20:35:15 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:35:28 [emerg] 7#7: unknown "domain" variable
+2024/12/10 20:38:35 [emerg] 7#7: unknown "domain" variable
+2024/12/10 20:38:36 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:38:36 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:38:37 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:38:39 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:38:41 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:38:45 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:38:52 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:39:05 [emerg] 8#8: unknown "domain" variable
+2024/12/10 20:59:52 [notice] 1#1: using the "epoll" event method
+2024/12/10 20:59:52 [notice] 1#1: nginx/1.27.3
+2024/12/10 20:59:52 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2024/12/10 20:59:52 [notice] 1#1: OS: Linux 5.15.0-122-generic
+2024/12/10 20:59:52 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/12/10 20:59:52 [notice] 1#1: start worker processes
+2024/12/10 20:59:52 [notice] 1#1: start worker process 28
+2024/12/10 20:59:52 [notice] 1#1: start worker process 29
+2024/12/10 21:00:37 [error] 28#28: *2 open() "/usr/share/nginx/html/apple-touch-icon-precomposed.png" failed (2: No such file or directory), client: 171.33.251.109, server: localhost, request: "GET /apple-touch-icon-precomposed.png HTTP/1.1", host: "w-list.ru"
+2024/12/10 21:00:37 [error] 28#28: *2 open() "/usr/share/nginx/html/apple-touch-icon.png" failed (2: No such file or directory), client: 171.33.251.109, server: localhost, request: "GET /apple-touch-icon.png HTTP/1.1", host: "w-list.ru"
+2024/12/10 21:00:43 [error] 29#29: *4 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 176.53.222.164, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "admin.w-list.ru"
+2024/12/10 21:00:47 [error] 29#29: *5 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 171.33.251.109, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "admin.w-list.ru", referrer: "http://admin.w-list.ru/"
+2024/12/10 21:01:13 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2024/12/10 21:01:13 [notice] 28#28: gracefully shutting down
+2024/12/10 21:01:13 [notice] 28#28: exiting
+2024/12/10 21:01:13 [notice] 28#28: exit
+2024/12/10 21:01:13 [notice] 29#29: gracefully shutting down
+2024/12/10 21:01:13 [notice] 29#29: exiting
+2024/12/10 21:01:13 [notice] 29#29: exit
+2024/12/10 21:01:13 [notice] 1#1: signal 17 (SIGCHLD) received from 28
+2024/12/10 21:01:13 [notice] 1#1: worker process 28 exited with code 0
+2024/12/10 21:01:13 [notice] 1#1: signal 29 (SIGIO) received
+2024/12/10 21:01:13 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2024/12/10 21:01:13 [notice] 1#1: worker process 29 exited with code 0
+2024/12/10 21:01:13 [notice] 1#1: exit
+2024/12/10 21:03:30 [notice] 1#1: using the "epoll" event method
+2024/12/10 21:03:30 [notice] 1#1: nginx/1.27.3
+2024/12/10 21:03:30 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2024/12/10 21:03:30 [notice] 1#1: OS: Linux 5.15.0-122-generic
+2024/12/10 21:03:30 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2024/12/10 21:03:30 [notice] 1#1: start worker processes
+2024/12/10 21:03:30 [notice] 1#1: start worker process 23
+2024/12/10 21:03:30 [notice] 1#1: start worker process 24
+2024/12/10 21:08:10 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2024/12/10 21:08:10 [notice] 24#24: gracefully shutting down
+2024/12/10 21:08:10 [notice] 23#23: gracefully shutting down
+2024/12/10 21:08:10 [notice] 24#24: exiting
+2024/12/10 21:08:10 [notice] 23#23: exiting
+2024/12/10 21:08:10 [notice] 24#24: exit
+2024/12/10 21:08:10 [notice] 23#23: exit
+2024/12/10 21:08:10 [notice] 1#1: signal 17 (SIGCHLD) received from 24
+2024/12/10 21:08:10 [notice] 1#1: worker process 24 exited with code 0
+2024/12/10 21:08:10 [notice] 1#1: signal 29 (SIGIO) received
+2024/12/10 21:08:10 [notice] 1#1: signal 17 (SIGCHLD) received from 23
+2024/12/10 21:08:10 [notice] 1#1: worker process 23 exited with code 0
+2024/12/10 21:08:10 [notice] 1#1: exit
+2024/12/10 21:08:17 [emerg] 1#1: unknown "domain" variable
+2024/12/10 21:08:18 [emerg] 1#1: unknown "domain" variable
+2024/12/10 21:08:19 [emerg] 1#1: unknown "domain" variable
+2024/12/10 21:08:20 [emerg] 1#1: unknown "domain" variable
+2024/12/10 21:08:21 [emerg] 1#1: unknown "domain" variable
+2024/12/10 21:08:23 [emerg] 1#1: unknown "domain" variable
+2024/12/10 21:08:27 [emerg] 1#1: unknown "domain" variable
+2024/12/10 21:15:58 [emerg] 7#7: unknown "domain" variable
+2024/12/10 21:15:59 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:00 [emerg] 9#9: unknown "domain" variable
+2024/12/10 21:16:01 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:02 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:04 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:08 [emerg] 7#7: unknown "domain" variable
+2024/12/10 21:16:15 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:45 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:46 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:46 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:16:47 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:18:57 [emerg] 9#9: unknown "domain" variable
+2024/12/10 21:18:58 [emerg] 9#9: unknown "domain" variable
+2024/12/10 21:18:59 [emerg] 9#9: unknown "domain" variable
+2024/12/10 21:19:00 [emerg] 9#9: unknown "domain" variable
+2024/12/10 21:19:01 [emerg] 9#9: unknown "domain" variable
+2024/12/10 21:19:03 [emerg] 9#9: unknown "domain" variable
+2024/12/10 21:19:07 [emerg] 8#8: unknown "domain" variable
+2024/12/10 21:23:27 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:23:28 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:23:29 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:23:30 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:23:31 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:23:33 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:23:37 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:23:44 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:16 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:17 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:18 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:19 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:20 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:22 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:26 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:32:33 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:33:42 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:33:43 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:33:45 [emerg] 1#1: cannot load certificate "/etc/letsencrypt/live/w-list.ru/fullchain.pem": BIO_new_file() failed (SSL: error:80000002:system library::No such file or directory:calling fopen(/etc/letsencrypt/live/w-list.ru/fullchain.pem, r) error:10000080:BIO routines::no such file)
+2024/12/10 21:35:48 [emerg] 1#1: no "ssl_certificate" is defined for the "listen ... ssl" directive in /etc/nginx/nginx.conf:17
+2024/12/10 21:35:48 [emerg] 1#1: no "ssl_certificate" is defined for the "listen ... ssl" directive in /etc/nginx/nginx.conf:17
+2024/12/10 21:35:49 [emerg] 1#1: no "ssl_certificate" is defined for the "listen ... ssl" directive in /etc/nginx/nginx.conf:17
+2024/12/10 21:35:50 [emerg] 1#1: no "ssl_certificate" is defined for the "listen ... ssl" directive in /etc/nginx/nginx.conf:17
+2024/12/10 21:37:21 [error] 22#22: *1 open() "/var/www/certbot/.well-known/acme-challenge/X0DbYgwcF-YV-w4nKEIdgncI5kESk4e_pglpu4wit1A" failed (2: No such file or directory), client: 23.178.112.213, server: w-list.ru, request: "GET /.well-known/acme-challenge/X0DbYgwcF-YV-w4nKEIdgncI5kESk4e_pglpu4wit1A HTTP/1.1", host: "admin.w-list.ru"
+2024/12/10 21:37:22 [error] 22#22: *2 open() "/var/www/certbot/.well-known/acme-challenge/VaAcDqp5Agf3Dp8bXZckBir704OyFfF4K8D8qITwzvk" failed (2: No such file or directory), client: 23.178.112.216, server: w-list.ru, request: "GET /.well-known/acme-challenge/VaAcDqp5Agf3Dp8bXZckBir704OyFfF4K8D8qITwzvk HTTP/1.1", host: "customer.w-list.ru"
+2024/12/10 21:37:22 [error] 22#22: *3 open() "/var/www/certbot/.well-known/acme-challenge/Y2KZ0d9_WQWoynaAWKuLeE9YQFM8RuJhg2H_D21nbDc" failed (2: No such file or directory), client: 23.178.112.211, server: w-list.ru, request: "GET /.well-known/acme-challenge/Y2KZ0d9_WQWoynaAWKuLeE9YQFM8RuJhg2H_D21nbDc HTTP/1.1", host: "w-list.ru"
+2024/12/10 21:42:37 [error] 29#29: *1 open() "/var/www/certbot/.well-known/acme-challenge/iuoB8B13UPbrA5RVne3YHUZqq0kEeveLjEUJMam6RDU" failed (2: No such file or directory), client: 23.178.112.216, server: w-list.ru, request: "GET /.well-known/acme-challenge/iuoB8B13UPbrA5RVne3YHUZqq0kEeveLjEUJMam6RDU HTTP/1.1", host: "admin.w-list.ru"
+2024/12/10 21:42:37 [error] 29#29: *2 open() "/var/www/certbot/.well-known/acme-challenge/DJAB7uwp6KYAATWxdFZeNxtN0v2NqvpJLwAaCV1HRJI" failed (2: No such file or directory), client: 23.178.112.213, server: w-list.ru, request: "GET /.well-known/acme-challenge/DJAB7uwp6KYAATWxdFZeNxtN0v2NqvpJLwAaCV1HRJI HTTP/1.1", host: "customer.w-list.ru"
+2024/12/10 21:42:37 [error] 29#29: *3 open() "/var/www/certbot/.well-known/acme-challenge/lA-QQcwQbP2rQrPb8LoMAzFwIh2mlcPG23CyM9aEEKE" failed (2: No such file or directory), client: 23.178.112.211, server: w-list.ru, request: "GET /.well-known/acme-challenge/lA-QQcwQbP2rQrPb8LoMAzFwIh2mlcPG23CyM9aEEKE HTTP/1.1", host: "w-list.ru"
+2024/12/10 21:44:24 [error] 29#29: *4 open() "/var/www/certbot/.well-known/acme-challenge/test-file" failed (2: No such file or directory), client: 212.67.14.6, server: w-list.ru, request: "GET /.well-known/acme-challenge/test-file HTTP/1.1", host: "w-list.ru"
