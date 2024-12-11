@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   vue-build-admin:
-    image: node:lts
+    image: node:latest
     container_name: admin-w-list-container
     working_dir: /usr/src/app
     volumes:
