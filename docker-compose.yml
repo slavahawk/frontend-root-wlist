@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   vue-build-admin:
-    image: node:lts
-    container_name: vue-build-admin
+    image: admin-w-list-image
+    container_name: admin-w-list-container
     working_dir: /usr/src/app
     volumes:
       - .:/usr/src/app # Монтируем текущую директорию в контейнер
