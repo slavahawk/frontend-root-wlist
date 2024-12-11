@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="test new docker/10">
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="fix nginx.conf">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,14 +89,6 @@
       <workItem from="1733789060429" duration="5038000" />
       <workItem from="1733831088939" duration="2209000" />
       <workItem from="1733839260259" duration="9281000" />
-    </task>
-    <task id="LOCAL-00010" summary="check ci/8">
-      <option name="closed" value="true" />
-      <created>1733769636873</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1733769636873</updated>
     </task>
     <task id="LOCAL-00011" summary="check cd">
       <option name="closed" value="true" />
@@ -481,7 +474,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733851567965</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="fix nginx.conf">
+      <option name="closed" value="true" />
+      <created>1733901297748</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1733901297748</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -499,7 +500,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix work" />
     <MESSAGE value="change logo, favicon and nginx.conf" />
     <MESSAGE value="test domen" />
     <MESSAGE value="test domen/2" />
@@ -524,6 +524,7 @@
     <MESSAGE value="test new docker/8" />
     <MESSAGE value="test new docker/9" />
     <MESSAGE value="test new docker/10" />
-    <option name="LAST_COMMIT_MESSAGE" value="test new docker/10" />
+    <MESSAGE value="fix nginx.conf" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix nginx.conf" />
   </component>
 </project>
