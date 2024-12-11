@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="fix nginx.conf/3">
+    <list default="true" id="6eea08a6-a431-43b6-8454-a86bd16377e8" name="Changes" comment="fix nginx.conf/4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx.conf" afterDir="false" />
     </list>
@@ -89,14 +89,6 @@
       <workItem from="1733789060429" duration="5038000" />
       <workItem from="1733831088939" duration="2209000" />
       <workItem from="1733839260259" duration="9281000" />
-    </task>
-    <task id="LOCAL-00014" summary="check cd/4">
-      <option name="closed" value="true" />
-      <created>1733770877403</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1733770877403</updated>
     </task>
     <task id="LOCAL-00015" summary="check cd/5">
       <option name="closed" value="true" />
@@ -482,7 +474,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733902264076</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="fix nginx.conf/4">
+      <option name="closed" value="true" />
+      <created>1733902654314</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1733902654314</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +500,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test domen/4" />
     <MESSAGE value="test cert" />
     <MESSAGE value="test cert/2" />
     <MESSAGE value="test cert/3" />
@@ -525,6 +524,7 @@
     <MESSAGE value="fix nginx.conf/1" />
     <MESSAGE value="fix nginx.conf/2" />
     <MESSAGE value="fix nginx.conf/3" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix nginx.conf/3" />
+    <MESSAGE value="fix nginx.conf/4" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix nginx.conf/4" />
   </component>
 </project>
