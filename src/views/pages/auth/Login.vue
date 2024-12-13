@@ -9,7 +9,7 @@
             <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Добро пожаловать в W-List!</div>
             <span class="text-muted-color font-medium">Войдите, чтобы продолжить</span>
           </div>
-            {{'test@mail.ru // 123'}}
+          {{'test3@example.com // asdasd'}}
           <Form v-slot="$form" :initialValues="initialValues" :resolver="resolver" @submit="handleSubmit" class="form">
             <div class="input-container">
               <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
@@ -20,6 +20,7 @@
                   placeholder="Email адрес"
                   class="w-full md:w-[30rem]"
                   v-model="initialValues.email"
+                  autocomplete="email"
               />
               <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error?.message }}</Message>
             </div>
@@ -34,6 +35,7 @@
                   :toggleMask="true"
                   fluid
                   :feedback="false"
+                  autocomplete="current-password"
               />
               <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
             </div>
@@ -44,6 +46,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -53,6 +56,7 @@ import {Form} from '@primevue/forms';
 import {Button, InputText, Message, Password} from 'primevue';
 import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
 import {useAuthStore} from "@/stores/authStore.ts";
+import {AuthService} from "@/service/AuthService.ts";
 
 
 const authStore = useAuthStore();
@@ -89,6 +93,10 @@ const resolver = async ({ values }) => {
 // Handle form submission
 const handleSubmit = async ({ valid, states }) => {
   if (valid) {
+
+    const data = await AuthService.auth({email: states.email.value, password: states.password.value});
+
+    console.log(data)
     console.log('Форма отправлена:', { email: states.email.value, password: states.password.value });
     await authStore.login(states.email.value, states.password.value)
   }
