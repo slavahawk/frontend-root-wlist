@@ -1,7 +1,4 @@
-import {useToast} from "primevue/usetoast";
-
-export const handleError = (error: any) => {
-    const toast = useToast()
+export const handleError = (error: any, toast: any) => {
     const errorMessage = error.response?.data?.message || error.message || 'Произошла ошибка';
     toast.add({
         severity: 'error',

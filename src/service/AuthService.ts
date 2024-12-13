@@ -7,8 +7,8 @@ export class AuthService {
             const { data } = await api.post('/auth', body);
             return data;
         } catch (error) {
-            console.error('Authentication error:', error);
-            throw new Error('Authentication failed');
+            console.error('Неверный логин или пароль:', error);
+            throw new Error('Неверный логин или пароль');
         }
     }
 

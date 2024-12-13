@@ -1,6 +1,6 @@
-import type { AxiosResponse, AxiosError } from 'axios';
+import type {AxiosError, AxiosResponse} from 'axios';
 import axios from 'axios';
-import {useToast} from "primevue/usetoast";
+import {useAuthStore} from "@/stores/authStore";
 
 // Создаем экземпляр axios с базовым URL
 const api = axios.create({
@@ -8,39 +8,39 @@ const api = axios.create({
 });
 
 // Интерцептор для обработки запросов
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        config.headers = {
-            ...config.headers,
-            Authorization: token,
-        };
+axios.interceptors.response.use(
+    response => response,
+    async error => {
+        const { response } = error;
+        const authStore = useAuthStore();
+        if (response && response.status === 401) {
+            // Попробовать обновить токен
+            try {
+                await authStore.refresh();
+                // Повторить оригинальный запрос с новым токеном
+                const originalRequest = error.config;
+                return axios(originalRequest);
+            } catch (refreshError) {
+                // Если обновление токена не удалось, вы можете выполнить выход
+                await authStore.logout();
+                return Promise.reject(refreshError);
+            }
+        }
+
+        return Promise.reject(error);
     }
-    return config;
-});
+);
 
 // Интерцептор для обработки ответов
 api.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError) => {
-        const toast = useToast()
-
         // Логируем информацию об ошибке
         console.error('API Error:', {
             message: error.message,
             response: error.response,
             config: error.config,
         });
-
-        // Отображаем ошибку с помощью PrimeVue Toast
-
-        toast.add({
-            severity: 'error',
-            summary: 'Ошибка API',
-            detail: error.message || 'Произошла ошибка при выполнении запроса.',
-            life: 3000
-        });
-
         return Promise.reject(error);
     }
 );
