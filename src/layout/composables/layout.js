@@ -1,4 +1,4 @@
-import {computed, reactive, onMounted, watch, ref} from 'vue';
+import {computed, reactive, ref, watch} from 'vue';
 
 const layoutConfig = reactive({
     preset: 'Aura',
