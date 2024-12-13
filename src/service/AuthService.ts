@@ -1,44 +1,54 @@
-import api from "@/api/api.ts";
-import type {User} from "@/types/user.ts";
+import { api } from "@/api/api.ts";
 
-export class AuthService {
-    static async auth(body: { email: string; password: string }): Promise<User> {
-        try {
-            const { data } = await api.post('/auth', body);
-            return data;
-        } catch (error) {
-            console.error('Неверный логин или пароль:', error);
-            throw new Error('Неверный логин или пароль');
-        }
-    }
-
-    static async register(body: { email: string; password: string; role: string; shopId: number }): Promise<User> {
-        try {
-            const { data } = await api.post('/auth/register', body);
-            return data;
-        } catch (error) {
-            console.error('Registration error:', error);
-            throw new Error('Registration failed');
-        }
-    }
-
-    static async refresh(refreshToken: string): Promise<User> {
-        try {
-            const { data } = await api.post('/auth/refresh', { refreshToken });
-            return data;
-        } catch (error) {
-            console.error('Refresh token error:', error);
-            throw new Error('Token refresh failed');
-        }
-    }
-
-    static async logout(refreshToken: string): Promise<void> {
-        try {
-            await api.post('/auth/logout', { refreshToken });
-        } catch (error) {
-            console.error('Logout error:', error);
-            throw new Error('Logout failed');
-        }
-    }
+interface AuthResponse {
+  success: boolean;
+  details: { accessToken: string; refreshToken: string };
 }
 
+export class AuthService {
+  static async auth(body: {
+    email: string;
+    password: string;
+  }): Promise<AuthResponse> {
+    try {
+      const { data } = await api.post("/auth", body);
+      return data;
+    } catch (error) {
+      console.error("Неверный логин или пароль:", error);
+      throw new Error("Неверный логин или пароль");
+    }
+  }
+
+  static async register(body: {
+    email: string;
+    password: string;
+    shopName: string;
+  }): Promise<{ details: []; success: boolean }> {
+    try {
+      const { data } = await api.post("/auth/register", body);
+      return data;
+    } catch (error) {
+      console.error("Ошибка регистрации, ваш email уже занят:", error);
+      throw new Error("Ошибка регистрации, ваш email уже занят");
+    }
+  }
+
+  static async refresh(refreshToken: string): Promise<AuthResponse> {
+    try {
+      const { data } = await api.post("/auth/refresh", { refreshToken });
+      return data;
+    } catch (error) {
+      console.error("Refresh token error:", error);
+      throw new Error("Token refresh failed");
+    }
+  }
+
+  static async logout(refreshToken: string): Promise<void> {
+    try {
+      await api.post("/auth/logout", { refreshToken });
+    } catch (error) {
+      console.error("Logout error:", error);
+      throw new Error("Logout failed");
+    }
+  }
+}

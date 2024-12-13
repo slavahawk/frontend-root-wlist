@@ -1,31 +1,12 @@
 <script setup lang="ts">
-import {useAuthStore} from "@/stores/authStore";
-import {onBeforeUnmount, onMounted} from "vue";
+import { initializeAuth } from "@/api/api.ts";
 
-const authStore = useAuthStore();
-
-const refreshInterval = 15 * 60 * 1000; // Обновление каждые 15 минут
-
-onMounted(() => {
-
-  if (authStore.checkAuth()) {
-     authStore.refresh();
-  }
-
-  const intervalId = setInterval(() => {
-    authStore.refresh();
-  }, refreshInterval);
-
-  // Очистите интервал при размонтировании компонента
-  onBeforeUnmount(() => {
-    clearInterval(intervalId);
-  });
-});
+initializeAuth();
 </script>
 
 <template>
   <router-view />
-  <Toast/>
+  <Toast />
 </template>
 
 <style scoped></style>

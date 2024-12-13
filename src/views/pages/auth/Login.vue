@@ -1,84 +1,145 @@
 <template>
   <FloatingConfigurator />
-  <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
+  <div
+    class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden"
+  >
     <div class="flex flex-col items-center justify-center">
-      <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
-        <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
+      <div
+        style="
+          border-radius: 56px;
+          padding: 0.3rem;
+          background: linear-gradient(
+            180deg,
+            var(--primary-color) 10%,
+            rgba(33, 150, 243, 0) 30%
+          );
+        "
+      >
+        <div
+          class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20"
+          style="border-radius: 53px"
+        >
           <div class="text-center mb-8">
-            <Logo class="w-24 h-24 ml-auto mr-auto mb-4"/>
-            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Добро пожаловать в W-List!</div>
-            <span class="text-muted-color font-medium">Войдите, чтобы продолжить</span>
+            <Logo class="w-24 h-24 ml-auto mr-auto mb-4" />
+            <div
+              class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4"
+            >
+              Добро пожаловать в W-List!
+            </div>
+            <span class="text-muted-color font-medium"
+              >Войдите, чтобы продолжить</span
+            >
           </div>
-          <Form v-slot="$form" :initialValues="initialValues" :resolver="resolver" @submit="handleSubmit"  class="form">
+          <Form
+            v-slot="$form"
+            :initialValues="initialValues"
+            :resolver="resolver"
+            @submit="handleSubmit"
+            class="form"
+          >
             <div class="input-container">
-              <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
+              <label
+                for="email1"
+                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
+                >Email</label
+              >
               <InputText
-                  id="email"
-                  name="email"
-                  type="text"
-                  placeholder="Email адрес"
-                  class="w-full md:w-[30rem]"
-                  v-model="initialValues.email"
-                  autocomplete="email"
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Email адрес"
+                class="w-full md:w-[30rem]"
+                v-model="initialValues.email"
+                autocomplete="email"
               />
-              <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error?.message }}</Message>
+              <Message
+                v-if="$form.email?.invalid"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ $form.email.error?.message }}</Message
+              >
             </div>
 
             <div class="input-container">
-              <label for="password" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Пароль</label>
+              <label
+                for="password"
+                class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
+                >Пароль</label
+              >
               <Password
-                  id="password"
-                  name="password"
-                  v-model="initialValues.password"
-                  placeholder="Пароль"
-                  :toggleMask="true"
-                  fluid
-                  :feedback="false"
-                  autocomplete="current-password"
+                id="password"
+                name="password"
+                v-model="initialValues.password"
+                placeholder="Пароль"
+                :toggleMask="true"
+                fluid
+                :feedback="false"
+                autocomplete="current-password"
               />
-              <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
+              <Message
+                v-if="$form.password?.invalid"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ $form.password.error?.message }}</Message
+              >
             </div>
 
-            <Button :loading="authStore.isLoad" label="Войти" class="w-full" type="submit"></Button> <!-- Handle submit -->
+            <Button
+              :loading="authStore.isLoad"
+              label="Войти"
+              class="w-full"
+              type="submit"
+            ></Button>
+            <!-- Handle submit -->
             <div class="flex items-center justify-between mt-4 mb-8 gap-8">
               <!--              <div class="flex items-center">-->
               <!--                <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>-->
               <!--                <label for="rememberme1">Remember me</label>-->
               <!--              </div>-->
               <!--              ml-2-->
-              <router-link :to="{name: AppRoutes.REG}" class="font-medium no-underline  text-right cursor-pointer text-primary">Регистрация</router-link>
-              <span class="font-medium no-underline  text-right cursor-pointer text-primary">Забыли пароль?</span>
+              <router-link
+                :to="{ name: AppRoutes.REG }"
+                class="font-medium no-underline text-right cursor-pointer text-primary"
+                >Регистрация</router-link
+              >
+              <span
+                class="font-medium no-underline text-right cursor-pointer text-primary"
+                >Забыли пароль?</span
+              >
             </div>
           </Form>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
-import {reactive} from 'vue';
-import {z} from 'zod';
-import {Form} from '@primevue/forms';
-import {Button, InputText, Message, Password} from 'primevue';
-import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
-import {useAuthStore} from "@/stores/authStore.ts";
+import { reactive } from "vue";
+import { z } from "zod";
+import { Form } from "@primevue/forms";
+import { Button, InputText, Message, Password } from "primevue";
+import FloatingConfigurator from "@/components/FloatingConfigurator.vue";
+import { useAuthStore } from "@/stores/authStore.ts";
 import Logo from "@/assets/images/svg/Logo.vue";
-import {AppRoutes} from "@/router";
-
+import { AppRoutes } from "@/router";
 
 const authStore = useAuthStore();
 
 const initialValues = reactive({
-  email: 'test3@example.com',
-  password: 'asdasd'
+  email: "",
+  password: "",
 });
 
 // Определите схему Zod для валидации
 const schema = z.object({
-  email: z.string().email('Неверный адрес электронной почты').nonempty('Электронная почта обязательна.'),
-  password: z.string().nonempty('Пароль обязателен.'),
+  email: z
+    .string()
+    .email("Неверный адрес электронной почты")
+    .nonempty("Электронная почта обязательна."),
+  password: z.string().nonempty("Пароль обязателен."),
 });
 
 // Resolver function to validate the form
@@ -102,7 +163,7 @@ const resolver = async ({ values }) => {
 // Handle form submission
 const handleSubmit = async ({ valid, states }) => {
   if (valid) {
-    await authStore.login(states.email.value, states.password.value)
+    await authStore.login(states.email.value, states.password.value);
   }
 };
 </script>

@@ -1,72 +1,127 @@
 <template>
   <FloatingConfigurator />
-  <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
+  <div
+    class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden"
+  >
     <div class="flex flex-col items-center justify-center">
-      <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
-        <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
+      <div
+        style="
+          border-radius: 56px;
+          padding: 0.3rem;
+          background: linear-gradient(
+            180deg,
+            var(--primary-color) 10%,
+            rgba(33, 150, 243, 0) 30%
+          );
+        "
+      >
+        <div
+          class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20"
+          style="border-radius: 53px"
+        >
           <div class="text-center mb-8">
             <Logo class="w-24 h-24 ml-auto mr-auto mb-4" />
-            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Регистрация</div>
-            <span class="text-muted-color font-medium">Создайте учетную запись</span>
+            <div
+              class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4"
+            >
+              Регистрация
+            </div>
+            <span class="text-muted-color font-medium"
+              >Создайте учетную запись</span
+            >
           </div>
-          <Form v-slot="$form" :initialValues="initialValues" :resolver="resolver" @submit="handleSubmit" class="form">
+          <Form
+            v-slot="$form"
+            :initialValues="initialValues"
+            :resolver="resolver"
+            @submit="handleSubmit"
+            class="form"
+          >
             <div class="input-container">
-              <label for="email" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
+              <label
+                for="shopName"
+                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
+                >Название магазина</label
+              >
               <InputText
-                  id="email"
-                  name="email"
-                  type="text"
-                  placeholder="Email адрес"
-                  class="w-full md:w-[30rem]"
-                  v-model="initialValues.email"
-                  autocomplete="email"
+                id="shopName"
+                name="shopName"
+                type="text"
+                placeholder="Название вашего магазина"
+                class="w-full md:w-[30rem]"
+                v-model="initialValues.shopName"
+                autocomplete="off"
               />
-              <Message v-if="$form.email?.invalid" severity="error" size="small" variant="simple">{{ $form.email.error?.message }}</Message>
+              <Message
+                v-if="$form.shopName?.invalid"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ $form.shopName.error?.message }}</Message
+              >
             </div>
 
             <div class="input-container">
-              <label for="password" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Пароль</label>
+              <label
+                for="email"
+                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
+                >Email</label
+              >
+              <InputText
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Email адрес"
+                class="w-full md:w-[30rem]"
+                v-model="initialValues.email"
+                autocomplete="email"
+              />
+              <Message
+                v-if="$form.email?.invalid"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ $form.email.error?.message }}</Message
+              >
+            </div>
+
+            <div class="input-container">
+              <label
+                for="password"
+                class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
+                >Пароль</label
+              >
               <Password
-                  id="password"
-                  name="password"
-                  v-model="initialValues.password"
-                  placeholder="Пароль"
-                  :toggleMask="true"
-                  fluid
-                  :feedback="false"
-                  autocomplete="new-password"
+                id="password"
+                name="password"
+                v-model="initialValues.password"
+                placeholder="Пароль"
+                :toggleMask="true"
+                fluid
+                :feedback="false"
+                autocomplete="new-password"
               />
-              <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
+              <Message
+                v-if="$form.password?.invalid"
+                severity="error"
+                size="small"
+                variant="simple"
+                >{{ $form.password.error?.message }}</Message
+              >
             </div>
 
-            <div class="input-container">
-              <label for="role" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Роль</label>
-              <InputText
-                  id="role"
-                  name="role"
-                  type="text"
-                  placeholder="Введите роль"
-                  class="w-full md:w-[30rem]"
-                  v-model="initialValues.role"
-              />
-              <Message v-if="$form.role?.invalid" severity="error" size="small" variant="simple">{{ $form.role.error?.message }}</Message>
-            </div>
-
-            <div class="input-container">
-              <label for="shopId" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">ID магазина</label>
-              <InputNumber
-                  id="shopId"
-                  name="shopId"
-                  placeholder="Введите ID магазина"
-                  class="w-full md:w-[30rem]"
-                  v-model="initialValues.shopId"
-              />
-              <Message v-if="$form.shopId?.invalid" severity="error" size="small" variant="simple">{{ $form.shopId.error?.message }}</Message>
-            </div>
-
-            <Button :loading="authStore.isLoad" label="Зарегистрироваться" class="w-full" type="submit"></Button> <!-- Handle submit -->
+            <Button
+              :loading="authStore.isLoad"
+              label="Зарегистрироваться"
+              class="w-full"
+              type="submit"
+            ></Button>
             <div class="flex items-center justify-between mt-4 mb-8 gap-8">
-              <router-link :to="{name: AppRoutes.LOGIN}" class="font-medium no-underline text-right cursor-pointer text-primary">Уже есть учетная запись? Войти</router-link>
+              <router-link
+                :to="{ name: AppRoutes.LOGIN }"
+                class="font-medium no-underline text-right cursor-pointer text-primary"
+                >Уже есть учетная запись? Войти</router-link
+              >
             </div>
           </Form>
         </div>
@@ -76,31 +131,31 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { z } from 'zod';
-import { Form } from '@primevue/forms';
-import { Button, InputText, Message, Password } from 'primevue';
-import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
+import { reactive } from "vue";
+import { z } from "zod";
+import { Form } from "@primevue/forms";
+import { Button, InputText, Message, Password } from "primevue";
+import FloatingConfigurator from "@/components/FloatingConfigurator.vue";
 import { useAuthStore } from "@/stores/authStore.ts";
-import { AuthService } from "@/service/AuthService.ts";
 import Logo from "@/assets/images/svg/Logo.vue";
-import {AppRoutes} from "@/router";
+import { AppRoutes } from "@/router";
 
 const authStore = useAuthStore();
 
 const initialValues = reactive({
-  email: '',
-  password: '',
-  role: '',
-  shopId: null // Set default value as null or adjust according to your needs
+  shopName: "",
+  email: "",
+  password: "",
 });
 
 // Define Zod schema for validation
 const schema = z.object({
-  email: z.string().email('Неверный адрес электронной почты').nonempty('Электронная почта обязательна.'),
-  password: z.string().nonempty('Пароль обязателен.'),
-  role: z.string().nonempty('Роль обязательна.'),
-  shopId: z.number().nonnegative('ID магазина должен быть положительным.').optional()
+  shopName: z.string().nonempty("Название магазина обязательно."),
+  email: z
+    .string()
+    .email("Неверный адрес электронной почты")
+    .nonempty("Электронная почта обязательна."),
+  password: z.string().nonempty("Пароль обязателен."),
 });
 
 // Resolver function to validate the form
@@ -124,24 +179,21 @@ const resolver = async ({ values }) => {
 // Handle form submission
 const handleSubmit = async ({ valid, states }) => {
   if (valid) {
-    console.log('Форма отправлена:', {
+    console.log("Форма отправлена:", {
+      shopName: states.shopName.value,
       email: states.email.value,
       password: states.password.value,
-      role: states.role.value,
-      shopId: states.shopId.value
     });
     await authStore.register({
+      shopName: states.shopName.value,
       email: states.email.value,
       password: states.password.value,
-      role: states.role.value,
-      shopId: states.shopId.value
     });
   }
 };
 </script>
 
 <style scoped>
-/* Your styles here */
 .input-container {
   display: flex;
   flex-direction: column;
