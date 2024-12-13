@@ -9,7 +9,7 @@
             <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Добро пожаловать в W-List!</div>
             <span class="text-muted-color font-medium">Войдите, чтобы продолжить</span>
           </div>
-          <Form v-slot="$form" :initialValues="initialValues" :resolver="resolver" @submit="handleSubmit" class="form">
+          <Form v-slot="$form" :initialValues="initialValues" :resolver="resolver" @submit="handleSubmit"  class="form">
             <div class="input-container">
               <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
               <InputText
@@ -39,14 +39,14 @@
               <Message v-if="$form.password?.invalid" severity="error" size="small" variant="simple">{{ $form.password.error?.message }}</Message>
             </div>
 
-            <Button label="Войти" class="w-full" type="submit"></Button> <!-- Handle submit -->
+            <Button :loading="authStore.isLoad" label="Войти" class="w-full" type="submit"></Button> <!-- Handle submit -->
             <div class="flex items-center justify-between mt-4 mb-8 gap-8">
               <!--              <div class="flex items-center">-->
               <!--                <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>-->
               <!--                <label for="rememberme1">Remember me</label>-->
               <!--              </div>-->
               <!--              ml-2-->
-              <span class="font-medium no-underline  text-right cursor-pointer text-primary">Регистрация</span>
+              <router-link :to="{name: AppRoutes.REG}" class="font-medium no-underline  text-right cursor-pointer text-primary">Регистрация</router-link>
               <span class="font-medium no-underline  text-right cursor-pointer text-primary">Забыли пароль?</span>
             </div>
           </Form>
@@ -64,8 +64,8 @@ import {Form} from '@primevue/forms';
 import {Button, InputText, Message, Password} from 'primevue';
 import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
 import {useAuthStore} from "@/stores/authStore.ts";
-import {AuthService} from "@/service/AuthService.ts";
 import Logo from "@/assets/images/svg/Logo.vue";
+import {AppRoutes} from "@/router";
 
 
 const authStore = useAuthStore();
@@ -102,11 +102,6 @@ const resolver = async ({ values }) => {
 // Handle form submission
 const handleSubmit = async ({ valid, states }) => {
   if (valid) {
-
-    const data = await AuthService.auth({email: states.email.value, password: states.password.value});
-
-    console.log(data)
-    console.log('Форма отправлена:', { email: states.email.value, password: states.password.value });
     await authStore.login(states.email.value, states.password.value)
   }
 };

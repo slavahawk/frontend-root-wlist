@@ -5,12 +5,14 @@ import {useAuthStore} from "@/stores/authStore";
 
 export enum AppRoutes {
   DASHBOARD = 'Dashboard',
-  AUTH = 'Auth',
+  LOGIN = 'Login',
+  REG = 'Reg',
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.DASHBOARD]: '/',
-  [AppRoutes.AUTH]: '/auth/login',
+  [AppRoutes.LOGIN]: '/auth/login',
+  [AppRoutes.REG]: '/auth/reg',
 }
 
 const router = createRouter({
@@ -131,9 +133,14 @@ const router = createRouter({
     },
 
     {
-      path: RoutePath.Auth,
-      name: AppRoutes.AUTH,
+      path: RoutePath.Login,
+      name: AppRoutes.LOGIN,
       component: () => import('@/views/pages/auth/Login.vue')
+    },
+    {
+      path: RoutePath.Reg,
+      name: AppRoutes.REG,
+      component: () => import('@/views/pages/auth/Reg.vue')
     },
     {
       path: '/auth/access',
@@ -156,7 +163,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!authStore.isAuthenticated) {
-      next({ name: AppRoutes.AUTH });
+      next({ name: AppRoutes.LOGIN });
     } else {
       next();
     }

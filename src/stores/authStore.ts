@@ -9,11 +9,10 @@ import type {User} from "@/types/user.ts";
 
 export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
-    const isLoad=  ref(false)
+    const isLoad=  ref(false);
     const isAuthenticated = ref(false);
     const toast = useToast();
     const router = useRouter();
-
 
     // Загружаем состояние аутентификации из localStorage при монтировании
     const storedUser = localStorage.getItem('user');
@@ -39,18 +38,40 @@ export const useAuthStore = defineStore('auth', () => {
             });
             await router.push({ name: AppRoutes.DASHBOARD });
         } catch (error) {
-            handleError(error); // Используйте функцию для обработки ошибок
+            handleError(error);
         } finally {
             isLoad.value = false;
         }
     };
 
+    const register = async (body: {email: string, password: string, role: string, shopId: number}) => {
+        isLoad.value = true;
+        try {
+            const data = await AuthService.register(body);
+            if (!data) {
+                throw new Error('User data not found in response');
+            }
+            user.value = data;
+            isAuthenticated.value = true;
+            localStorage.setItem('user', JSON.stringify(data));
+            toast.add({
+                severity: 'success',
+                summary: 'Регистрация успешна',
+                life: 3000
+            });
+            await router.push({ name: AppRoutes.DASHBOARD });
+        } catch (error) {
+            handleError(error);
+        } finally {
+            isLoad.value = false;
+        }
+    };
 
     const logout = () => {
         user.value = null;
         isAuthenticated.value = false;
         localStorage.removeItem('user');
-        router.push({ name: AppRoutes.AUTH });
+        router.push({ name: AppRoutes.LOGIN });
     };
 
     const checkAuth = () => {
@@ -59,33 +80,11 @@ export const useAuthStore = defineStore('auth', () => {
 
     return {
         user,
+        isLoad,
         isAuthenticated,
         login,
+        register,
         logout,
         checkAuth,
     };
 });
-
-
-// import { defineStore } from 'pinia';
-//
-// export const useAuthStore = defineStore('auth', {
-//     state: () => ({
-//         isLoad: false,
-//         user: null,
-//     }),
-//     actions: {
-//         async authenticate(email: string, password: string) {
-//             this.isLoad = true; // Устанавливаем флаг загрузки в true
-//             try {
-//                 const response = await AuthService.auth({ email, password });
-//                 this.user = response.user; // Предполагается, что ответ содержит пользователя
-//             } catch (error) {
-//                 console.error('Failed to authenticate:', error);
-//                 // Обработка ошибок (например, показать уведомление)
-//             } finally {
-//                 this.isLoad = false; // Устанавливаем флаг загрузки в false
-//             }
-//         },
-//     },
-// });
