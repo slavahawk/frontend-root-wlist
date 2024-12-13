@@ -1,6 +1,6 @@
 <script setup>
-import { useLayout } from '@/layout/composables/layout.js';
-import { $t, updatePreset, updateSurfacePalette } from '@primevue/themes';
+import {useLayout} from '@/layout/composables/layout.js';
+import {$t, updatePreset, updateSurfacePalette} from '@primevue/themes';
 import Aura from '@primevue/themes/aura';
 import Lara from '@primevue/themes/lara';
 import { ref } from 'vue';
@@ -194,6 +194,9 @@ function onPresetChange() {
 function onMenuModeChange() {
     layoutConfig.menuMode = menuMode.value;
 }
+
+onPresetChange()
+onMenuModeChange()
 </script>
 
 <template>
@@ -202,7 +205,7 @@ function onMenuModeChange() {
     >
         <div class="flex flex-col gap-4">
             <div>
-                <span class="text-sm text-muted-color font-semibold">Primary</span>
+                <span class="text-sm text-muted-color font-semibold">Основной цвет</span>
                 <div class="pt-2 flex gap-2 flex-wrap justify-between">
                     <button
                         v-for="primaryColor of primaryColors"
@@ -216,7 +219,7 @@ function onMenuModeChange() {
                 </div>
             </div>
             <div>
-                <span class="text-sm text-muted-color font-semibold">Surface</span>
+                <span class="text-sm text-muted-color font-semibold">Фон</span>
                 <div class="pt-2 flex gap-2 flex-wrap justify-between">
                     <button
                         v-for="surface of surfaces"
