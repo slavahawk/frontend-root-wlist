@@ -3,6 +3,7 @@ import {useLayout} from '@/layout/composables/layout';
 import AppConfigurator from './AppConfigurator.vue';
 import {RoutePath} from "@/router";
 import {useAuthStore} from "@/stores/authStore.ts";
+import Logo from "@/assets/images/svg/Logo.vue";
 
 const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 
@@ -16,7 +17,7 @@ const authStore = useAuthStore();
                 <i class="pi pi-bars"></i>
             </button>
             <router-link :to="RoutePath.Dashboard" class="layout-topbar-logo">
-              <img src="../assets/images/logo.png" class="w-8" alt="logo">
+              <Logo />
               <span>W-List</span>
             </router-link>
         </div>
