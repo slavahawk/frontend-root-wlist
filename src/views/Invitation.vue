@@ -14,7 +14,7 @@
               @click="showAddInvitation = true"
             />
           </div>
-          <Button icon="pi pi-refresh" rounded raised />
+          <Button icon="pi pi-refresh" rounded raised @click="getInvitations" />
         </div>
       </template>
       <Column field="id" header="ID"></Column>
