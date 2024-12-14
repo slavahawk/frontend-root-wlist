@@ -26,6 +26,10 @@ const loadFromLocalStorage = () => {
   if (savedState) Object.assign(layoutState, savedState);
 };
 
+if (!localStorage.getItem("layoutConfig") && layoutConfig.darkTheme) {
+  document.documentElement.classList.add("app-dark");
+}
+
 const getParsedItem = (key) => {
   try {
     return JSON.parse(localStorage.getItem(key));
