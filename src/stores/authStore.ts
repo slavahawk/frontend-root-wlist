@@ -36,7 +36,7 @@ export const useAuthStore = defineStore("auth", () => {
         summary: "Успешный вход",
         life: 3000,
       });
-      await router.push({ name: AppRoutes.DASHBOARD });
+      await router.push({ name: AppRoutes.INVITATION });
     } catch (error) {
       handleError(error, toast);
     } finally {

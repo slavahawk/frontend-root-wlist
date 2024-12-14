@@ -155,7 +155,10 @@ const schema = z.object({
     .string()
     .email("Неверный адрес электронной почты")
     .nonempty("Электронная почта обязательна."),
-  password: z.string().nonempty("Пароль обязателен."),
+  password: z
+    .string()
+    .nonempty("Пароль обязателен.")
+    .min(6, "Минимум 6 символов"),
 });
 
 // Resolver function to validate the form
@@ -193,11 +196,4 @@ const handleSubmit = async ({ valid, states }) => {
 };
 </script>
 
-<style scoped>
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 24px;
-}
-</style>
+<style scoped></style>

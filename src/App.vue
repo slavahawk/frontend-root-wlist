@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { initializeAuth } from "@/api/api.ts";
+import { initializeAuth } from "@/api/api";
 
 initializeAuth();
 </script>

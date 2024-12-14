@@ -7,6 +7,7 @@ export enum AppRoutes {
   LOGIN = "Login",
   REG = "Reg",
   INVITATION = "Invitation",
+  COMMON = "Common",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
@@ -14,6 +15,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.LOGIN]: "/auth/login",
   [AppRoutes.REG]: "/auth/reg",
   [AppRoutes.INVITATION]: "/invitation",
+  [AppRoutes.COMMON]: "/common",
 };
 
 const router = createRouter({
@@ -33,6 +35,11 @@ const router = createRouter({
           path: RoutePath.Invitation,
           name: AppRoutes.INVITATION,
           component: () => import("@/views/Invitation.vue"),
+        },
+        {
+          path: RoutePath.Common,
+          name: AppRoutes.COMMON,
+          component: () => import("@/views/Common.vue"),
         },
         {
           path: "/uikit/formlayout",

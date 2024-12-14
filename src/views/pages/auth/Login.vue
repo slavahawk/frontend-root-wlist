@@ -92,22 +92,14 @@
               class="w-full"
               type="submit"
             ></Button>
-            <!-- Handle submit -->
+
             <div class="flex items-center justify-between mt-4 mb-8 gap-8">
-              <!--              <div class="flex items-center">-->
-              <!--                <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>-->
-              <!--                <label for="rememberme1">Remember me</label>-->
-              <!--              </div>-->
-              <!--              ml-2-->
               <router-link
                 :to="{ name: AppRoutes.REG }"
                 class="font-medium no-underline text-right cursor-pointer text-primary"
                 >Регистрация</router-link
               >
-              <span
-                class="font-medium no-underline text-right cursor-pointer text-primary"
-                >Забыли пароль?</span
-              >
+              <ForgotPasswordDialog />
             </div>
           </Form>
         </div>
@@ -119,12 +111,12 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { z } from "zod";
-import { Form } from "@primevue/forms";
-import { Button, InputText, Message, Password } from "primevue";
+
 import FloatingConfigurator from "@/components/FloatingConfigurator.vue";
 import { useAuthStore } from "@/stores/authStore.ts";
 import Logo from "@/assets/images/svg/Logo.vue";
 import { AppRoutes } from "@/router";
+import ForgotPasswordDialog from "@/components/ForgotPasswordDialog.vue";
 
 const authStore = useAuthStore();
 
@@ -139,10 +131,12 @@ const schema = z.object({
     .string()
     .email("Неверный адрес электронной почты")
     .nonempty("Электронная почта обязательна."),
-  password: z.string().nonempty("Пароль обязателен."),
+  password: z
+    .string()
+    .nonempty("Пароль обязателен.")
+    .min(6, "Минимум 6 символов"),
 });
 
-// Resolver function to validate the form
 const resolver = async ({ values }) => {
   try {
     schema.parse(values);
@@ -170,10 +164,4 @@ const handleSubmit = async ({ valid, states }) => {
 
 <style scoped>
 /* Ваши стили здесь */
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 24px;
-}
 </style>

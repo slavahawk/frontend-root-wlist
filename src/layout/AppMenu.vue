@@ -5,10 +5,10 @@ import AppMenuItem from "./AppMenuItem.vue";
 import { RoutePath } from "@/router";
 
 const model = ref([
-  {
-    label: "Home",
-    items: [{ label: "Dashboard", icon: "pi pi-fw pi-home", to: "/" }],
-  },
+  // {
+  //   label: "Home",
+  //   items: [{ label: "Dashboard", icon: "pi pi-fw pi-home", to: "/" }],
+  // },
   {
     label: "Основное",
     items: [
@@ -16,6 +16,11 @@ const model = ref([
         label: "Приглашенные",
         icon: "pi pi-fw pi-id-card",
         to: RoutePath.Invitation,
+      },
+      {
+        label: "Настройки",
+        icon: "pi pi-fw pi-id-card",
+        to: RoutePath.Common,
       },
       // { label: "База сомелье", icon: "pi pi-fw pi-home", to: "/" },
       // { label: "База вин", icon: "pi pi-fw pi-home", to: "/" },

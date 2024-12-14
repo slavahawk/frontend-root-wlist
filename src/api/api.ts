@@ -9,6 +9,9 @@ const api = axios.create({
 
 // Функция для установки токенов в заголовки
 const setAuthHeader = (token: string) => {
+  if (!token) {
+    delete api.defaults.headers.common["Authorization"];
+  }
   api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
 
@@ -36,8 +39,10 @@ const refreshAccessToken = async () => {
 };
 
 api.interceptors.request.use((config) => {
-  if (config.headers) {
+  if (config.headers && localStorage.getItem("accessToken")) {
     config.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
+  } else {
+    delete config.headers.Authorization;
   }
   return config;
 });

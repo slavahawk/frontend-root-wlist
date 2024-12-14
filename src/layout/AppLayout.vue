@@ -1,8 +1,9 @@
-<script setup>
-import { useLayout } from "@/layout/composables/layout.js";
+<script setup lang="ts">
+import { useLayout } from "@/layout/composables/layout";
 import { computed, ref, watch } from "vue";
 import AppSidebar from "./AppSidebar.vue";
 import AppTopbar from "./AppTopbar.vue";
+import { CategoryService } from "@/service/CategoryService.ts";
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
@@ -59,6 +60,8 @@ function isOutsideClicked(event) {
     topbarEl.contains(event.target)
   );
 }
+
+CategoryService.getCategories();
 </script>
 
 <template>

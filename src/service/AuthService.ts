@@ -51,4 +51,33 @@ export class AuthService {
       throw new Error("Logout failed");
     }
   }
+
+  static async resetPassword(body: {
+    token: string;
+    newPassword: string;
+  }): Promise<{
+    success: boolean;
+    details: {};
+  }> {
+    try {
+      const { data } = await api.post("/auth/reset-password", body);
+      return data;
+    } catch (error) {
+      console.error("Ошибка смены пароля:", error);
+      throw new Error("Ошибка смены пароля");
+    }
+  }
+
+  static async forgotPassword(email: string): Promise<{
+    success: boolean;
+    details: {};
+  }> {
+    try {
+      const { data } = await api.post("/auth/forgot-password", { email });
+      return data;
+    } catch (error) {
+      console.error("Ошибка сброса пароля:", error);
+      throw new Error("Ошибка сброса пароля");
+    }
+  }
 }

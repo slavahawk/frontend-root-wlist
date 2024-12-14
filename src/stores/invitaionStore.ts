@@ -14,7 +14,7 @@ export const useInvitationStore = defineStore("invitation", () => {
   const getInvitations = async () => {
     isLoad.value = true;
     try {
-      const data = await InvitationService.getInvitation();
+      const data = await InvitationService.getAll();
 
       checkData(data);
 
