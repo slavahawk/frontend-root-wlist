@@ -14,12 +14,12 @@ const model = ref([
     items: [
       {
         label: "Приглашенные",
-        icon: "pi pi-fw pi-id-card",
+        icon: "pi pi-users",
         to: RoutePath.Invitation,
       },
       {
         label: "Настройки",
-        icon: "pi pi-fw pi-id-card",
+        icon: "pi pi-cog",
         to: RoutePath.Common,
       },
       // { label: "База сомелье", icon: "pi pi-fw pi-home", to: "/" },
