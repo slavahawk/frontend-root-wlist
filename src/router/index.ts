@@ -35,11 +35,13 @@ const router = createRouter({
           path: RoutePath.Invitation,
           name: AppRoutes.INVITATION,
           component: () => import("@/views/Invitation.vue"),
+          meta: { requiresAuth: true },
         },
         {
           path: RoutePath.Common,
           name: AppRoutes.COMMON,
           component: () => import("@/views/Common.vue"),
+          meta: { requiresAuth: true },
         },
         {
           path: "/uikit/formlayout",
