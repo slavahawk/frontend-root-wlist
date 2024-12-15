@@ -28,19 +28,6 @@ export const useAuthStore = defineStore("auth", () => {
 
       checkData(data, "User data not found in response");
 
-      if (!data.success) {
-        isAuthenticated.value = false;
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("accessToken");
-        toast.add({
-          severity: "error",
-          summary: "Ваш токен устарел",
-          life: 3000,
-        });
-        await router.push({ name: AppRoutes.LOGIN });
-        return;
-      }
-
       isAuthenticated.value = true;
       localStorage.setItem("accessToken", data.details.accessToken);
       localStorage.setItem("refreshToken", data.details.refreshToken);

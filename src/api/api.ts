@@ -47,23 +47,33 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Перехватчик ответов
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    // Проверяем, получили ли мы статус 401 и не пытались ли уже обновить токен
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       try {
+        // Обновляем токен
         await refreshAccessToken();
+
+        // Обновите заголовки запроса с новым токеном, например:
+        // originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+
+        // Повторяем оригинальный запрос с обновленным токеном
         return api(originalRequest);
       } catch (refreshError) {
         console.error("Could not refresh token:", refreshError);
         // Перенаправляем на страницу входа
         await router.push({ name: AppRoutes.LOGIN });
-        return Promise.reject(refreshError); // Не забывайте вернуть ошибку
+        return Promise.reject(refreshError);
       }
     }
 
