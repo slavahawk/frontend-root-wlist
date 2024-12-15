@@ -74,6 +74,8 @@ import { reactive, ref } from "vue";
 import { useToast } from "primevue/usetoast";
 import { z } from "zod";
 import { AuthService } from "@/service/AuthService.ts";
+import { InvitationService } from "@/service/InvitationService.ts";
+import { handleError } from "@/helper/handleError.ts";
 
 const { getInvitations } = useInvitationStore();
 const { invitations, isLoad } = storeToRefs(useInvitationStore());
@@ -116,7 +118,7 @@ const resolver = async ({ values }) => {
 const handleResetSubmit = async ({ valid, states }) => {
   if (valid) {
     try {
-      const data = await AuthService.forgotPassword(states.email.value);
+      const data = await InvitationService.send(states.email.value);
       console.log(data);
     } catch (e) {
       handleError(e, toast);
