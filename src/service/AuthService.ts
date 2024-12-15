@@ -33,7 +33,9 @@ export class AuthService {
     }
   }
 
-  static async refresh(refreshToken: string): Promise<AuthResponse> {
+  static async refresh(
+    refreshToken: string,
+  ): Promise<{ details: { token: string }; success: boolean }> {
     try {
       const { data } = await api.post("/auth/refresh", { refreshToken });
       return data;
