@@ -7,6 +7,7 @@ export enum AppRoutes {
   LOGIN = "Login",
   REG = "Reg",
   INVITATION = "Invitation",
+  INVITATION_CONFIRM = "InvitationConfirm",
   COMMON = "Common",
 }
 
@@ -15,6 +16,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.LOGIN]: "/auth/login",
   [AppRoutes.REG]: "/auth/reg",
   [AppRoutes.INVITATION]: "/invitation",
+  [AppRoutes.INVITATION_CONFIRM]: "/invitation/:token/confirm",
   [AppRoutes.COMMON]: "/common",
 };
 
@@ -34,9 +36,16 @@ const router = createRouter({
         {
           path: RoutePath.Invitation,
           name: AppRoutes.INVITATION,
-          component: () => import("@/views/Invitation.vue"),
+          component: () => import("@/views/Invitation/Invitation.vue"),
           meta: { requiresAuth: true },
         },
+        {
+          path: RoutePath.Invitation,
+          name: AppRoutes.INVITATION,
+          component: () => import("@/views/Invitation/Invitation.vue"),
+          meta: { requiresAuth: true },
+        },
+
         {
           path: RoutePath.Common,
           name: AppRoutes.COMMON,
@@ -135,6 +144,12 @@ const router = createRouter({
           component: () => import("@/views/pages/Documentation.vue"),
         },
       ],
+    },
+    {
+      path: RoutePath.InvitationConfirm,
+      name: AppRoutes.INVITATION_CONFIRM,
+      component: () => import("@/views/Invitation/Confirm.vue"),
+      meta: { requiresAuth: false },
     },
     {
       path: "/landing",

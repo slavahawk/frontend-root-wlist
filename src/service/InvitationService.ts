@@ -23,12 +23,17 @@ export class InvitationService {
       throw new Error("Ошибка отправления приглашения");
     }
   }
-  static async confirm(body: { token: string; newPassword: string }): Promise<{
+  static async confirm(
+    token: string,
+    newPassword: string,
+  ): Promise<{
     success: boolean;
     details: {};
   }> {
     try {
-      const { data } = await api.post("/invitations/confirm", body);
+      const { data } = await api.post(`/invitations/${token}/confirm`, {
+        newPassword,
+      });
       return data;
     } catch (error) {
       console.error("Ошибка подтверждения", error);

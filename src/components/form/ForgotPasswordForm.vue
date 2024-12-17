@@ -35,9 +35,10 @@
 
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
-import { reactive, defineEmits } from "vue";
+import { reactive } from "vue";
 import { z } from "zod";
 import { AuthService } from "@/service/AuthService.ts";
+import { handleError } from "@/helper/handleError.ts";
 
 const toast = useToast();
 

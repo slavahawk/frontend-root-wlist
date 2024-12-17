@@ -7,6 +7,7 @@ import { AuthService } from "@/service/AuthService.ts";
 import { handleError } from "@/helper/handleError.ts";
 import type { User } from "@/types/user.ts";
 import { checkData } from "@/helper/checkData.ts";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/const/localstorage.ts";
 
 export const useAuthStore = defineStore("auth", () => {
   const user = ref<User | null>(null);
@@ -16,7 +17,7 @@ export const useAuthStore = defineStore("auth", () => {
   const router = useRouter();
 
   // Load authentication state from localStorage on mount
-  const refreshToken = localStorage.getItem("refreshToken");
+  const refreshToken = localStorage.getItem(REFRESH_TOKEN);
   if (refreshToken) {
     isAuthenticated.value = true;
   }
@@ -29,8 +30,8 @@ export const useAuthStore = defineStore("auth", () => {
       checkData(data, "User data not found in response");
 
       isAuthenticated.value = true;
-      localStorage.setItem("accessToken", data.details.accessToken);
-      localStorage.setItem("refreshToken", data.details.refreshToken);
+      localStorage.setItem(ACCESS_TOKEN, data.details.accessToken);
+      localStorage.setItem(REFRESH_TOKEN, data.details.refreshToken);
       toast.add({
         severity: "success",
         summary: "Успешный вход",
@@ -69,10 +70,10 @@ export const useAuthStore = defineStore("auth", () => {
   const logout = async () => {
     isLoad.value = true;
     try {
-      await AuthService.logout(localStorage.getItem("refreshToken"));
+      await AuthService.logout(localStorage.getItem(REFRESH_TOKEN));
       isAuthenticated.value = false;
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("accessToken");
+      localStorage.removeItem(REFRESH_TOKEN);
+      localStorage.removeItem(ACCESS_TOKEN);
       toast.add({
         severity: "success",
         summary: "Успешный выход",

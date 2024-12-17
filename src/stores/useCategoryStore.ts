@@ -3,27 +3,27 @@ import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
 import { handleError } from "@/helper/handleError.ts";
 import { checkData } from "@/helper/checkData.ts";
-import type { Invitation } from "@/types/invitation.ts";
-import { InvitationService } from "@/service/InvitationService.ts";
+import type { Category } from "@/types/category.ts";
+import { CategoryService } from "@/service/CategoryService.ts";
 
-export const useInvitationStore = defineStore("invitation", () => {
-  const invitations = ref<Invitation[]>([]);
+export const useCategoryStore = defineStore("categories", () => {
+  const categories = ref<Category[]>([]);
   const isLoad = ref(false);
   const toast = useToast();
 
-  const getInvitations = async () => {
+  const getCategories = async () => {
     isLoad.value = true;
     try {
-      const data = await InvitationService.getAll();
+      const data = await CategoryService.getAll();
 
       checkData(data);
 
       toast.add({
         severity: "success",
-        summary: "Приглашенные получены",
+        summary: "Категории получены",
         life: 3000,
       });
-      invitations.value = data;
+      categories.value = data;
       return data;
     } catch (error) {
       handleError(error, toast);
@@ -33,8 +33,8 @@ export const useInvitationStore = defineStore("invitation", () => {
   };
 
   return {
-    invitations,
+    categories,
     isLoad,
-    getInvitations,
+    getCategories,
   };
 });

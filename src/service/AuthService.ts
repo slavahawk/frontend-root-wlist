@@ -33,19 +33,12 @@ export class AuthService {
     }
   }
 
-  static async refresh(
-    refreshToken: string,
-  ): Promise<{
-    details: { token: string; refreshToken: string };
+  static async refresh(refreshToken: string): Promise<{
+    details: { accessToken: string; refreshToken: string };
     success: boolean;
   }> {
-    try {
-      const { data } = await api.post("/auth/refresh", { refreshToken });
-      return data;
-    } catch (error) {
-      console.error("Refresh token error:", error);
-      throw new Error("Token refresh failed");
-    }
+    const { data } = await api.post("/auth/refresh", { refreshToken });
+    return data;
   }
 
   static async logout(refreshToken: string): Promise<void> {

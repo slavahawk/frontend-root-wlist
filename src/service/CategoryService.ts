@@ -1,7 +1,8 @@
 import { api } from "@/api/api.ts";
+import type { Category } from "@/types/category.ts";
 
 export class CategoryService {
-  static async getCategories(): Promise<any> {
+  static async getAll(): Promise<Category[]> {
     try {
       const { data } = await api.get("/categories");
       return data;

@@ -1,71 +1,75 @@
-import axios from "axios";
-import { AuthService } from "@/service/AuthService.ts";
-import router, { AppRoutes } from "@/router";
+import axios, {
+  type AxiosError,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+} from "axios";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/const/localstorage.ts";
+import { RoutePath } from "@/router";
+import router from "@/router";
 
 const API_URL = "https://api.w-list.ru";
-
 const api = axios.create({
   baseURL: API_URL,
 });
 
-api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
-  if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
-  else delete config.headers.Authorization;
-  return config;
-});
+const bearerString = (token: string): string => `Bearer ${token}`;
+const getToken = (key: string): string | null => localStorage.getItem(key);
 
 let isRefreshing = false;
-const subscribers = new Set();
 
-function subscribeTokenRefresh(callback) {
-  subscribers.add(callback);
-}
+const refreshAccessToken = async () => {
+  const refreshToken = getToken(REFRESH_TOKEN);
+  if (!refreshToken) return null;
 
-function onRefreshed(accessToken) {
-  subscribers.forEach((callback) => callback(accessToken));
-  subscribers.clear();
-}
+  try {
+    const { data } = await api.post("/auth/refresh", { refreshToken });
+    const { accessToken, refreshToken: newRefreshToken } = data.details;
+    localStorage.setItem(ACCESS_TOKEN, accessToken);
+    localStorage.setItem(REFRESH_TOKEN, newRefreshToken);
+    return accessToken;
+  } catch (error) {
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+    await router.push(RoutePath.Login);
+  }
+};
+
+const setAuthHeader = (config: AxiosRequestConfig) => {
+  const accessToken = getToken(ACCESS_TOKEN);
+  if (accessToken) {
+    config.headers["Authorization"] = bearerString(accessToken);
+  }
+  return config;
+};
+
+api.interceptors.request.use(setAuthHeader, (error: AxiosError) =>
+  Promise.reject(error),
+);
 
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+  (response: AxiosResponse) => response,
+  async (error: AxiosError) => {
+    const originalRequest = error.config as AxiosRequestConfig;
 
-    if (error.response.status === 401) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          subscribeTokenRefresh((accessToken) => {
-            originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-            resolve(api(originalRequest));
-          });
+        return new Promise((resolve) => {
+          resolve(null);
         });
       }
 
+      originalRequest._retry = true;
       isRefreshing = true;
 
       try {
-        const response = await AuthService.refresh(
-          localStorage.getItem("refreshToken"),
-        );
-
-        localStorage.setItem("accessToken", response.details.accessToken);
-        localStorage.setItem("refreshToken", response.details.refreshToken);
-
-        api.defaults.headers["Authorization"] =
-          `Bearer ${response.details.accessToken}`;
-
-        onRefreshed(response.details.accessToken);
-
-        originalRequest.headers["Authorization"] =
-          `Bearer ${response.details.accessToken}`;
-
-        return api(originalRequest);
-      } catch (err) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        await router.push({ name: AppRoutes.LOGIN });
-        return Promise.reject(err);
+        const newAccessToken = await refreshAccessToken();
+        if (newAccessToken) {
+          originalRequest.headers["Authorization"] =
+            bearerString(newAccessToken);
+          return api(originalRequest);
+        }
+      } catch (error) {
+        return Promise.reject(error);
       } finally {
         isRefreshing = false;
       }
@@ -75,10 +79,10 @@ api.interceptors.response.use(
   },
 );
 
-const initializeAuth = () => {
-  const accessToken = localStorage.getItem("accessToken");
+const initializeAuth = (): void => {
+  const accessToken = getToken(ACCESS_TOKEN);
   if (accessToken) {
-    api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    api.defaults.headers.common["Authorization"] = bearerString(accessToken);
   } else {
     delete api.defaults.headers.common["Authorization"];
   }

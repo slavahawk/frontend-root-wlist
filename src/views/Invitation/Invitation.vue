@@ -19,7 +19,11 @@
       </template>
       <Column field="id" header="ID"></Column>
       <Column field="sentMail" header="Отправленный email"></Column>
-      <Column field="expiredAt" header="Дата истечения"></Column>
+      <Column field="expiredAt" header="Дата истечения">
+        <template #body="{ data }">
+          {{ data.expiredAt }}
+        </template>
+      </Column>
       <Column field="confirmedAt" header="Дата подтверждения"></Column>
       <Column field="createdAt" header="Дата создания"></Column>
     </DataTable>
@@ -73,7 +77,6 @@ import { reactive, ref } from "vue";
 
 import { useToast } from "primevue/usetoast";
 import { z } from "zod";
-import { AuthService } from "@/service/AuthService.ts";
 import { InvitationService } from "@/service/InvitationService.ts";
 import { handleError } from "@/helper/handleError.ts";
 

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useLayout } from "@/layout/composables/layout";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 import AppSidebar from "./AppSidebar.vue";
 import AppTopbar from "./AppTopbar.vue";
+import { useCategoryStore } from "@/stores/useCategoryStore.ts";
+import { useAuthStore } from "@/stores/authStore.ts";
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
@@ -13,6 +15,15 @@ watch(isSidebarActive, (newVal) => {
     bindOutsideClickListener();
   } else {
     unbindOutsideClickListener();
+  }
+});
+
+const { getCategories } = useCategoryStore();
+const { checkAuth } = useAuthStore();
+
+watchEffect(() => {
+  if (checkAuth()) {
+    Promise.all([getCategories()]);
   }
 });
 
