@@ -7,7 +7,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/const/localstorage.ts";
 import { RoutePath } from "@/router";
 import router from "@/router";
 
-const API_URL = "https://api.w-list.ru";
+export const API_URL = "https://api.w-list.ru";
 const api = axios.create({
   baseURL: API_URL,
 });
@@ -22,7 +22,9 @@ const refreshAccessToken = async () => {
   if (!refreshToken) return null;
 
   try {
-    const { data } = await api.post("/auth/refresh", { refreshToken });
+    const { data } = await axios.post(API_URL + "/auth/refresh", {
+      refreshToken,
+    });
     const { accessToken, refreshToken: newRefreshToken } = data.details;
     localStorage.setItem(ACCESS_TOKEN, accessToken);
     localStorage.setItem(REFRESH_TOKEN, newRefreshToken);
