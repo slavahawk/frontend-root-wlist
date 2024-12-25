@@ -4,7 +4,7 @@ import { useToast } from "primevue/usetoast";
 import { handleError } from "@/helper/handleError.ts";
 import { checkData } from "@/helper/checkData.ts";
 import type { Invitation } from "@/types/invitation.ts";
-import { InvitationService } from "@/service/InvitationService.ts";
+import InvitationService from "@/service/InvitationService.ts";
 
 export const useInvitationStore = defineStore("invitation", () => {
   const invitations = ref<Invitation[]>([]);

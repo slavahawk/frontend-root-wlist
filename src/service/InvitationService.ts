@@ -1,43 +1,37 @@
-import { api } from "@/api/api.ts";
-import type { Invitation } from "@/types/invitation";
+import axios from "axios";
+import type { Invitation, InvitationRequest } from "@/types/invitation";
 
-export class InvitationService {
-  static async getAll(): Promise<Invitation[]> {
+const InvitationService = {
+  async getAll(): Promise<Invitation[]> {
     try {
-      const { data } = await api.get("/invitations");
-      return data;
+      const response = await axios.get("/invitations");
+      return response.data;
     } catch (error) {
-      console.error("Ошибка получения приглашенных", error);
-      throw new Error("Ошибка получения приглашенных");
+      console.error("Ошибка при отправке приглашения:", error);
+      throw error;
     }
-  }
-  static async send(email: string): Promise<{
-    success: boolean;
-    details: {};
-  }> {
+  },
+
+  async send(invitationData: InvitationRequest): Promise<void> {
     try {
-      const { data } = await api.post("/invitations/send", { email });
-      return data;
+      await axios.post("/invitations/send", invitationData);
     } catch (error) {
-      console.error("Ошибка отправления приглашения", error);
-      throw new Error("Ошибка отправления приглашения");
+      console.error("Ошибка при отправке приглашения:", error);
+      throw error;
     }
-  }
-  static async confirm(
-    token: string,
-    newPassword: string,
-  ): Promise<{
-    success: boolean;
-    details: {};
-  }> {
+  },
+
+  async confirm(token: string): Promise<void> {
     try {
-      const { data } = await api.post(`/invitations/${token}/confirm`, {
-        newPassword,
-      });
-      return data;
+      await axios.post(`/invitations/${token}/confirm`);
     } catch (error) {
-      console.error("Ошибка подтверждения", error);
-      throw new Error("Ошибка подтверждения");
+      console.error(
+        `Ошибка при подтверждении приглашения с токеном ${token}:`,
+        error,
+      );
+      throw error;
     }
-  }
-}
+  },
+};
+
+export default InvitationService;

@@ -117,8 +117,15 @@ import { useAuthStore } from "@/stores/authStore.ts";
 import Logo from "@/assets/images/svg/Logo.vue";
 import { AppRoutes } from "@/router";
 import ForgotPasswordDialog from "@/components/ForgotPasswordDialog.vue";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/const/localstorage.ts";
 
 const authStore = useAuthStore();
+
+if (localStorage.getItem(REFRESH_TOKEN) && localStorage.getItem(ACCESS_TOKEN)) {
+  authStore.isAuthenticated = false;
+  localStorage.removeItem(REFRESH_TOKEN);
+  localStorage.removeItem(ACCESS_TOKEN);
+}
 
 const initialValues = reactive({
   email: "",

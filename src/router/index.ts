@@ -1,6 +1,7 @@
 import AppLayout from "@/layout/AppLayout.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+import { api, initializeAuth } from "@/api/api.ts";
 
 export enum AppRoutes {
   DASHBOARD = "Dashboard",
@@ -9,6 +10,7 @@ export enum AppRoutes {
   INVITATION = "Invitation",
   INVITATION_CONFIRM = "InvitationConfirm",
   COMMON = "Common",
+  WINE = "Wine",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
@@ -18,6 +20,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.INVITATION]: "/invitation",
   [AppRoutes.INVITATION_CONFIRM]: "/invitation/:token/confirm",
   [AppRoutes.COMMON]: "/common",
+  [AppRoutes.WINE]: "/wine",
 };
 
 const router = createRouter({
@@ -52,96 +55,12 @@ const router = createRouter({
           component: () => import("@/views/Common.vue"),
           meta: { requiresAuth: true },
         },
-        {
-          path: "/uikit/formlayout",
-          name: "formlayout",
-          component: () => import("@/views/uikit/FormLayout.vue"),
-        },
-        {
-          path: "/uikit/input",
-          name: "input",
-          component: () => import("@/views/uikit/InputDoc.vue"),
-        },
-        {
-          path: "/uikit/button",
-          name: "button",
-          component: () => import("@/views/uikit/ButtonDoc.vue"),
-        },
-        {
-          path: "/uikit/table",
-          name: "table",
-          component: () => import("@/views/uikit/TableDoc.vue"),
-        },
-        {
-          path: "/uikit/list",
-          name: "list",
-          component: () => import("@/views/uikit/ListDoc.vue"),
-        },
-        {
-          path: "/uikit/tree",
-          name: "tree",
-          component: () => import("@/views/uikit/TreeDoc.vue"),
-        },
-        {
-          path: "/uikit/panel",
-          name: "panel",
-          component: () => import("@/views/uikit/PanelsDoc.vue"),
-        },
 
         {
-          path: "/uikit/overlay",
-          name: "overlay",
-          component: () => import("@/views/uikit/OverlayDoc.vue"),
-        },
-        {
-          path: "/uikit/media",
-          name: "media",
-          component: () => import("@/views/uikit/MediaDoc.vue"),
-        },
-        {
-          path: "/uikit/message",
-          name: "message",
-          component: () => import("@/views/uikit/MessagesDoc.vue"),
-        },
-        {
-          path: "/uikit/file",
-          name: "file",
-          component: () => import("@/views/uikit/FileDoc.vue"),
-        },
-        {
-          path: "/uikit/menu",
-          name: "menu",
-          component: () => import("@/views/uikit/MenuDoc.vue"),
-        },
-        {
-          path: "/uikit/charts",
-          name: "charts",
-          component: () => import("@/views/uikit/ChartDoc.vue"),
-        },
-        {
-          path: "/uikit/misc",
-          name: "misc",
-          component: () => import("@/views/uikit/MiscDoc.vue"),
-        },
-        {
-          path: "/uikit/timeline",
-          name: "timeline",
-          component: () => import("@/views/uikit/TimelineDoc.vue"),
-        },
-        {
-          path: "/pages/empty",
-          name: "empty",
-          component: () => import("@/views/pages/Empty.vue"),
-        },
-        {
-          path: "/pages/crud",
-          name: "crud",
-          component: () => import("@/views/pages/Crud.vue"),
-        },
-        {
-          path: "/documentation",
-          name: "documentation",
-          component: () => import("@/views/pages/Documentation.vue"),
+          path: RoutePath.Wine,
+          name: AppRoutes.WINE,
+          component: () => import("@/views/wine/Wine.vue"),
+          meta: { requiresAuth: true },
         },
       ],
     },
@@ -150,11 +69,6 @@ const router = createRouter({
       name: AppRoutes.INVITATION_CONFIRM,
       component: () => import("@/views/Invitation/Confirm.vue"),
       meta: { requiresAuth: false },
-    },
-    {
-      path: "/landing",
-      name: "landing",
-      component: () => import("@/views/pages/Landing.vue"),
     },
     {
       path: "/:pathMatch(.*)*",
@@ -192,8 +106,11 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!authStore.isAuthenticated) {
+      console.log("noAuth");
+      delete api.defaults.headers.common["Authorization"]; // Удаляем заголовок Authorization
       next({ name: AppRoutes.LOGIN });
     } else {
+      initializeAuth();
       next();
     }
   } else {

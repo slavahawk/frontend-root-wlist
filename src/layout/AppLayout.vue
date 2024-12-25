@@ -3,7 +3,6 @@ import { useLayout } from "@/layout/composables/layout";
 import { computed, ref, watch, watchEffect } from "vue";
 import AppSidebar from "./AppSidebar.vue";
 import AppTopbar from "./AppTopbar.vue";
-import { useCategoryStore } from "@/stores/useCategoryStore.ts";
 import { useAuthStore } from "@/stores/authStore.ts";
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
@@ -18,13 +17,12 @@ watch(isSidebarActive, (newVal) => {
   }
 });
 
-const { getCategories } = useCategoryStore();
 const { checkAuth } = useAuthStore();
 
 watchEffect(() => {
-  if (checkAuth()) {
-    Promise.all([getCategories()]);
-  }
+  // if (checkAuth()) {
+  //   Promise.all([getCategories()]);
+  // }
 });
 
 const containerClass = computed(() => {

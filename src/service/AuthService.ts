@@ -1,59 +1,31 @@
-import { api } from "@/api/api.ts";
+import type { AuthRequest, AuthResponse, RegRequest } from "@/types/auth";
+import { api } from "@/api/api";
 
-interface AuthResponse {
-  success: boolean;
-  details: { accessToken: string; refreshToken: string };
-}
-
-export class AuthService {
-  static async auth(body: {
-    email: string;
-    password: string;
-  }): Promise<AuthResponse> {
+const AuthService = {
+  async login(authData: AuthRequest): Promise<AuthResponse> {
     try {
-      const { data } = await api.post("/auth", body);
-      return data;
+      const response = await api.post<AuthResponse>("/auth", authData);
+      return response.data;
     } catch (error) {
-      console.error("Неверный логин или пароль:", error);
-      throw new Error("Неверный логин или пароль");
+      console.error("Ошибка при входе в систему:", error);
+      throw error; // Пробрасываем ошибку дальше
     }
-  }
+  },
 
-  static async register(body: {
-    email: string;
-    password: string;
-    shopName: string;
-  }): Promise<{ details: []; success: boolean }> {
+  async register(registrationData: RegRequest): Promise<AuthResponse> {
     try {
-      const { data } = await api.post("/auth/register", body);
-      return data;
+      const response = await api.post<AuthResponse>(
+        "/auth/register",
+        registrationData,
+      );
+      return response.data;
     } catch (error) {
-      console.error("Ошибка регистрации, ваш email уже занят:", error);
-      throw new Error("Ошибка регистрации, ваш email уже занят");
+      console.error("Ошибка при регистрации:", error);
+      throw error;
     }
-  }
+  },
 
-  static async refresh(refreshToken: string): Promise<{
-    details: { accessToken: string; refreshToken: string };
-    success: boolean;
-  }> {
-    const { data } = await api.post("/auth/refresh", { refreshToken });
-    return data;
-  }
-
-  static async logout(refreshToken: string): Promise<void> {
-    try {
-      await api.post("/auth/logout", { refreshToken });
-    } catch (error) {
-      console.error("Logout error:", error);
-      throw new Error("Logout failed");
-    }
-  }
-
-  static async resetPassword(body: {
-    token: string;
-    newPassword: string;
-  }): Promise<{
+  async resetPassword(body: { token: string; newPassword: string }): Promise<{
     success: boolean;
     details: {};
   }> {
@@ -64,18 +36,37 @@ export class AuthService {
       console.error("Ошибка смены пароля:", error);
       throw new Error("Ошибка смены пароля");
     }
-  }
+  },
 
-  static async forgotPassword(email: string): Promise<{
-    success: boolean;
-    details: {};
-  }> {
+  async refreshToken(refreshToken: string): Promise<AuthResponse> {
     try {
-      const { data } = await api.post("/auth/forgot-password", { email });
-      return data;
+      const response = await api.post<AuthResponse>("/auth/refresh", {
+        refreshToken,
+      });
+      return response.data;
     } catch (error) {
-      console.error("Ошибка сброса пароля:", error);
-      throw new Error("Ошибка сброса пароля");
+      console.error("Ошибка при обновлении токена:", error);
+      throw error;
     }
-  }
-}
+  },
+
+  async logout(): Promise<void> {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+      console.error("Ошибка при выходе из системы:", error);
+      throw error;
+    }
+  },
+
+  async forgotPassword(email: string): Promise<void> {
+    try {
+      await api.post("/auth/forgot-password", { email });
+    } catch (error) {
+      console.error("Ошибка при запросе сброса пароля:", error);
+      throw error;
+    }
+  },
+};
+
+export default AuthService;

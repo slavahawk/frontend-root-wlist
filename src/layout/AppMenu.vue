@@ -13,6 +13,11 @@ const model = ref([
     label: "Основное",
     items: [
       {
+        label: "Вина",
+        icon: "pi pi-users",
+        to: RoutePath.Wine,
+      },
+      {
         label: "Приглашенные",
         icon: "pi pi-users",
         to: RoutePath.Invitation,

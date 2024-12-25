@@ -1,5 +1,5 @@
-import "./assets/main.scss";
-import "./assets/tailwind.css";
+import "@/assets/main.scss";
+import "@/assets/tailwind.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -8,7 +8,6 @@ import ToastService from "primevue/toastservice";
 import Aura from "@primevue/themes/aura";
 import App from "./App.vue";
 import router from "./router";
-import "primeicons/primeicons.css";
 
 import ConfirmationService from "primevue/confirmationservice";
 

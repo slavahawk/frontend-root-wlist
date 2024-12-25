@@ -85,8 +85,6 @@ const initializeAuth = (): void => {
   const accessToken = getToken(ACCESS_TOKEN);
   if (accessToken) {
     api.defaults.headers.common["Authorization"] = bearerString(accessToken);
-  } else {
-    delete api.defaults.headers.common["Authorization"];
   }
 };
 

@@ -1,8 +1,12 @@
 export interface Invitation {
-  id: 0;
+  id: number;
   sentMail: string;
-  token: string;
-  expiredAt: Date;
-  confirmedAt: Date;
-  createdAt: Date;
+  expiredAt: string; // ISO 8601 date-time format
+  confirmedAt?: string; // Optional
+  createdAt: string; // ISO 8601 date-time format
+}
+
+// Типы для работы с пригласительными
+export interface InvitationRequest {
+  email: string;
 }
