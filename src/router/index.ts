@@ -31,12 +31,6 @@ const router = createRouter({
       component: AppLayout,
       children: [
         {
-          path: RoutePath.Dashboard,
-          name: AppRoutes.DASHBOARD,
-          component: () => import("@/views/Dashboard.vue"),
-          meta: { requiresAuth: true },
-        },
-        {
           path: RoutePath.Invitation,
           name: AppRoutes.INVITATION,
           component: () => import("@/views/Invitation/Invitation.vue"),

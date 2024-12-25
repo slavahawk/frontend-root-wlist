@@ -4,6 +4,9 @@ import { computed, ref, watch, watchEffect } from "vue";
 import AppSidebar from "./AppSidebar.vue";
 import AppTopbar from "./AppTopbar.vue";
 import { useAuthStore } from "@/stores/authStore.ts";
+import { useCountryStore } from "@/stores/countryStore.ts";
+import { useGrapeStore } from "@/stores/grapeStore.ts";
+import { useRegionStore } from "@/stores/regionStore.ts";
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
@@ -18,11 +21,14 @@ watch(isSidebarActive, (newVal) => {
 });
 
 const { checkAuth } = useAuthStore();
+const { fetchCountries } = useCountryStore();
+const { fetchGrapes } = useGrapeStore();
+const { fetchRegions } = useRegionStore();
 
 watchEffect(() => {
-  // if (checkAuth()) {
-  //   Promise.all([getCategories()]);
-  // }
+  if (checkAuth()) {
+    Promise.all([fetchCountries(), fetchGrapes(), fetchRegions()]);
+  }
 });
 
 const containerClass = computed(() => {
