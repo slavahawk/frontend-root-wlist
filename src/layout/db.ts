@@ -1,11 +1,6 @@
 import Aura from "@primevue/themes/aura";
 import Lara from "@primevue/themes/lara";
 
-export const menuModeOptions = [
-  { label: "Static", value: "static" },
-  { label: "Overlay", value: "overlay" },
-];
-
 export const presets = {
   Aura,
   Lara,

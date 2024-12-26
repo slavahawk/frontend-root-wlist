@@ -4,7 +4,11 @@
     min-height: 100vh;
     justify-content: space-between;
     padding: 6rem 2rem 0 2rem;
-    transition: margin-left var(--layout-section-transition-duration);
+    //transition: margin-left var(--layout-section-transition-duration);
+
+    @media screen and (max-width: 976px) {
+        padding: 2rem 2rem 0 2rem;
+    }
 }
 
 .layout-main {

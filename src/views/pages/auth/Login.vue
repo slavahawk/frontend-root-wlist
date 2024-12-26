@@ -49,7 +49,7 @@
                 type="text"
                 placeholder="Email адрес"
                 class="w-full md:w-[30rem]"
-                v-model="initialValues.email"
+                v-model.trim="initialValues.email"
                 autocomplete="email"
               />
               <Message
@@ -70,7 +70,7 @@
               <Password
                 id="password"
                 name="password"
-                v-model="initialValues.password"
+                v-model.trim="initialValues.password"
                 placeholder="Пароль"
                 :toggleMask="true"
                 fluid

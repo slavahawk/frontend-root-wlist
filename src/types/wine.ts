@@ -43,6 +43,25 @@ export interface Wine {
   updatedAt: string; // ISO 8601 date-time format
 }
 
+export interface WineRoot {
+  alcoholByVolume: number;
+  bottleVolume: number;
+  category: WineCategory;
+  colour: WineColour;
+  countryId: number;
+  createdAt: string;
+  id: number;
+  interestingFacts: string;
+  isDeleted: boolean;
+  isHidden: boolean;
+  name: string;
+  organoleptic: string;
+  regionId: number;
+  sugarType: SugarType;
+  updatedAt: string;
+  vintage: number;
+}
+
 export interface CreateWineRequest {
   name: string;
   category: WineCategory;
@@ -69,6 +88,7 @@ export interface WineResponses {
   };
   _embedded: {
     adminWineResponseList: Wine[];
+    rootWineResponseList: WineRoot[];
   };
 }
 
@@ -112,25 +132,4 @@ export const sugarTypeOptions = [
   { label: "Полусухое", value: "SEMI_DRY" },
   { label: "Полусладкое", value: "SEMI_SWEET" },
   { label: "Сладкое", value: "SWEET" },
-];
-
-// Опции для селектора стран (пример статического массива)
-export const countryOptions: Array<{ label: string; value: number }> = [
-  { label: "Россия", value: 1 },
-  { label: "Франция", value: 2 },
-  { label: "Италия", value: 3 },
-];
-
-// Опции для селектора регионов (пример статического массива)
-export const regionOptions: Array<{ label: string; value: number }> = [
-  { label: "Кубань", value: 1 },
-  { label: "Бордо", value: 2 },
-  { label: "Тоскана", value: 3 },
-];
-
-// Опции для селектора винограда (пример статического массива)
-export const grapeOptions: Array<{ label: string; value: number }> = [
-  { label: "Шардоне", value: 1 },
-  { label: "Мерло", value: 2 },
-  { label: "Каберне Совиньон", value: 3 },
 ];

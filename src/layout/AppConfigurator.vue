@@ -2,15 +2,13 @@
 import { useLayout } from "@/layout/composables/layout";
 import { $t, updatePreset, updateSurfacePalette } from "@primevue/themes";
 import { ref } from "vue";
-import { menuModeOptions, primaryColors, surfaces, presets } from "@/layout/db";
+import { presets, primaryColors, surfaces } from "@/layout/db";
 
 const { layoutConfig, isDarkTheme, saveToLocalStorage } = useLayout();
 
 const preset = ref(layoutConfig.preset);
 
 const presetOptions = ref(Object.keys(presets));
-
-const menuMode = ref(layoutConfig.menuMode);
 
 function getPresetExt() {
   const color = primaryColors.find((c) => c.name === layoutConfig.primary);
@@ -137,22 +135,12 @@ const changePreset = () => {
     .use({ useDefaultOptions: true });
 };
 
-const changeMenuMode = () => {
-  layoutConfig.menuMode = menuMode;
-};
-
 function onPresetChange() {
   changePreset();
   saveToLocalStorage();
 }
 
-function onMenuModeChange() {
-  changeMenuMode();
-  saveToLocalStorage();
-}
-
 changePreset();
-changeMenuMode();
 </script>
 
 <template>
@@ -211,17 +199,6 @@ changeMenuMode();
           @change="onPresetChange"
           :options="presetOptions"
           :allowEmpty="false"
-        />
-      </div>
-      <div class="flex flex-col gap-2">
-        <span class="text-sm text-muted-color font-semibold">Menu Mode</span>
-        <SelectButton
-          v-model="menuMode"
-          @change="onMenuModeChange"
-          :options="menuModeOptions"
-          :allowEmpty="false"
-          optionLabel="label"
-          optionValue="value"
         />
       </div>
     </div>

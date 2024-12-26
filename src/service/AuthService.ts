@@ -1,10 +1,14 @@
 import type { AuthRequest, AuthResponse, RegRequest } from "@/types/auth";
-import { api } from "@/api/api";
+import { api, API_URL } from "@/api/api";
+import axios from "axios";
 
 const AuthService = {
   async login(authData: AuthRequest): Promise<AuthResponse> {
     try {
-      const response = await api.post<AuthResponse>("/auth", authData);
+      const response = await axios.post<AuthResponse>(
+        API_URL + "/auth",
+        authData,
+      );
       return response.data;
     } catch (error) {
       console.error("Ошибка при входе в систему:", error);

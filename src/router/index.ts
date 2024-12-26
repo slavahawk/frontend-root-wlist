@@ -11,6 +11,8 @@ export enum AppRoutes {
   INVITATION_CONFIRM = "InvitationConfirm",
   COMMON = "Common",
   WINE = "Wine",
+  GRAPE = "Grape",
+  REGION = "Region",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
@@ -21,6 +23,8 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.INVITATION_CONFIRM]: "/invitation/:token/confirm",
   [AppRoutes.COMMON]: "/common",
   [AppRoutes.WINE]: "/wine",
+  [AppRoutes.GRAPE]: "/grape",
+  [AppRoutes.REGION]: "/region",
 };
 
 const router = createRouter({
@@ -54,6 +58,18 @@ const router = createRouter({
           path: RoutePath.Wine,
           name: AppRoutes.WINE,
           component: () => import("@/views/wine/Wine.vue"),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: RoutePath.Grape,
+          name: AppRoutes.GRAPE,
+          component: () => import("@/views/grape/Grape.vue"),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: RoutePath.Region,
+          name: AppRoutes.REGION,
+          component: () => import("@/views/region/Region.vue"),
           meta: { requiresAuth: true },
         },
       ],

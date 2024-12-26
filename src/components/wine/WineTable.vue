@@ -1,146 +1,181 @@
 <template>
-  <div>
-    <DataTable
-      title="asd"
-      :value="wines._embedded?.adminWineResponseList"
-      :loading="loading"
-      dataKey="id"
-      selectionMode="single"
-      filterDisplay="row"
-    >
-      <template #empty> No customers found. </template>
-      <template #header>
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="text-xl font-bold">Список вин</span>
-            <Button
-              icon="pi pi-plus"
-              rounded
-              raised
-              @click="showCreateDialog"
-            />
-            <Button
-              label="Сбросить фильтры"
-              icon="pi pi-times"
-              rounded
-              raised
-              @click="resetFilters"
-            />
-          </div>
-          <Button icon="pi pi-refresh" rounded raised @click="loadWines" />
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <Dropdown
-            class="w-full md:w-56"
-            id="category"
-            v-model="params.category"
-            :options="categoryOptions"
-            optionLabel="label"
-            optionValue="value"
-            showClear
-            placeholder="Выберите категорию"
-          />
-          <Dropdown
-            class="w-full md:w-56"
-            id="colour"
-            v-model="params.colour"
-            :options="colourOptions"
-            optionLabel="label"
-            optionValue="value"
-            showClear
-            placeholder="Выберите цвет"
-          />
-          <Dropdown
-            class="w-full md:w-56"
-            id="sugarType"
-            v-model="params.sugarType"
-            :options="sugarTypeOptions"
-            optionLabel="label"
-            optionValue="value"
-            showClear
-            placeholder="Выберите тип сахара"
-          />
-          <Dropdown
-            class="w-full md:w-56"
-            id="country"
-            v-model="params.countryId"
-            :options="countryOptions"
-            optionLabel="label"
-            optionValue="value"
-            showClear
-            placeholder="Выберите страну"
-          />
-          <Dropdown
-            class="w-full md:w-56"
-            id="region"
-            v-model="params.regionId"
-            :options="regionOptions"
-            optionLabel="label"
-            optionValue="value"
-            showClear
-            placeholder="Выберите регион"
-          />
-          <Dropdown
-            class="w-full md:w-56"
-            id="grape"
-            v-model="params.grapeId"
-            :options="grapeOptions"
-            optionLabel="label"
-            optionValue="value"
-            showClear
-            placeholder="Выберите виноград"
-          />
-          <InputText
-            class="w-full md:w-56"
-            v-model="params.vintage"
-            placeholder="Год урожая"
-          />
-          <InputText
-            class="w-full md:w-56"
-            v-model="params.bottleVolume"
-            placeholder="Объем бутылки"
-          />
-        </div>
-      </template>
-      <Column field="name" header="Имя" sortable></Column>
-      <Column field="category" header="Категория" sortable> </Column>
-      <Column field="colour" header="Цвет"></Column>
-      <Column field="bottleVolume" header="Объем (мл)"></Column>
-      <Column
-        field="alcoholByVolume"
-        header="Алкогольное содержание (%)"
-      ></Column>
-      <Column header="Действия">
-        <template #body="{ data }">
-          <div class="flex gap-2 flex-wrap">
-            <Button icon="pi pi-pencil" @click="showEditDialog(data)"></Button>
-            <Button
-              icon="pi pi-trash"
-              @click="deleteWine(data.id)"
-              class="p-button-danger"
-            ></Button>
+  <div class="filter-container">
+    <div v-if="filterState" class="filter">
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-2xl">Фильтры</div>
+        <Button
+          label="Сбросить фильтры"
+          icon="pi pi-times"
+          size="small"
+          @click="resetFilters"
+        />
+      </div>
+      <div class="input-container">
+        <div class="text-l">Категории</div>
+        <Dropdown
+          class="w-full md:w-56"
+          id="category"
+          v-model="params.category"
+          :options="categoryOptions"
+          optionLabel="label"
+          optionValue="value"
+          showClear
+          placeholder="Выберите категорию"
+        />
+      </div>
+
+      <div class="input-container">
+        <div class="text-l">Цвет</div>
+        <Dropdown
+          class="w-full md:w-56"
+          id="colour"
+          v-model="params.colour"
+          :options="colourOptions"
+          optionLabel="label"
+          optionValue="value"
+          showClear
+          placeholder="Выберите цвет"
+        />
+      </div>
+
+      <div class="input-container">
+        <div class="text-l">Тип сахара</div>
+        <Dropdown
+          class="w-full md:w-56"
+          id="sugarType"
+          v-model="params.sugarType"
+          :options="sugarTypeOptions"
+          optionLabel="label"
+          optionValue="value"
+          showClear
+          placeholder="Выберите тип сахара"
+        />
+      </div>
+      <div class="input-container">
+        <div class="text-l">Страна</div>
+        <Dropdown
+          class="w-full md:w-56"
+          id="country"
+          v-model="params.countryId"
+          :options="countriesOptions"
+          optionLabel="label"
+          optionValue="value"
+          showClear
+          placeholder="Выберите страну"
+        />
+      </div>
+
+      <div class="input-container">
+        <div class="text-l">Регион</div>
+        <Dropdown
+          class="w-full md:w-56"
+          id="region"
+          v-model="params.regionId"
+          :options="regionOptions"
+          optionLabel="label"
+          optionValue="value"
+          showClear
+          placeholder="Выберите регион"
+        />
+      </div>
+
+      <div class="input-container">
+        <div class="text-l">Виноград</div>
+        <Dropdown
+          class="w-full md:w-56"
+          id="grape"
+          v-model="params.grapeId"
+          :options="grapeOptions"
+          optionLabel="label"
+          optionValue="value"
+          showClear
+          placeholder="Выберите виноград"
+        />
+      </div>
+
+      <div class="input-container">
+        <div class="text-l">Год урожая</div>
+        <InputText
+          class="w-full md:w-56"
+          v-model="params.vintage"
+          placeholder="Год урожая"
+        />
+      </div>
+
+      <div class="input-container">
+        <div class="text-l">Объем бутылки</div>
+        <InputText
+          class="w-full md:w-56"
+          v-model="params.bottleVolume"
+          placeholder="Объем бутылки"
+        />
+      </div>
+    </div>
+
+    <div class="flex-1">
+      <DataTable
+        :value="wines._embedded?.rootWineResponseList"
+        :loading="loading"
+        dataKey="id"
+        selectionMode="single"
+        filterDisplay="row"
+      >
+        <template #empty> No customers found. </template>
+        <template #header>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-xl font-bold">Список вин</span>
+              <Button
+                :icon="`pi ${filterState ? 'pi-filter-slash' : 'pi-filter'} `"
+                link
+                @click="toggleMenu"
+              />
+              <Button
+                icon="pi pi-plus"
+                rounded
+                raised
+                @click="showCreateDialog"
+              />
+            </div>
+            <Button icon="pi pi-refresh" rounded raised @click="loadWines" />
           </div>
         </template>
-      </Column>
-    </DataTable>
+        <Column field="name" header="Имя" sortable></Column>
+        <Column field="category" header="Категория" sortable></Column>
+        <Column field="colour" header="Цвет"></Column>
+        <Column field="bottleVolume" header="Объем (мл)"></Column>
+        <Column header="Действия">
+          <template #body="{ data }">
+            <div class="flex gap-2 flex-wrap">
+              <Button icon="pi pi-pencil" @click="showEditDialog(data)" />
+              <Button
+                icon="pi pi-trash"
+                @click="deleteWine(data.id)"
+                class="p-button-danger"
+              />
+            </div>
+          </template>
+        </Column>
+      </DataTable>
 
-    <Paginator
-      v-if="wines.page"
-      :first="params.page * params.size"
-      :rows="params.size"
-      :totalRecords="wines.page.totalElements"
-      @page="onPageChange"
-      :rowsPerPageOptions="[10, 20, 50]"
-    />
+      <Paginator
+        v-if="wines.page"
+        :first="params.page * params.size"
+        :rows="params.size"
+        :totalRecords="wines.page.totalElements"
+        @page="onPageChange"
+        :rowsPerPageOptions="[10, 20, 50]"
+      />
 
-    <WineDialog
-      :isVisible="showDialog"
-      :createMode="createMode"
-      :initialData="formData"
-      @close="showDialog = false"
-      @save="saveWine"
-      @update:visible="showDialog = $event"
-    />
+      <WineDialog
+        :isVisible="showDialog"
+        :createMode="createMode"
+        :initialData="formData"
+        @close="showDialog = false"
+        @save="saveWine"
+        @update:visible="showDialog = $event"
+      />
+    </div>
   </div>
 </template>
 
@@ -150,17 +185,24 @@ import { useWineStore } from "@/stores/wineStore";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import {
-  type Wine,
-  type CreateWineRequest,
-  type WineQueryParams,
   categoryOptions,
   colourOptions,
+  type CreateWineRequest,
   sugarTypeOptions,
-  countryOptions,
-  regionOptions,
-  grapeOptions,
+  type Wine,
+  type WineQueryParams,
 } from "@/types/wine";
 import WineDialog from "./WineDialog.vue";
+import { useCountryStore } from "@/stores/countryStore.ts";
+import { useRegionStore } from "@/stores/regionStore.ts";
+import { useGrapeStore } from "@/stores/grapeStore.ts";
+
+const filterState = ref(true);
+filterState.value = window.innerWidth > 991;
+
+const toggleMenu = () => {
+  filterState.value = !filterState.value;
+};
 
 const {
   fetchWines,
@@ -169,6 +211,9 @@ const {
   deleteWine: wineDelete,
 } = useWineStore();
 const { wines, loading } = storeToRefs(useWineStore());
+const { countriesOptions } = storeToRefs(useCountryStore());
+const { regionOptions } = storeToRefs(useRegionStore());
+const { grapeOptions } = storeToRefs(useGrapeStore());
 
 const route = useRoute();
 const router = useRouter();
@@ -202,12 +247,34 @@ const initialParams = {
   sort: undefined,
 };
 
-const params = reactive<WineQueryParams>({ ...initialParams, ...route.query });
+const parseQueryParams = (query: Record<string, any>): WineQueryParams => {
+  return {
+    page: parseInt(query.page) || 0,
+    size: parseInt(query.size) || 10,
+    colour: query.colour || undefined,
+    sugarType: query.sugarType || undefined,
+    countryId: parseInt(query.countryId) || undefined,
+    regionId: parseInt(query.regionId) || undefined,
+    grapeId: parseInt(query.grapeId) || undefined,
+    vintage: parseInt(query.vintage) || undefined,
+    bottleVolume: parseInt(query.bottleVolume) || undefined,
+    sort: query.sort || undefined,
+  };
+};
+
+// Инициализация параметров из URL с помощью функции
+const params = reactive<WineQueryParams>({
+  ...initialParams,
+  ...parseQueryParams(route.query), // Преобразуем параметры
+});
 
 // Загрузка вин при монтировании
 const loadWines = async () => {
   await fetchWines(params);
 };
+
+// Загрузка данных при монтировании
+await loadWines();
 
 // Используйте watch для отслеживания изменений в params
 watch(
@@ -310,9 +377,6 @@ const onPageChange = async ({
   await loadWines(); // Запрашиваем данные при смене страницы
   updateParamsInRoute(); // Обновляем параметры в URL
 };
-
-// Начальная загрузка вин
-loadWines();
 </script>
 
 <style scoped></style>

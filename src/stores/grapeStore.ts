@@ -1,5 +1,5 @@
 // src/stores/grapeStore.ts
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import GrapeService from "@/service/GrapeService";
 import type { Grape, GrapeRequest } from "@/types/grape";
@@ -9,6 +9,13 @@ export const useGrapeStore = defineStore("grape", () => {
   const selectedGrape = ref<Grape | null>(null);
   const loading = ref(false);
   const error = ref<string | null>(null);
+
+  const grapeOptions = computed(() => {
+    return grapes.value.map((grape) => ({
+      value: grape.id,
+      label: grape.name,
+    }));
+  });
 
   const fetchGrapes = async () => {
     loading.value = true;
@@ -92,6 +99,7 @@ export const useGrapeStore = defineStore("grape", () => {
 
   return {
     grapes,
+    grapeOptions,
     selectedGrape,
     loading,
     error,

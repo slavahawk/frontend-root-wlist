@@ -48,6 +48,8 @@ declare module 'vue' {
     ForgotPasswordForm: typeof import('./src/components/form/ForgotPasswordForm.vue')['default']
     Form: typeof import('@primevue/forms/form')['default']
     Galleria: typeof import('primevue/galleria')['default']
+    GrapeForm: typeof import('./src/components/grape/GrapeForm.vue')['default']
+    GrapeTable: typeof import('./src/components/grape/GrapeTable.vue')['default']
     HeroWidget: typeof import('./src/components/landing/HeroWidget.vue')['default']
     HighlightsWidget: typeof import('./src/components/landing/HighlightsWidget.vue')['default']
     IconField: typeof import('primevue/iconfield')['default']
@@ -79,6 +81,8 @@ declare module 'vue' {
     RadioButton: typeof import('primevue/radiobutton')['default']
     Rating: typeof import('primevue/rating')['default']
     RecentSalesWidget: typeof import('./src/components/dashboard/RecentSalesWidget.vue')['default']
+    RegionForm: typeof import('./src/components/region/RegionForm.vue')['default']
+    RegionTable: typeof import('./src/components/region/RegionTable.vue')['default']
     ResetPassword: typeof import('./src/components/form/ResetPassword.vue')['default']
     ResetPasswordForm: typeof import('./src/components/form/ResetPasswordForm.vue')['default']
     RevenueStreamWidget: typeof import('./src/components/dashboard/RevenueStreamWidget.vue')['default']
@@ -119,6 +123,7 @@ declare module 'vue' {
     WineTable: typeof import('./src/components/wine/WineTable.vue')['default']
   }
   export interface ComponentCustomProperties {
+    Ripple: typeof import('primevue/ripple')['default']
     StyleClass: typeof import('primevue/styleclass')['default']
     Tooltip: typeof import('primevue/tooltip')['default']
   }

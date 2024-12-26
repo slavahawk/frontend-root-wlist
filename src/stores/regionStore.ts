@@ -1,5 +1,5 @@
 // src/stores/regionStore.ts
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import RegionService from "@/service/RegionService";
 import type { Region, RegionRequest } from "@/types/region";
@@ -9,6 +9,13 @@ export const useRegionStore = defineStore("region", () => {
   const selectedRegion = ref<Region | null>(null);
   const loading = ref(false);
   const error = ref<string | null>(null);
+
+  const regionOptions = computed(() => {
+    return regions.value.map((region) => ({
+      value: region.id,
+      label: region.name,
+    }));
+  });
 
   const fetchRegions = async () => {
     loading.value = true;
@@ -92,6 +99,7 @@ export const useRegionStore = defineStore("region", () => {
 
   return {
     regions,
+    regionOptions,
     selectedRegion,
     loading,
     error,
