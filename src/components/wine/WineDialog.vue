@@ -66,7 +66,7 @@
       </div>
 
       <div class="input-container">
-        <label for="bottleVolume">Объем (мл):</label>
+        <label for="bottleVolume">Объем (л):</label>
         <InputText
           id="bottleVolume"
           name="bottleVolume"
