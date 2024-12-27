@@ -139,7 +139,7 @@
         <Column field="name" header="Имя" sortable></Column>
         <Column field="category" header="Категория" sortable></Column>
         <Column field="colour" header="Цвет"></Column>
-        <Column field="bottleVolume" header="Объем (мл)"></Column>
+        <Column field="bottleVolume" header="Объем (л)"></Column>
         <Column field="alcoholByVolume" header="Алкоголь (%)"></Column>
         <Column field="sugarType" header="Уровень сахара"></Column>
         <Column field="vintage" header="Год урожая"></Column>
