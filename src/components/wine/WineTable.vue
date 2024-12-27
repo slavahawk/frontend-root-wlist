@@ -38,7 +38,7 @@
       </div>
 
       <div class="input-container">
-        <div class="text-l">Тип сахара</div>
+        <div class="text-l">Уровень сахара</div>
         <Dropdown
           id="sugarType"
           v-model="params.sugarType"
@@ -46,7 +46,7 @@
           optionLabel="label"
           optionValue="value"
           showClear
-          placeholder="Выберите тип сахара"
+          placeholder="Выберите уровень сахара"
         />
       </div>
       <div class="input-container">
@@ -141,7 +141,7 @@
         <Column field="colour" header="Цвет"></Column>
         <Column field="bottleVolume" header="Объем (мл)"></Column>
         <Column field="alcoholByVolume" header="Алкоголь (%)"></Column>
-        <Column field="sugarType" header="Тип сахара"></Column>
+        <Column field="sugarType" header="Уровень сахара"></Column>
         <Column field="vintage" header="Год урожая"></Column>
         <Column field="interestingFacts" header="Интересные факты"></Column>
         <Column
@@ -199,7 +199,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
