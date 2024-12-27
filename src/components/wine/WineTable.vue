@@ -7,13 +7,13 @@
           label="Сбросить фильтры"
           icon="pi pi-times"
           size="small"
+          variant="text"
           @click="resetFilters"
         />
       </div>
       <div class="input-container">
         <div class="text-l">Категории</div>
         <Dropdown
-          class="w-full md:w-56"
           id="category"
           v-model="params.category"
           :options="categoryOptions"
@@ -27,7 +27,6 @@
       <div class="input-container">
         <div class="text-l">Цвет</div>
         <Dropdown
-          class="w-full md:w-56"
           id="colour"
           v-model="params.colour"
           :options="colourOptions"
@@ -41,7 +40,6 @@
       <div class="input-container">
         <div class="text-l">Тип сахара</div>
         <Dropdown
-          class="w-full md:w-56"
           id="sugarType"
           v-model="params.sugarType"
           :options="sugarTypeOptions"
@@ -54,7 +52,6 @@
       <div class="input-container">
         <div class="text-l">Страна</div>
         <Dropdown
-          class="w-full md:w-56"
           id="country"
           v-model="params.countryId"
           :options="countriesOptions"
@@ -68,7 +65,6 @@
       <div class="input-container">
         <div class="text-l">Регион</div>
         <Dropdown
-          class="w-full md:w-56"
           id="region"
           v-model="params.regionId"
           :options="regionOptions"
@@ -82,7 +78,6 @@
       <div class="input-container">
         <div class="text-l">Виноград</div>
         <Dropdown
-          class="w-full md:w-56"
           id="grape"
           v-model="params.grapeId"
           :options="grapeOptions"
@@ -95,20 +90,18 @@
 
       <div class="input-container">
         <div class="text-l">Год урожая</div>
-        <InputText
-          class="w-full md:w-56"
-          v-model="params.vintage"
+        <DatePicker
+          v-model="year"
+          view="year"
+          :minDate="minDate"
+          dateFormat="yy"
           placeholder="Год урожая"
         />
       </div>
 
       <div class="input-container">
         <div class="text-l">Объем бутылки</div>
-        <InputText
-          class="w-full md:w-56"
-          v-model="params.bottleVolume"
-          placeholder="Объем бутылки"
-        />
+        <InputText v-model="params.bottleVolume" placeholder="Объем бутылки" />
       </div>
     </div>
 
@@ -127,31 +120,50 @@
               <span class="text-xl font-bold">Список вин</span>
               <Button
                 :icon="`pi ${filterState ? 'pi-filter-slash' : 'pi-filter'} `"
-                link
+                variant="text"
                 @click="toggleMenu"
+                v-tooltip.bottom="
+                  `${filterState ? 'Скрыть' : 'Раскрыть'} фильтры`
+                "
               />
               <Button
                 icon="pi pi-plus"
-                rounded
-                raised
+                variant="text"
                 @click="showCreateDialog"
+                v-tooltip.bottom="`Добавить вино`"
               />
             </div>
-            <Button icon="pi pi-refresh" rounded raised @click="loadWines" />
           </div>
         </template>
+
         <Column field="name" header="Имя" sortable></Column>
         <Column field="category" header="Категория" sortable></Column>
         <Column field="colour" header="Цвет"></Column>
         <Column field="bottleVolume" header="Объем (мл)"></Column>
+        <Column field="alcoholByVolume" header="Алкоголь (%)"></Column>
+        <Column field="sugarType" header="Тип сахара"></Column>
+        <Column field="vintage" header="Год урожая"></Column>
+        <Column field="interestingFacts" header="Интересные факты"></Column>
+        <Column
+          field="isHidden"
+          header="Скрыто"
+          :body="(data) => (data.isHidden ? 'Да' : 'Нет')"
+        ></Column>
         <Column header="Действия">
           <template #body="{ data }">
             <div class="flex gap-2 flex-wrap">
-              <Button icon="pi pi-pencil" @click="showEditDialog(data)" />
+              <Button
+                icon="pi pi-pencil"
+                variant="text"
+                @click="showEditDialog(data)"
+                v-tooltip.bottom="`Редактировать вино`"
+              />
               <Button
                 icon="pi pi-trash"
                 @click="deleteWine(data.id)"
+                variant="text"
                 class="p-button-danger"
+                v-tooltip.bottom="`Удалить вино`"
               />
             </div>
           </template>
@@ -165,7 +177,14 @@
         :totalRecords="wines.page.totalElements"
         @page="onPageChange"
         :rowsPerPageOptions="[10, 20, 50]"
-      />
+      >
+        <template #start>
+          <Button @click="loadWines" type="button" icon="pi pi-refresh" text />
+        </template>
+        <template #end>
+          <!--          <Button type="button" icon="pi pi-refresh" text />-->
+        </template>
+      </Paginator>
 
       <WineDialog
         :isVisible="showDialog"
@@ -180,7 +199,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
@@ -196,6 +215,12 @@ import WineDialog from "./WineDialog.vue";
 import { useCountryStore } from "@/stores/countryStore.ts";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import { useGrapeStore } from "@/stores/grapeStore.ts";
+
+const year = ref();
+const minDate = new Date(1900, 0, 1);
+watch(year, (val) => {
+  params.vintage = val?.getFullYear() ?? undefined;
+});
 
 const filterState = ref(true);
 filterState.value = window.innerWidth > 991;
@@ -237,6 +262,7 @@ const formData = ref<CreateWineRequest & { id?: number }>({
 const initialParams = {
   page: 0,
   size: 10,
+  category: undefined,
   colour: undefined,
   sugarType: undefined,
   countryId: undefined,
