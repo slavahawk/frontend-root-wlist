@@ -95,6 +95,7 @@ export interface WineResponses {
 export interface WineQueryParams {
   page: number;
   size: number;
+  category?: WineCategory;
   colour?: WineColour;
   sugarType?: SugarType;
   countryId?: number;
@@ -103,6 +104,22 @@ export interface WineQueryParams {
   vintage?: number;
   bottleVolume?: number;
   sort?: string;
+}
+
+export interface WineRequestFilter {
+  category?: WineCategory;
+  colour?: WineColour;
+  sugarType?: SugarType;
+  vintage?: number;
+  countryId?: number;
+  regionId?: number;
+  grapeId?: number;
+  bottleVolume?: number;
+}
+
+export interface WineRequest extends WineRequestFilter {
+  page: number;
+  size: number;
 }
 
 // Опции для селектора категорий
@@ -118,18 +135,19 @@ export const categoryOptions = [
   { label: "Безалкогольное", value: "NON_ALCOHOL" },
 ];
 
-// Опции для селектора цвета
-export const colourOptions = [
-  { label: "Красный", value: "RED" },
-  { label: "Белый", value: "WHITE" },
-  { label: "Оранжевый", value: "ORANGE" },
-  { label: "Розовый", value: "ROSE" },
-];
+export interface WineFilter {
+  id: string;
+  name: string;
+  count: number;
+}
 
-// Опции для селектора типа сахара
-export const sugarTypeOptions = [
-  { label: "Сухое", value: "DRY" },
-  { label: "Полусухое", value: "SEMI_DRY" },
-  { label: "Полусладкое", value: "SEMI_SWEET" },
-  { label: "Сладкое", value: "SWEET" },
-];
+export interface WineFilters {
+  category?: WineFilter[];
+  colour?: WineFilter[];
+  sugarType?: WineFilter[];
+  vintage?: WineFilter[];
+  country?: WineFilter[];
+  region?: WineFilter[];
+  grapes?: WineFilter[];
+  bottleVolume?: WineFilter[];
+}

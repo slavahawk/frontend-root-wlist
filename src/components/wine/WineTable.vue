@@ -11,83 +11,48 @@
           @click="resetFilters"
         />
       </div>
-      <div class="input-container">
-        <div class="text-l">Категории</div>
-        <Dropdown
-          id="category"
-          v-model="params.category"
-          :options="categoryOptions"
-          optionLabel="label"
-          optionValue="value"
-          showClear
-          placeholder="Выберите категорию"
-        />
-      </div>
-
-      <div class="input-container">
-        <div class="text-l">Цвет</div>
-        <Dropdown
-          id="colour"
-          v-model="params.colour"
-          :options="colourOptions"
-          optionLabel="label"
-          optionValue="value"
-          showClear
-          placeholder="Выберите цвет"
-        />
-      </div>
-
-      <div class="input-container">
-        <div class="text-l">Уровень сахара</div>
-        <Dropdown
-          id="sugarType"
-          v-model="params.sugarType"
-          :options="sugarTypeOptions"
-          optionLabel="label"
-          optionValue="value"
-          showClear
-          placeholder="Выберите уровень сахара"
-        />
-      </div>
-      <div class="input-container">
-        <div class="text-l">Страна</div>
-        <Dropdown
-          id="country"
-          v-model="params.countryId"
-          :options="countriesOptions"
-          optionLabel="label"
-          optionValue="value"
-          showClear
-          placeholder="Выберите страну"
-        />
-      </div>
-
-      <div class="input-container">
-        <div class="text-l">Регион</div>
-        <Dropdown
-          id="region"
-          v-model="params.regionId"
-          :options="regionOptions"
-          optionLabel="label"
-          optionValue="value"
-          showClear
-          placeholder="Выберите регион"
-        />
-      </div>
-
-      <div class="input-container">
-        <div class="text-l">Виноград</div>
-        <Dropdown
-          id="grape"
-          v-model="params.grapeId"
-          :options="grapeOptions"
-          optionLabel="label"
-          optionValue="value"
-          showClear
-          placeholder="Выберите виноград"
-        />
-      </div>
-
+      <MySelect
+        id="category"
+        :modelValue="selectedFilters.category"
+        :options="optionsFilter.category"
+        label="Категории"
+        @update="updateSelectedFilter('category', $event)"
+      />
+      <MySelect
+        id="colour"
+        :modelValue="selectedFilters.colour"
+        :options="optionsFilter.colour"
+        label="Цвет"
+        @update="updateSelectedFilter('colour', $event)"
+      />
+      <MySelect
+        id="sugarType"
+        :modelValue="selectedFilters.sugarType"
+        :options="optionsFilter.sugarType"
+        label="Уровень сахара"
+        @update="updateSelectedFilter('sugarType', $event)"
+      />
+      <MySelect
+        id="country"
+        :modelValue="selectedFilters.country"
+        :options="optionsFilter.country"
+        label="Страна"
+        @update="updateSelectedFilter('country', $event)"
+      />
+      <MySelect
+        id="region"
+        :modelValue="selectedFilters.region"
+        :options="optionsFilter.region"
+        label="Регион"
+        @update="updateSelectedFilter('region', $event)"
+      />
+      <MySelect
+        id="grape"
+        :modelValue="selectedFilters.grape"
+        :options="optionsFilter.grapes"
+        label="Виноград"
+        @update="updateSelectedFilter('grape', $event)"
+      />
       <div class="input-container">
         <div class="text-l">Год урожая</div>
         <DatePicker
@@ -98,11 +63,13 @@
           placeholder="Год урожая"
         />
       </div>
-
-      <div class="input-container">
-        <div class="text-l">Объем бутылки</div>
-        <InputText v-model="params.bottleVolume" placeholder="Объем бутылки" />
-      </div>
+      <MySelect
+        id="bottleVolume"
+        :modelValue="selectedFilters.bottleVolume"
+        :options="optionsFilter.bottleVolume"
+        label="Объем бутылки"
+        @update="updateSelectedFilter('bottleVolume', $event)"
+      />
     </div>
 
     <div class="flex-1">
@@ -113,13 +80,13 @@
         selectionMode="single"
         filterDisplay="row"
       >
-        <template #empty> No customers found. </template>
+        <template #empty>No wines found.</template>
         <template #header>
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2 mb-4">
               <span class="text-xl font-bold">Список вин</span>
               <Button
-                :icon="`pi ${filterState ? 'pi-filter-slash' : 'pi-filter'} `"
+                :icon="`pi ${filterState ? 'pi-filter-slash' : 'pi-filter'}`"
                 variant="text"
                 @click="toggleMenu"
                 v-tooltip.bottom="
@@ -135,7 +102,6 @@
             </div>
           </div>
         </template>
-
         <Column field="name" header="Имя" sortable></Column>
         <Column field="category" header="Категория" sortable></Column>
         <Column field="colour" header="Цвет"></Column>
@@ -181,9 +147,6 @@
         <template #start>
           <Button @click="loadWines" type="button" icon="pi pi-refresh" text />
         </template>
-        <template #end>
-          <!--          <Button type="button" icon="pi pi-refresh" text />-->
-        </template>
       </Paginator>
 
       <WineDialog
@@ -204,45 +167,19 @@ import { useWineStore } from "@/stores/wineStore";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import {
-  categoryOptions,
-  colourOptions,
   type CreateWineRequest,
-  sugarTypeOptions,
   type Wine,
+  type WineFilter,
+  type WineFilters,
   type WineQueryParams,
 } from "@/types/wine";
+import MySelect from "@/components/MySelect.vue";
 import WineDialog from "./WineDialog.vue";
-import { useCountryStore } from "@/stores/countryStore.ts";
-import { useRegionStore } from "@/stores/regionStore.ts";
-import { useGrapeStore } from "@/stores/grapeStore.ts";
 
 const year = ref();
 const minDate = new Date(1900, 0, 1);
-watch(year, (val) => {
-  params.vintage = val?.getFullYear() ?? undefined;
-});
 
-const filterState = ref(true);
-filterState.value = window.innerWidth > 991;
-
-const toggleMenu = () => {
-  filterState.value = !filterState.value;
-};
-
-const {
-  fetchWines,
-  createWine,
-  updateWine,
-  deleteWine: wineDelete,
-} = useWineStore();
-const { wines, loading } = storeToRefs(useWineStore());
-const { countriesOptions } = storeToRefs(useCountryStore());
-const { regionOptions } = storeToRefs(useRegionStore());
-const { grapeOptions } = storeToRefs(useGrapeStore());
-
-const route = useRoute();
-const router = useRouter();
-
+const filterState = ref(window.innerWidth > 991);
 const showDialog = ref(false);
 const createMode = ref(true);
 const formData = ref<CreateWineRequest & { id?: number }>({
@@ -258,10 +195,41 @@ const formData = ref<CreateWineRequest & { id?: number }>({
   grapeIds: [],
 });
 
-// Задайте начальные параметры фильтрации
-const initialParams = {
-  page: 0,
-  size: 10,
+const optionsFilter = reactive<WineFilters>({
+  category: [],
+  colour: [],
+  sugarType: [],
+  vintage: [],
+  country: [],
+  region: [],
+  grapes: [],
+  bottleVolume: [],
+});
+
+const selectedFilters = reactive({
+  category: null,
+  colour: null,
+  sugarType: null,
+  country: null,
+  region: null,
+  grape: null,
+  bottleVolume: null,
+});
+
+const route = useRoute();
+const router = useRouter();
+const {
+  fetchWines,
+  fetchWinesFilter,
+  createWine,
+  updateWine,
+  deleteWine: wineDelete,
+} = useWineStore();
+const { wines, loading, winesFilter } = storeToRefs(useWineStore());
+
+const initializeParams = (query: Record<string, any>): WineQueryParams => ({
+  page: parseInt(query.page) || 0,
+  size: parseInt(query.size) || 10,
   category: undefined,
   colour: undefined,
   sugarType: undefined,
@@ -271,79 +239,96 @@ const initialParams = {
   vintage: undefined,
   bottleVolume: undefined,
   sort: undefined,
-};
-
-const parseQueryParams = (query: Record<string, any>): WineQueryParams => {
-  return {
-    page: parseInt(query.page) || 0,
-    size: parseInt(query.size) || 10,
-    colour: query.colour || undefined,
-    sugarType: query.sugarType || undefined,
-    countryId: parseInt(query.countryId) || undefined,
-    regionId: parseInt(query.regionId) || undefined,
-    grapeId: parseInt(query.grapeId) || undefined,
-    vintage: parseInt(query.vintage) || undefined,
-    bottleVolume: parseInt(query.bottleVolume) || undefined,
-    sort: query.sort || undefined,
-  };
-};
-
-// Инициализация параметров из URL с помощью функции
-const params = reactive<WineQueryParams>({
-  ...initialParams,
-  ...parseQueryParams(route.query), // Преобразуем параметры
 });
 
-// Загрузка вин при монтировании
-const loadWines = async () => {
-  await fetchWines(params);
-};
+const params = reactive<WineQueryParams>(initializeParams(route.query));
 
-// Загрузка данных при монтировании
-await loadWines();
+watch(year, (val) => {
+  params.vintage = val?.getFullYear() ?? undefined;
+});
 
-// Используйте watch для отслеживания изменений в params
+watch(winesFilter, (val: WineFilters) => {
+  Object.assign(optionsFilter, val);
+});
+
 watch(
   () => params,
   async () => {
-    await loadWines(); // Запрашиваем данные при каждом изменении params
-    updateParamsInRoute(); // Обновляем параметры URL
+    await loadWines();
+    updateParamsInRoute();
   },
-  { deep: true }, // Обязательно используйте deep для отслеживания изменений во вложенных объектах
+  { deep: true },
 );
 
-// Функция для обновления параметров в маршруте
-const updateParamsInRoute = () => {
-  router.replace({ query: { ...params } }); // Обновляем параметры в URL
-};
+// Функции для обновления фильтров
+const updateSelectedFilter = async (
+  filterName: string,
+  value: WineFilter | null,
+) => {
+  // Обновляем параметры запроса
+  params[filterName] = value?.id;
 
-// Функция для сброса фильтров
-const resetFilters = () => {
-  Object.assign(params, { ...initialParams }); // Сброс параметров к начальным значениям
-  loadWines(); // Перезагрузите данные
-};
+  // Загружаем вина и обновляем фильтры
+  await loadWines();
 
-// Предыдущий watch для диалогового окна
-watch(showDialog, (newValue) => {
-  if (!newValue) {
-    clearForm();
+  // Обновляем выбранные фильтры значениями из optionsFilter
+  if (optionsFilter[filterName]) {
+    const foundFilter = optionsFilter[filterName].find(
+      (option) => option.id === value?.id,
+    );
+
+    if (foundFilter) {
+      // Заменяем все поля в selectedFilters, если они есть в найденном фильтре
+      selectedFilters[filterName] = foundFilter;
+
+      // Если нужно обновить все поля, можно пройти по всем полям в selectedFilters
+      for (const key in selectedFilters) {
+        if (optionsFilter[key]) {
+          const match = optionsFilter[key].find(
+            (option) => option.id === selectedFilters[key]?.id,
+          );
+          // Если нашли соответствующий фильтр, обновляем значение
+          if (match) {
+            selectedFilters[key] = match;
+          }
+        }
+      }
+    } else {
+      selectedFilters[filterName] = null; // Если не найден, можно оставить null
+    }
   }
-});
-
-const clearForm = () => {
-  formData.value = {
-    name: "",
-    category: "RED",
-    colour: "RED",
-    bottleVolume: 0,
-    alcoholByVolume: 0,
-    sugarType: "DRY",
-    countryId: 0,
-    isHidden: false,
-    grapeIds: [],
-  };
 };
 
+const resetFilters = () => {
+  Object.keys(params).forEach((key) => {
+    params[key] = undefined;
+  });
+
+  Object.keys(selectedFilters).forEach((key) => {
+    selectedFilters[key].value = null;
+  });
+
+  loadWines();
+};
+
+const loadWines = async () => {
+  try {
+    const wineData = await fetchWines(params); // Получение данных о вине
+    const filterData = await fetchWinesFilter(params); // Получение фильтров с количеством
+
+    Object.assign(wines.value, wineData); // Установка данных о вине
+    Object.assign(optionsFilter, filterData); // Обновление optionsFilter с новыми значениями
+  } catch (error) {
+    console.error("Error loading wines:", error);
+  }
+};
+
+// Обновление параметров в маршруте
+const updateParamsInRoute = () => {
+  router.replace({ query: { ...params } });
+};
+
+// Функции для работы с диалоговым окном
 const showCreateDialog = () => {
   createMode.value = true;
   showDialog.value = true;
@@ -351,35 +336,23 @@ const showCreateDialog = () => {
 
 const showEditDialog = (wine: Wine) => {
   createMode.value = false;
-  formData.value = {
-    id: wine.id,
-    name: wine.name,
-    category: wine.category,
-    colour: wine.colour,
-    bottleVolume: wine.bottleVolume,
-    alcoholByVolume: wine.alcoholByVolume,
-    sugarType: wine.sugarType,
-    countryId: wine.country?.id ?? 0,
-    isHidden: wine.isHidden,
-    grapeIds: wine.grapes?.map((grape) => grape.id) ?? [],
-    vintage: wine.vintage,
-    regionId: wine.region?.id ?? 0,
-    interestingFacts: wine.interestingFacts,
-    organoleptic: wine.organoleptic,
-  };
-
+  formData.value = { ...wine }; // Используем оператор распаковки для копирования свойств
   showDialog.value = true;
 };
 
 const saveWine = async (data: CreateWineRequest) => {
-  if (createMode.value) {
-    await createWine(data);
-  } else {
-    const { id, ...wineData } = formData.value;
-    await updateWine(id, wineData);
+  try {
+    if (createMode.value) {
+      await createWine(data);
+    } else {
+      const { id, ...wineData } = formData.value;
+      await updateWine(id, wineData);
+    }
+    showDialog.value = false;
+    await loadWines();
+  } catch (error) {
+    console.error("Error saving wine:", error);
   }
-  showDialog.value = false;
-  await loadWines();
 };
 
 const deleteWine = async (id: number) => {
@@ -389,20 +362,17 @@ const deleteWine = async (id: number) => {
   }
 };
 
-const onPageChange = async ({
-  page,
-  rows,
-}: {
-  page: number;
-  first: number;
-  rows: number;
-  pageCount: number;
-}) => {
+const onPageChange = async ({ page, rows }) => {
   params.page = page;
   params.size = rows;
-  await loadWines(); // Запрашиваем данные при смене страницы
-  updateParamsInRoute(); // Обновляем параметры в URL
+  await loadWines();
 };
-</script>
 
-<style scoped></style>
+// Упрощение переключения состояния фильтров
+const toggleMenu = () => {
+  filterState.value = !filterState.value;
+};
+
+// Инициализация загрузки вин при монтировании
+await loadWines();
+</script>
