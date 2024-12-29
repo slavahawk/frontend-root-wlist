@@ -11,6 +11,18 @@
           @click="resetFilters"
         />
       </div>
+
+      <ToggleSwitch v-model="checked">
+        <template #handle="{ checked }">
+          <i
+            :class="[
+              '!text-xs pi',
+              { 'pi-check': checked, 'pi-times': !checked },
+            ]"
+          />
+        </template>
+      </ToggleSwitch>
+
       <MySelect
         id="category"
         :modelValue="selectedFilters.category"
@@ -175,6 +187,8 @@ import {
 } from "@/types/wine";
 import MySelect from "@/components/MySelect.vue";
 import WineDialog from "./WineDialog.vue";
+
+const checked = ref(false);
 
 const year = ref();
 const minDate = new Date(1900, 0, 1);
