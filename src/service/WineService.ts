@@ -5,7 +5,6 @@ import type {
   WineResponses,
   WineFilters,
   WineRequest,
-  WineRequestFilter,
 } from "@/types/wine";
 
 const WineService = {
@@ -21,11 +20,9 @@ const WineService = {
     }
   },
 
-  async getWineFilters(requestParams: WineRequestFilter): Promise<WineFilters> {
+  async getWineFilters(): Promise<WineFilters> {
     try {
-      const response = await api.get<WineFilters>("/wines/filters", {
-        params: requestParams,
-      });
+      const response = await api.get<WineFilters>("/wines/filters");
       return response.data;
     } catch (error) {
       console.error("Ошибка при получении фильтров:", error);

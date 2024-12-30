@@ -32,9 +32,9 @@
           id="category"
           name="category"
           v-model="formData.category"
-          :options="categoryOptions"
-          optionLabel="label"
-          optionValue="value"
+          :options="winesFilter.category"
+          option-label="name"
+          option-value="id"
         />
         <Message
           v-if="$form.category?.invalid"
@@ -51,9 +51,9 @@
           id="colour"
           name="colour"
           v-model="formData.colour"
-          :options="сolourOptions"
-          optionLabel="label"
-          optionValue="value"
+          :options="winesFilter.colour"
+          option-label="name"
+          option-value="id"
         />
         <Message
           v-if="$form.colour?.invalid"
@@ -70,9 +70,9 @@
           id="bottleVolume"
           name="bottleVolume"
           v-model="formData.bottleVolume"
-          :options="bottleVolumeOptions"
-          optionLabel="label"
-          optionValue="value"
+          :options="winesFilter.bottleVolume"
+          option-label="name"
+          option-value="id"
         />
         <Message
           v-if="$form.bottleVolume?.invalid"
@@ -242,21 +242,23 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, defineProps, defineEmits } from "vue";
+import { defineEmits, defineProps, ref, watch } from "vue";
 import { z } from "zod";
 import {
-  type CreateWineRequest,
-  type Wine,
   categoryOptions,
-  сolourOptions,
+  type CreateWineRequest,
   sugarTypesOptions,
-  bottleVolumeOptions,
+  type Wine,
+  сolourOptions,
 } from "@/types/wine";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import { useGrapeStore } from "@/stores/grapeStore.ts";
 import FileUpload from "primevue/fileupload";
+import { useWineStore } from "@/stores/wineStore.ts";
+
+const { winesFilter } = storeToRefs(useWineStore());
 
 const { countriesOptions } = storeToRefs(useCountryStore());
 const { regionOptions } = storeToRefs(useRegionStore());

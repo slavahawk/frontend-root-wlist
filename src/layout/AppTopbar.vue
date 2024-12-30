@@ -18,6 +18,8 @@ function checkActiveRoute(item) {
   return route.path === item.to;
 }
 
+const showSearch = ref(false);
+
 const items = ref([
   {
     label: "Вина",
@@ -66,13 +68,15 @@ const items = ref([
       </router-link>
     </template>
     <template #end>
-      <div class="flex items-center gap-6">
+      <div class="flex items-center gap-4">
+        <Button
+          link
+          type="button"
+          icon="pi pi-search"
+          @click="showSearch = true"
+        />
         <div class="layout-config-menu">
-          <button
-            type="button"
-            class="layout-topbar-action"
-            @click="toggleDarkMode"
-          >
+          <button type="button" @click="toggleDarkMode">
             <i
               :class="[
                 'pi',
@@ -120,6 +124,7 @@ const items = ref([
           icon="pi pi-sign-out"
         ></Button>
       </div>
+      <Dialog modal v-model:visible="showSearch" header="Найти вино"> </Dialog>
     </template>
   </Menubar>
 </template>

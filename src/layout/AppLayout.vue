@@ -3,12 +3,19 @@ import AppTopbar from "./AppTopbar.vue";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import { useCountryStore } from "@/stores/countryStore.ts";
 import { useGrapeStore } from "@/stores/grapeStore.ts";
+import { useWineStore } from "@/stores/wineStore.ts";
 
 const { fetchRegions } = useRegionStore();
 const { fetchCountries } = useCountryStore();
 const { fetchGrapes } = useGrapeStore();
+const { fetchWinesFilter } = useWineStore();
 
-Promise.all([fetchRegions(), fetchCountries(), fetchGrapes()]);
+Promise.all([
+  fetchRegions(),
+  fetchCountries(),
+  fetchGrapes(),
+  fetchWinesFilter(),
+]);
 </script>
 
 <template>
