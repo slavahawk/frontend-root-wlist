@@ -4,6 +4,7 @@
     header="Вино"
     modal
     @hide="resetForm"
+    style="min-width: 50%"
     @update:visible="updateVisible"
   >
     <Form
@@ -15,170 +16,224 @@
     >
       <div class="input-container">
         <label for="name">Имя:</label>
-        <InputText id="name" name="name" v-model="formData.name" required />
+        <InputText id="name" name="name" v-model="formData.name" />
         <Message
           v-if="$form.name?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.name.error.message }}</Message
         >
-          {{ $form.name.error?.message }}
-        </Message>
       </div>
 
       <div class="input-container">
         <label for="category">Категория:</label>
-        <Dropdown
+        <Select
           id="category"
           name="category"
           v-model="formData.category"
           :options="categoryOptions"
           optionLabel="label"
           optionValue="value"
-          required
         />
         <Message
           v-if="$form.category?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.category.error.message }}</Message
         >
-          {{ $form.category.error?.message }}
-        </Message>
       </div>
 
       <div class="input-container">
         <label for="colour">Цвет:</label>
-        <InputText
+        <Select
           id="colour"
           name="colour"
           v-model="formData.colour"
-          required
+          :options="сolourOptions"
+          optionLabel="label"
+          optionValue="value"
         />
         <Message
           v-if="$form.colour?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.colour.error.message }}</Message
         >
-          {{ $form.colour.error?.message }}
-        </Message>
       </div>
 
       <div class="input-container">
         <label for="bottleVolume">Объем (л):</label>
-        <InputText
+        <Select
           id="bottleVolume"
           name="bottleVolume"
-          type="number"
           v-model="formData.bottleVolume"
-          @input="convertToNumber('bottleVolume')"
-          required
+          :options="bottleVolumeOptions"
+          optionLabel="label"
+          optionValue="value"
         />
         <Message
           v-if="$form.bottleVolume?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.bottleVolume.error.message }}</Message
         >
-          {{ $form.bottleVolume.error?.message }}
-        </Message>
       </div>
 
       <div class="input-container">
         <label for="alcoholByVolume">Алкогольное содержание (%):</label>
-        <InputText
+        <InputNumber
           id="alcoholByVolume"
           name="alcoholByVolume"
-          type="number"
-          v-model="formData.alcoholByVolume"
-          @input="convertToNumber('alcoholByVolume')"
-          required
+          v-model.number="formData.alcoholByVolume"
+          :min="0"
+          :max="100"
         />
         <Message
           v-if="$form.alcoholByVolume?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.alcoholByVolume.error.message }}</Message
         >
-          {{ $form.alcoholByVolume.error?.message }}
-        </Message>
+        <Slider class="mt-4" v-model="formData.alcoholByVolume" />
       </div>
 
       <div class="input-container">
         <label for="vintage">Год урожая:</label>
-        <InputText
-          id="vintage"
-          name="vintage"
-          type="number"
-          v-model="formData.vintage"
-          @input="convertToNumber('vintage')"
-          required
+        <DatePicker
+          v-model="year"
+          view="year"
+          :minDate="minDate"
+          dateFormat="yy"
+          placeholder="Год урожая"
         />
-        <Message
-          v-if="$form.vintage?.invalid"
-          severity="error"
-          size="small"
-          variant="simple"
-        >
-          {{ $form.vintage.error?.message }}
-        </Message>
       </div>
 
       <div class="input-container">
-        <label for="regionId">Регион ID:</label>
-        <InputText
+        <label for="countryId">Страна:</label>
+        <Select
+          id="countryId"
+          name="countryId"
+          v-model="formData.countryId"
+          :options="countriesOptions"
+          optionLabel="label"
+          optionValue="value"
+        />
+        <Message
+          v-if="$form.countryId?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $form.countryId.error.message }}</Message
+        >
+      </div>
+
+      <div class="input-container">
+        <label for="regionId">Регион:</label>
+        <Select
           id="regionId"
           name="regionId"
-          type="number"
           v-model="formData.regionId"
-          @input="convertToNumber('regionId')"
-          required
+          :options="regionOptions"
+          optionLabel="label"
+          optionValue="value"
         />
         <Message
           v-if="$form.regionId?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.regionId.error.message }}</Message
         >
-          {{ $form.regionId.error?.message }}
-        </Message>
+      </div>
+
+      <div class="input-container">
+        <label for="grapeIds">Виноград:</label>
+        <MultiSelect
+          id="grapeIds"
+          name="grapeIds"
+          v-model="formData.grapeIds"
+          :options="grapeOptions"
+          optionLabel="label"
+          optionValue="value"
+          filter
+          placeholder="Выбрать виноград"
+        />
+        <Message
+          v-if="$form.grapeIds?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $form.grapeIds.error.message }}</Message
+        >
       </div>
 
       <div class="input-container">
         <label for="interestingFacts">Интересные факты:</label>
-        <InputText
+        <Textarea
           id="interestingFacts"
           name="interestingFacts"
           v-model="formData.interestingFacts"
-          required
+          rows="5"
+          cols="30"
         />
         <Message
           v-if="$form.interestingFacts?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.interestingFacts.error.message }}</Message
         >
-          {{ $form.interestingFacts.error?.message }}
-        </Message>
       </div>
 
       <div class="input-container">
         <label for="organoleptic">Органолептические характеристики:</label>
-        <InputText
+        <Textarea
           id="organoleptic"
           name="organoleptic"
           v-model="formData.organoleptic"
-          required
+          rows="5"
+          cols="30"
         />
         <Message
           v-if="$form.organoleptic?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.organoleptic.error.message }}</Message
         >
-          {{ $form.organoleptic.error?.message }}
+      </div>
+
+      <div class="input-container">
+        <label for="isHidden">Скрыть вино:</label>
+        <InputSwitch id="isHidden" v-model="formData.isHidden" />
+      </div>
+
+      <div class="input-container">
+        <label for="image">Загрузить изображение:</label>
+        <FileUpload
+          id="image"
+          name="image"
+          accept="image/*"
+          maxFileSize="2000000"
+          @select="handleFileUpload"
+          customUpload
+          auto
+          mode="basic"
+        />
+        <Message v-if="imageFile" severity="info" size="small" variant="simple">
+          Загружено: {{ imageFile.name }}
         </Message>
+        <img
+          v-if="imageSrc"
+          :src="imageSrc"
+          alt="Image"
+          class="shadow-md rounded-xl w-full sm:w-64"
+        />
       </div>
 
       <Button label="Сохранить" type="submit"></Button>
@@ -193,7 +248,19 @@ import {
   type CreateWineRequest,
   type Wine,
   categoryOptions,
+  сolourOptions,
+  sugarTypesOptions,
+  bottleVolumeOptions,
 } from "@/types/wine";
+import { storeToRefs } from "pinia";
+import { useCountryStore } from "@/stores/countryStore.ts";
+import { useRegionStore } from "@/stores/regionStore.ts";
+import { useGrapeStore } from "@/stores/grapeStore.ts";
+import FileUpload from "primevue/fileupload";
+
+const { countriesOptions } = storeToRefs(useCountryStore());
+const { regionOptions } = storeToRefs(useRegionStore());
+const { grapeOptions } = storeToRefs(useGrapeStore());
 
 const props = defineProps<{
   isVisible: boolean;
@@ -203,11 +270,14 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: "close"): void;
-  (e: "save", data: CreateWineRequest): void;
+  (e: "save", data: CreateWineRequest, image: File | null): void;
   (e: "update:visible", value: boolean): void;
 }>();
 
-const formData = ref<CreateWineRequest>({
+const year = ref<Date>(new Date());
+const minDate = new Date(1900, 0, 1);
+const formData = ref<CreateWineRequest & { id?: number }>({
+  id: undefined,
   name: "",
   category: "RED",
   colour: "RED",
@@ -217,55 +287,67 @@ const formData = ref<CreateWineRequest>({
   countryId: 0,
   isHidden: false,
   grapeIds: [],
-  vintage: 0,
-  regionId: 0,
+  vintage: new Date().getFullYear(),
   interestingFacts: "",
+  regionId: 0,
   organoleptic: "",
 });
 
-// Определите схему Zod для валидации
+const imageFile = ref<File | null>(null);
+const imageSrc = ref("");
+
+watch(year, (val: Date) => {
+  formData.value.vintage = val.getFullYear();
+});
+
+// Zod schema for validation
 const schema = z.object({
   name: z.string().nonempty("Имя обязательно."),
-  category: z.string().nonempty("Категория обязательна."),
-  colour: z.string().nonempty("Цвет обязателен."),
-  bottleVolume: z.number().min(1, "Объем должен быть больше 0."),
+  category: z.enum(
+    categoryOptions.map((option) => option.value),
+    "Категория обязательна.",
+  ),
+  colour: z.enum(
+    сolourOptions.map((option) => option.value),
+    "Цвет обязателен.",
+  ),
+  bottleVolume: z.number().min(0, "Объем обязателен."),
   alcoholByVolume: z
     .number()
-    .min(0, "Алкогольное содержание не puede быть отрицательным."),
+    .min(0, "Алкогольное содержание не может быть отрицательным.")
+    .max(100, "Алкогольное содержание не может превышать 100."),
+  sugarType: z.enum(
+    sugarTypesOptions.map((option) => option.value),
+    "Тип сахара обязателен.",
+  ),
   vintage: z.number().min(1900, "Год урожая не может быть меньше 1900."),
+  countryId: z.number().min(1, "Страна ID обязательна."),
   regionId: z.number().min(1, "Регион ID обязателен."),
-  interestingFacts: z.string().optional(), // Можно не требовать
-  organoleptic: z.string().optional(), // Можно не требовать
+  grapeIds: z.array(z.number()).optional(),
+  interestingFacts: z.string().optional(),
+  organoleptic: z.string().optional(),
+  isHidden: z.boolean(),
 });
 
 // Обработчик формы
 const resolver = async ({ values }) => {
   try {
-    // Преобразование значений перед передачей в схему Zod
-    const parsedValues = {
-      ...values,
-      bottleVolume: Number(values.bottleVolume),
-      alcoholByVolume: Number(values.alcoholByVolume),
-      vintage: Number(values.vintage),
-      regionId: Number(values.regionId),
-    };
-
-    schema.parse(parsedValues);
-    return { errors: {} }; // Если ошибок нет, возвращаем пустой объект ошибок
+    schema.parse(values);
+    return { errors: {} };
   } catch (e) {
     if (e instanceof z.ZodError) {
       const errors = e.errors.reduce((acc, error) => {
-        const path = error.path[0]; // Получаем путь к ошибке
-        acc[path] = [{ message: error.message }]; // Добавляем ошибку по пути
+        const path = error.path[0];
+        acc[path] = [{ message: error.message }];
         return acc;
       }, {});
-      return { errors }; // Возвращаем ошибки
+      return { errors };
     }
-    return { errors: {} }; // На случай других ошибок
+    return { errors: {} };
   }
 };
 
-// Watcher для инициализации формы при изменении входных данных
+// Watcher для обновления biodata
 watch(
   () => props.isVisible,
   (newVal) => {
@@ -273,6 +355,7 @@ watch(
       formData.value = {
         ...props.initialData,
       };
+      year.value = new Date(props.initialData.vintage);
     } else {
       resetForm();
     }
@@ -280,14 +363,18 @@ watch(
 );
 
 // Функция для сохранения вина
-const saveWine = () => {
-  emit("save", formData.value);
-  resetForm();
+const saveWine = async ({ valid }) => {
+  if (valid) {
+    console.log(imageFile.value);
+    emit("save", formData.value, imageFile.value);
+    resetForm();
+  }
 };
 
 // Функция для сброса формы
 const resetForm = () => {
   formData.value = {
+    id: undefined,
     name: "",
     category: "RED",
     colour: "RED",
@@ -297,25 +384,33 @@ const resetForm = () => {
     countryId: 0,
     isHidden: false,
     grapeIds: [],
-    vintage: 0,
-    regionId: 0,
+    vintage: new Date().getFullYear(),
     interestingFacts: "",
+    regionId: 0,
     organoleptic: "",
   };
+  imageFile.value = null;
   emit("close");
 };
 
-// Обработка ввода в числовых полях и преобразование в число
-const convertToNumber = (fieldName: keyof CreateWineRequest) => {
-  formData.value[fieldName] = Number(formData.value[fieldName]);
+// Обработчик загрузки изображения
+const handleFileUpload = (event: any) => {
+  const files = event.files;
+  const file = files[0];
+  const reader = new FileReader();
+
+  reader.onload = async (e) => {
+    console.log(e.target.result);
+    imageSrc.value = e.target.result;
+  };
+
+  console.log(file);
+  imageFile.value = files.length > 0 ? file : null;
+  reader.readAsDataURL(file);
 };
 
-// Обработчик для обновления видимости
+// Функция для подтверждения обновления видимости
 const updateVisible = (value: boolean) => {
   emit("update:visible", value);
 };
 </script>
-
-<style scoped>
-/* Ваши стили здесь */
-</style>

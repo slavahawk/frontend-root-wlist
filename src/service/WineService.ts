@@ -33,6 +33,18 @@ const WineService = {
     }
   },
 
+  async getWineSearch(name: string): Promise<Wine[]> {
+    try {
+      const response = await api.get<Wine[]>("/wines/search", {
+        params: { name },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Ошибка при поиске вин:", error);
+      throw error;
+    }
+  },
+
   async getWineById(id: number): Promise<Wine> {
     try {
       const response = await api.get<Wine>(`/wines/${id}`);
@@ -43,9 +55,15 @@ const WineService = {
     }
   },
 
-  async createWine(wineData: CreateWineRequest): Promise<Wine> {
+  async createWine(wineData: CreateWineRequest, image: File): Promise<Wine> {
     try {
-      const response = await api.post<Wine>("/wines", wineData);
+      const formData = new FormData();
+      if (image) {
+        formData.append("image", image);
+      }
+      formData.append("request", JSON.stringify(wineData));
+
+      const response = await api.post<Wine>("/wines", formData);
       return response.data;
     } catch (error) {
       console.error("Ошибка при создании вина:", error);

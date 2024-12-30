@@ -60,13 +60,14 @@ export const useWineStore = defineStore("wine", () => {
     }
   };
 
-  const createWine = async (wineData: CreateWineRequest) => {
+  const createWine = async (wineData: CreateWineRequest, image: File) => {
     loading.value = true;
     error.value = null;
 
     try {
-      const newWine = await WineService.createWine(wineData);
-      wines.value.push(newWine);
+      const newWine = await WineService.createWine(wineData, image);
+      // wines.value._embedded.rootWineResponseList.push(newWine);
+      return newWine;
     } catch (err) {
       error.value = "Ошибка при создании вина. Попробуйте еще раз.";
       console.error(err);

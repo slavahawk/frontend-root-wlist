@@ -60,6 +60,10 @@ export interface WineRoot {
   sugarType: SugarType;
   updatedAt: string;
   vintage: number;
+  originalImagePath: string;
+  mediumImagePath: null | string;
+  tinyImagePath: null | string;
+  grapeIds: number[];
 }
 
 export interface CreateWineRequest {
@@ -133,6 +137,28 @@ export const categoryOptions = [
   { label: "Десертное", value: "DESSERT" },
   { label: "Фортифицированное", value: "FORTIFIED" },
   { label: "Безалкогольное", value: "NON_ALCOHOL" },
+];
+
+export const сolourOptions = [
+  { label: "Красное", value: "RED" },
+  { label: "Белое", value: "WHITE" },
+  { label: "Оранжевое", value: "ORANGE" },
+  { label: "Розовое", value: "ROSE" },
+];
+
+export const sugarTypesOptions = [
+  { label: "Сухое", value: "DRY" },
+  { label: "Полусухое", value: "SEMI_DRY" },
+  { label: "Полусладкое", value: "SEMI_SWEET" },
+  { label: "Сладкое", value: "SWEET" },
+];
+
+export const bottleVolumeOptions = [
+  { label: "0.25л", value: 0.25 },
+  { label: "0.5л", value: 0.5 },
+  { label: "0.75л", value: 0.75 },
+  { label: "1.0л", value: 1.0 },
+  { label: "1.5л", value: 1.5 },
 ];
 
 export interface WineFilter {

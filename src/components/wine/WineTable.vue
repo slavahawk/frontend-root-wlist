@@ -12,76 +12,86 @@
         />
       </div>
 
-      <ToggleSwitch v-model="checked">
-        <template #handle="{ checked }">
-          <i
-            :class="[
-              '!text-xs pi',
-              { 'pi-check': checked, 'pi-times': !checked },
-            ]"
+      <div class="mb-4 flex gap-2">
+        <ToggleSwitch v-model="checked">
+          <template #handle="{ checked }">
+            <i
+              :class="[
+                '!text-xs pi',
+                { 'pi-check': checked, 'pi-times': !checked },
+              ]"
+            />
+          </template>
+        </ToggleSwitch>
+        <p>Поиск по названию</p>
+      </div>
+      <InputText
+        v-if="checked"
+        type="text"
+        v-model="search"
+        placeholder="Введите название"
+      />
+      <div v-else>
+        <MySelect
+          id="category"
+          :modelValue="selectedFilters.category"
+          :options="optionsFilter.category"
+          label="Категории"
+          @update="updateSelectedFilter('category', $event)"
+        />
+        <MySelect
+          id="colour"
+          :modelValue="selectedFilters.colour"
+          :options="optionsFilter.colour"
+          label="Цвет"
+          @update="updateSelectedFilter('colour', $event)"
+        />
+        <MySelect
+          id="sugarType"
+          :modelValue="selectedFilters.sugarType"
+          :options="optionsFilter.sugarType"
+          label="Уровень сахара"
+          @update="updateSelectedFilter('sugarType', $event)"
+        />
+        <MySelect
+          id="country"
+          :modelValue="selectedFilters.country"
+          :options="optionsFilter.country"
+          label="Страна"
+          @update="updateSelectedFilter('country', $event)"
+        />
+        <MySelect
+          id="region"
+          :modelValue="selectedFilters.region"
+          :options="optionsFilter.region"
+          label="Регион"
+          @update="updateSelectedFilter('region', $event)"
+        />
+        <MySelect
+          id="grape"
+          :modelValue="selectedFilters.grape"
+          :options="optionsFilter.grapes"
+          label="Виноград"
+          @update="updateSelectedFilter('grape', $event)"
+        />
+        <div class="input-container">
+          <div class="text-l">Год урожая</div>
+          <DatePicker
+            v-model="year"
+            view="year"
+            :minDate="minDate"
+            dateFormat="yy"
+            placeholder="Год урожая"
           />
-        </template>
-      </ToggleSwitch>
-
-      <MySelect
-        id="category"
-        :modelValue="selectedFilters.category"
-        :options="optionsFilter.category"
-        label="Категории"
-        @update="updateSelectedFilter('category', $event)"
-      />
-      <MySelect
-        id="colour"
-        :modelValue="selectedFilters.colour"
-        :options="optionsFilter.colour"
-        label="Цвет"
-        @update="updateSelectedFilter('colour', $event)"
-      />
-      <MySelect
-        id="sugarType"
-        :modelValue="selectedFilters.sugarType"
-        :options="optionsFilter.sugarType"
-        label="Уровень сахара"
-        @update="updateSelectedFilter('sugarType', $event)"
-      />
-      <MySelect
-        id="country"
-        :modelValue="selectedFilters.country"
-        :options="optionsFilter.country"
-        label="Страна"
-        @update="updateSelectedFilter('country', $event)"
-      />
-      <MySelect
-        id="region"
-        :modelValue="selectedFilters.region"
-        :options="optionsFilter.region"
-        label="Регион"
-        @update="updateSelectedFilter('region', $event)"
-      />
-      <MySelect
-        id="grape"
-        :modelValue="selectedFilters.grape"
-        :options="optionsFilter.grapes"
-        label="Виноград"
-        @update="updateSelectedFilter('grape', $event)"
-      />
-      <div class="input-container">
-        <div class="text-l">Год урожая</div>
-        <DatePicker
-          v-model="year"
-          view="year"
-          :minDate="minDate"
-          dateFormat="yy"
-          placeholder="Год урожая"
+        </div>
+        <MySelect
+          id="bottleVolume"
+          :modelValue="selectedFilters.bottleVolume"
+          :options="optionsFilter.bottleVolume"
+          label="Объем бутылки"
+          @update="updateSelectedFilter('bottleVolume', $event)"
         />
       </div>
-      <MySelect
-        id="bottleVolume"
-        :modelValue="selectedFilters.bottleVolume"
-        :options="optionsFilter.bottleVolume"
-        label="Объем бутылки"
-        @update="updateSelectedFilter('bottleVolume', $event)"
-      />
     </div>
 
     <div class="flex-1">
@@ -115,6 +125,16 @@
           </div>
         </template>
         <Column field="name" header="Имя" sortable></Column>
+        <Column header="Обложка" sortable>
+          <template #body="{ data }">
+            <Avatar
+              :image="data.originalImagePath"
+              size="xlarge"
+              shape="circle"
+              @error="(e) => (e.target.src = Logo)"
+            />
+          </template>
+        </Column>
         <Column field="category" header="Категория" sortable></Column>
         <Column field="colour" header="Цвет"></Column>
         <Column field="bottleVolume" header="Объем (л)"></Column>
@@ -187,8 +207,16 @@ import {
 } from "@/types/wine";
 import MySelect from "@/components/MySelect.vue";
 import WineDialog from "./WineDialog.vue";
+import WineService from "@/service/WineService.ts";
+import Logo from "@/assets/images/logo.png";
 
 const checked = ref(false);
+const search = ref("");
+
+watch(search, async (value) => {
+  const data = await WineService.getWineSearch(value);
+  console.log(data);
+});
 
 const year = ref();
 const minDate = new Date(1900, 0, 1);
@@ -196,6 +224,8 @@ const minDate = new Date(1900, 0, 1);
 const filterState = ref(window.innerWidth > 991);
 const showDialog = ref(false);
 const createMode = ref(true);
+
+const imageData = ref<File | null>(null);
 const formData = ref<CreateWineRequest & { id?: number }>({
   id: undefined,
   name: "",
@@ -207,6 +237,10 @@ const formData = ref<CreateWineRequest & { id?: number }>({
   countryId: 0,
   isHidden: false,
   grapeIds: [],
+  vintage: 2024,
+  interestingFacts: "",
+  regionId: 0,
+  organoleptic: "",
 });
 
 const optionsFilter = reactive<WineFilters>({
@@ -354,10 +388,10 @@ const showEditDialog = (wine: Wine) => {
   showDialog.value = true;
 };
 
-const saveWine = async (data: CreateWineRequest) => {
+const saveWine = async (data: CreateWineRequest, image?: File) => {
   try {
     if (createMode.value) {
-      await createWine(data);
+      await createWine(data, image);
     } else {
       const { id, ...wineData } = formData.value;
       await updateWine(id, wineData);

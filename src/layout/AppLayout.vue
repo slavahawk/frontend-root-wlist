@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import AppTopbar from "./AppTopbar.vue";
+import { useRegionStore } from "@/stores/regionStore.ts";
+import { useCountryStore } from "@/stores/countryStore.ts";
+import { useGrapeStore } from "@/stores/grapeStore.ts";
+
+const { fetchRegions } = useRegionStore();
+const { fetchCountries } = useCountryStore();
+const { fetchGrapes } = useGrapeStore();
+
+Promise.all([fetchRegions(), fetchCountries(), fetchGrapes()]);
 </script>
 
 <template>
