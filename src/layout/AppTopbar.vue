@@ -7,18 +7,14 @@ import Logo from "@/assets/images/svg/Logo.vue";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import WineSearchDialog from "@/components/wine/WineSearchDialog.vue"; // Import the new dialog component
 
 const { toggleDarkMode, isDarkTheme } = useLayout();
-
 const { logout } = useAuthStore();
 const { isLoad } = storeToRefs(useAuthStore());
 const route = useRoute();
 
-function checkActiveRoute(item) {
-  return route.path === item.to;
-}
-
-const showSearch = ref(false);
+const checkActiveRoute = (item) => route.path === item.to;
 
 const items = ref([
   {
@@ -47,6 +43,8 @@ const items = ref([
     to: RoutePath.Common,
   },
 ]);
+
+const showSearch = ref(false);
 </script>
 
 <template>
@@ -57,7 +55,7 @@ const items = ref([
         <span>W-List</span>
       </router-link>
     </template>
-    <template #item="{ item, props, hasSubmenu, root }">
+    <template #item="{ item }">
       <router-link
         class="link__menu"
         :to="item.to"
@@ -76,14 +74,14 @@ const items = ref([
           @click="showSearch = true"
         />
         <div class="layout-config-menu">
-          <button type="button" @click="toggleDarkMode">
+          <Button @click="toggleDarkMode" link>
             <i
               :class="[
                 'pi',
                 { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme },
               ]"
             ></i>
-          </button>
+          </Button>
           <div class="relative">
             <button
               v-styleclass="{
@@ -124,7 +122,11 @@ const items = ref([
           icon="pi pi-sign-out"
         ></Button>
       </div>
-      <Dialog modal v-model:visible="showSearch" header="Найти вино"> </Dialog>
+
+      <WineSearchDialog
+        :visible="showSearch"
+        @update:visible="showSearch = false"
+      />
     </template>
   </Menubar>
 </template>

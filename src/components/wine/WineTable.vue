@@ -94,6 +94,7 @@ import Logo from "@/assets/images/logo.png";
 import FilterSection from "./FilterSection.vue";
 import HeaderSection from "./HeaderSection.vue";
 import ActionButtons from "./ActionButtons.vue";
+import type { CreateWineRequest } from "@/types/wine.ts";
 
 const filterState = ref(window.innerWidth > 991);
 const showDialog = ref(false);
@@ -164,7 +165,18 @@ const onPageChange = async ({ page, rows }) => {
 
 await loadWines();
 
-const saveWine = async (id) => {
-  console.log(id);
+const saveWine = async (data: CreateWineRequest, image?: File) => {
+  try {
+    if (createMode.value) {
+      await createWine(data, image);
+    } else {
+      const { id, ...wineData } = formData.value;
+      await updateWine(id, wineData);
+    }
+    showDialog.value = false;
+    await loadWines();
+  } catch (error) {
+    console.error("Error saving wine:", error);
+  }
 };
 </script>

@@ -5,6 +5,7 @@ import type {
   WineResponses,
   WineFilters,
   WineRequest,
+  WineRequestSearch,
 } from "@/types/wine";
 
 const WineService = {
@@ -30,10 +31,10 @@ const WineService = {
     }
   },
 
-  async getWineSearch(name: string): Promise<Wine[]> {
+  async getWineSearch(params: WineRequestSearch): Promise<Wine[]> {
     try {
       const response = await api.get<Wine[]>("/wines/search", {
-        params: { name },
+        params,
       });
       return response.data;
     } catch (error) {

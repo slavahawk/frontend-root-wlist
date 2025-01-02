@@ -110,6 +110,13 @@ export interface WineQueryParams {
   sort?: string;
 }
 
+export interface WineRequestSearch {
+  name: string;
+  page: number;
+  size: number;
+  sort?: string;
+}
+
 export interface WineRequestFilter {
   category?: WineCategory;
   colour?: WineColour;
@@ -154,11 +161,11 @@ export const sugarTypesOptions = [
 ];
 
 export const bottleVolumeOptions = [
-  { label: "0.25л", value: 0.25 },
-  { label: "0.5л", value: 0.5 },
-  { label: "0.75л", value: 0.75 },
-  { label: "1.0л", value: 1.0 },
-  { label: "1.5л", value: 1.5 },
+  { name: "0.25л", id: 0.25 },
+  { name: "0.5л", id: 0.5 },
+  { name: "0.75л", id: 0.75 },
+  { name: "1.0л", id: 1.0 },
+  { name: "1.5л", id: 1.5 },
 ];
 
 export interface WineFilter {

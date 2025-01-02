@@ -116,7 +116,6 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!authStore.isAuthenticated) {
-      console.log("noAuth");
       delete api.defaults.headers.common["Authorization"]; // Удаляем заголовок Authorization
       next({ name: AppRoutes.LOGIN });
     } else {

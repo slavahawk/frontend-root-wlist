@@ -7,15 +7,19 @@ import type {
   Wine,
   WineFilters,
   WineRequest,
+  WineRequestSearch,
   WineResponses,
 } from "@/types/wine";
 
 export const useWineStore = defineStore("wine", () => {
   const wines = ref<WineResponses>();
   const winesFilter = ref<WineFilters>();
+  const winesSearch = ref<WineResponses>();
   const selectedWine = ref<Wine | null>(null);
   const loading = ref(false);
+  const loadingSearch = ref(false);
   const error = ref<string | null>(null);
+  const errorSearch = ref<string | null>(null);
 
   const fetchWines = async (requestParams: WineRequest) => {
     loading.value = true;
@@ -28,6 +32,20 @@ export const useWineStore = defineStore("wine", () => {
       console.error(err);
     } finally {
       loading.value = false;
+    }
+  };
+
+  const fetchWinesSearch = async (params: WineRequestSearch) => {
+    loadingSearch.value = true;
+    errorSearch.value = null;
+
+    try {
+      winesSearch.value = await WineService.getWineSearch(params);
+    } catch (err) {
+      error.value = "Ошибка при получении вин. Попробуйте еще раз.";
+      console.error(err);
+    } finally {
+      loadingSearch.value = false;
     }
   };
 
@@ -125,5 +143,9 @@ export const useWineStore = defineStore("wine", () => {
     updateWine,
     deleteWine,
     clearSelectedWine,
+    winesSearch,
+    fetchWinesSearch,
+    loadingSearch,
+    errorSearch,
   };
 });

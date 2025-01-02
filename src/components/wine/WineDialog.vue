@@ -70,7 +70,7 @@
           id="bottleVolume"
           name="bottleVolume"
           v-model="formData.bottleVolume"
-          :options="winesFilter.bottleVolume"
+          :options="bottleVolumeOptions"
           option-label="name"
           option-value="id"
         />
@@ -245,6 +245,7 @@
 import { defineEmits, defineProps, ref, watch } from "vue";
 import { z } from "zod";
 import {
+  bottleVolumeOptions,
   categoryOptions,
   type CreateWineRequest,
   sugarTypesOptions,
@@ -367,7 +368,6 @@ watch(
 // Функция для сохранения вина
 const saveWine = async ({ valid }) => {
   if (valid) {
-    console.log(imageFile.value);
     emit("save", formData.value, imageFile.value);
     resetForm();
   }
@@ -392,6 +392,7 @@ const resetForm = () => {
     organoleptic: "",
   };
   imageFile.value = null;
+  imageSrc.value = null;
   emit("close");
 };
 
@@ -402,11 +403,9 @@ const handleFileUpload = (event: any) => {
   const reader = new FileReader();
 
   reader.onload = async (e) => {
-    console.log(e.target.result);
     imageSrc.value = e.target.result;
   };
 
-  console.log(file);
   imageFile.value = files.length > 0 ? file : null;
   reader.readAsDataURL(file);
 };

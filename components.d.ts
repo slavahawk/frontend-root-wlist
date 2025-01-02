@@ -127,6 +127,7 @@ declare module 'vue' {
     TreeSelect: typeof import('primevue/treeselect')['default']
     TreeTable: typeof import('primevue/treetable')['default']
     WineDialog: typeof import('./src/components/wine/WineDialog.vue')['default']
+    WineSearchDialog: typeof import('./src/components/wine/WineSearchDialog.vue')['default']
     WineTable: typeof import('./src/components/wine/WineTable.vue')['default']
   }
   export interface ComponentCustomProperties {

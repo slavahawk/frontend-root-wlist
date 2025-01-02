@@ -199,11 +199,6 @@ const resolver = async ({ values }) => {
 // Handle form submission
 const handleSubmit = async ({ valid, states }) => {
   if (valid) {
-    console.log("Форма отправлена:", {
-      shopName: states.shopName.value,
-      email: states.email.value,
-      password: states.password.value,
-    });
     await authStore.register({
       shopName: states.shopName.value,
       email: states.email.value,
