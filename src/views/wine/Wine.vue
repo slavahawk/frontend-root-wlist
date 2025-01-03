@@ -1,5 +1,4 @@
 <template>
-  <!--  <TestTable />-->
   <WineTable />
 </template>
 

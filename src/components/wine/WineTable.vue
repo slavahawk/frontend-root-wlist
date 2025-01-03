@@ -51,11 +51,8 @@
         </Column>
         <Column header="Действия">
           <template #body="{ data }">
-            <ActionButtons
-              :wine="data"
-              @edit="showEditDialog(data)"
-              @delete="deleteWine(data.id)"
-            />
+            <!--            @edit="showEditDialog(data)"-->
+            <ActionButtons :wine="data" @delete="deleteWine" />
           </template>
         </Column>
       </DataTable>
@@ -80,6 +77,8 @@
         @update:visible="showDialog = $event"
       />
     </div>
+
+    <ConfirmDialog />
   </div>
 </template>
 
@@ -93,6 +92,8 @@ import FilterSection from "./FilterSection.vue";
 import HeaderSection from "./HeaderSection.vue";
 import ActionButtons from "./ActionButtons.vue";
 import type { CreateWineRequest } from "@/types/wine.ts";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
 const filterState = ref(window.innerWidth > 991);
 const showDialog = ref(false);
@@ -176,5 +177,35 @@ const saveWine = async (data: CreateWineRequest, image?: File) => {
   } catch (error) {
     console.error("Error saving wine:", error);
   }
+};
+
+const confirm = useConfirm();
+const toast = useToast();
+
+const deleteWine = (id: number) => {
+  confirm.require({
+    message: "Вы уверены, что хотите удалить вино?",
+    header: "Удалить вино",
+    icon: "pi pi-info-circle",
+    rejectLabel: "Cancel",
+    rejectProps: {
+      label: "Назад",
+      severity: "secondary",
+      outlined: true,
+    },
+    acceptProps: {
+      label: "Удалить",
+      severity: "danger",
+    },
+    accept: () => wineDelete(id),
+    reject: () => {
+      toast.add({
+        severity: "error",
+        summary: "Rejected",
+        detail: "You have rejected",
+        life: 3000,
+      });
+    },
+  });
 };
 </script>

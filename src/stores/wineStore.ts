@@ -10,6 +10,7 @@ import type {
   WineRequestSearch,
   WineResponses,
 } from "@/types/wine";
+import { useToast } from "primevue/usetoast";
 
 export const useWineStore = defineStore("wine", () => {
   const wines = ref<WineResponses>();
@@ -20,6 +21,7 @@ export const useWineStore = defineStore("wine", () => {
   const loadingSearch = ref(false);
   const error = ref<string | null>(null);
   const errorSearch = ref<string | null>(null);
+  const toast = useToast();
 
   const fetchWines = async (requestParams: WineRequest) => {
     loading.value = true;
@@ -117,7 +119,12 @@ export const useWineStore = defineStore("wine", () => {
 
     try {
       await WineService.deleteWine(id);
-      wines.value = wines.value.filter((wine) => wine.id !== id);
+      toast.add({
+        severity: "success",
+        summary: "Удалено",
+        detail: `Вино под ID ${id} удалено`,
+        life: 3000,
+      });
     } catch (err) {
       error.value = "Ошибка при удалении вина. Попробуйте еще раз.";
       console.error(err);

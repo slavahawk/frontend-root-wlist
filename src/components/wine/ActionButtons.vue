@@ -16,20 +16,26 @@
   </div>
 </template>
 
-<script setup>
-import { defineProps } from "vue";
+<script setup lang="ts">
+import { defineProps, defineEmits } from "vue";
+import type { Wine } from "@/types/wine.ts";
 
-const props = defineProps({
-  wine: Object,
-  edit: Function,
-  delete: Function,
-});
+const props = defineProps<{
+  wine: Wine;
+  edit: (wine: Wine) => void;
+  delete: (id: number) => void;
+}>();
+
+const emit = defineEmits<{
+  (e: "edit", wine: Wine): void;
+  (e: "delete", id: number): void;
+}>();
 
 const editWine = () => {
-  props.edit(props.wine);
+  emit("edit", props.wine);
 };
 
 const deleteWine = () => {
-  props.delete(props.wine.id);
+  emit("delete", props.wine.id);
 };
 </script>

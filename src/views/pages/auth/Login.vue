@@ -92,15 +92,6 @@
               class="w-full"
               type="submit"
             ></Button>
-
-            <div class="flex items-center justify-between mt-4 mb-8 gap-8">
-              <router-link
-                :to="{ name: AppRoutes.REG }"
-                class="font-medium no-underline text-right cursor-pointer text-primary"
-                >Регистрация</router-link
-              >
-              <ForgotPasswordDialog />
-            </div>
           </Form>
         </div>
       </div>
@@ -115,8 +106,6 @@ import { z } from "zod";
 import FloatingConfigurator from "@/components/FloatingConfigurator.vue";
 import { useAuthStore } from "@/stores/authStore.ts";
 import Logo from "@/assets/images/svg/Logo.vue";
-import { AppRoutes } from "@/router";
-import ForgotPasswordDialog from "@/components/ForgotPasswordDialog.vue";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/const/localstorage.ts";
 
 const authStore = useAuthStore();
