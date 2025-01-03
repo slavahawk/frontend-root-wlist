@@ -59,7 +59,6 @@
           </template>
         </Column>
       </DataTable>
-
       <Paginator
         v-if="wines.page"
         :first="params.page * params.size"
@@ -72,7 +71,6 @@
           <Button @click="loadWines" type="button" icon="pi pi-refresh" text />
         </template>
       </Paginator>
-
       <WineDialog
         :isVisible="showDialog"
         :createMode="createMode"

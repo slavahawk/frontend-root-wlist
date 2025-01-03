@@ -52,16 +52,30 @@ const WineService = {
       throw error;
     }
   },
-
   async createWine(wineData: CreateWineRequest, image: File): Promise<Wine> {
     try {
       const formData = new FormData();
-      if (image) {
-        formData.append("image", image);
-      }
-      formData.append("request", JSON.stringify(wineData));
 
-      const response = await api.post<Wine>("/wines", formData);
+      // Append the image file if provided
+      if (image) {
+        formData.append("image", image, image.name); // Including the file name
+      }
+
+      // Append the JSON request data
+      formData.append(
+        "request",
+        new Blob([JSON.stringify(wineData)], { type: "application/json" }),
+      );
+
+      // Send the POST request
+      const response = await api.post<Wine>("/wines", formData, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data", // Content-Type could be omitted, FormData will handle it
+        },
+      });
+
+      // Return the created wine data
       return response.data;
     } catch (error) {
       console.error("Ошибка при создании вина:", error);

@@ -162,10 +162,16 @@ export const sugarTypesOptions = [
 
 export const bottleVolumeOptions = [
   { name: "0.25л", id: 0.25 },
+  { name: "0.33л", id: 0.33 },
   { name: "0.5л", id: 0.5 },
+  { name: "0.68л", id: 0.68 },
+  { name: "0.7л", id: 0.7 },
   { name: "0.75л", id: 0.75 },
   { name: "1.0л", id: 1.0 },
   { name: "1.5л", id: 1.5 },
+  { name: "3.0л", id: 3.0 },
+  { name: "4.5л", id: 4.5 },
+  { name: "6.0л", id: 6.0 },
 ];
 
 export interface WineFilter {

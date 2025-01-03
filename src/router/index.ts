@@ -120,6 +120,8 @@ router.beforeEach((to, from, next) => {
       next({ name: AppRoutes.LOGIN });
     } else {
       initializeAuth();
+
+      console.log("123");
       next();
     }
   } else {

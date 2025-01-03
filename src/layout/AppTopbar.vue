@@ -22,11 +22,11 @@ const items = ref([
     icon: "pi pi-users",
     to: RoutePath.Wine,
   },
-  {
-    label: "Приглашенные",
-    icon: "pi pi-users",
-    to: RoutePath.Invitation,
-  },
+  // {
+  //   label: "Приглашенные",
+  //   icon: "pi pi-users",
+  //   to: RoutePath.Invitation,
+  // },
   {
     label: "Grape",
     icon: "pi pi-users",

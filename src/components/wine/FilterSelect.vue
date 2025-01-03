@@ -14,17 +14,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineEmits, defineProps } from "vue";
 
-defineProps({
-  modelValue: {
-    type: [String, Number, Object],
-    required: true,
-  },
-  label: String,
-  options: Array,
-});
+defineProps<{
+  modelValue: string | number | object | undefined;
+  label: string;
+  options: [];
+}>();
 
 const emit = defineEmits(["update:modelValue", "change"]);
 

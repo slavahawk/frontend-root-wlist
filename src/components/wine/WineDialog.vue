@@ -215,11 +215,11 @@
 
       <div class="input-container">
         <label for="image">Загрузить изображение:</label>
+        <!--        :maxFileSize="2000000"-->
         <FileUpload
           id="image"
           name="image"
           accept="image/*"
-          maxFileSize="2000000"
           @select="handleFileUpload"
           customUpload
           auto
