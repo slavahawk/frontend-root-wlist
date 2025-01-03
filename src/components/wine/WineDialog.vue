@@ -108,6 +108,7 @@
           v-model="year"
           view="year"
           :minDate="minDate"
+          :maxData="maxDate"
           dateFormat="yy"
           placeholder="Год урожая"
         />
@@ -279,6 +280,7 @@ const emit = defineEmits<{
 
 const year = ref<Date>(new Date());
 const minDate = new Date(1900, 0, 1);
+const maxDate = ref(new Date());
 const formData = ref<CreateWineRequest & { id?: number }>({
   id: undefined,
   name: "",
@@ -324,14 +326,15 @@ const schema = z.object({
     "Тип сахара обязателен.",
   ),
   vintage: z.number().min(1900, "Год урожая не может быть меньше 1900."),
-  countryId: z.number().min(1, "Страна ID обязательна."),
-  regionId: z.number().min(1, "Регион ID обязателен."),
+  countryId: z.number().min(1, "Страна обязательна."),
+  regionId: z.number().min(1, "Регион обязателен."),
   grapeIds: z.array(z.number()).optional(),
-  interestingFacts: z.string().optional(),
-  organoleptic: z.string().optional(),
+  interestingFacts: z.string().nonempty("Интересные факты обязательны."),
+  organoleptic: z
+    .string()
+    .nonempty("Органолептические характеристики обязательны."),
   isHidden: z.boolean(),
 });
-
 // Обработчик формы
 const resolver = async ({ values }) => {
   try {

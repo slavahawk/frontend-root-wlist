@@ -51,8 +51,10 @@
         </Column>
         <Column header="Действия">
           <template #body="{ data }">
-            <!--            @edit="showEditDialog(data)"-->
-            <ActionButtons :wine="data" @delete="deleteWine" />
+            <ActionButtons
+              @delete="deleteWine(data.id)"
+              @edit="editWine(data)"
+            />
           </template>
         </Column>
       </DataTable>
@@ -207,5 +209,9 @@ const deleteWine = (id: number) => {
       });
     },
   });
+};
+
+const editWine = async (wine: Wine) => {
+  console.log(wine);
 };
 </script>

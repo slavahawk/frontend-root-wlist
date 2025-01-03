@@ -17,25 +17,18 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
-import type { Wine } from "@/types/wine.ts";
-
-const props = defineProps<{
-  wine: Wine;
-  edit: (wine: Wine) => void;
-  delete: (id: number) => void;
-}>();
+import { defineEmits } from "vue";
 
 const emit = defineEmits<{
-  (e: "edit", wine: Wine): void;
+  (e: "edit"): void;
   (e: "delete", id: number): void;
 }>();
 
 const editWine = () => {
-  emit("edit", props.wine);
+  emit("edit");
 };
 
 const deleteWine = () => {
-  emit("delete", props.wine.id);
+  emit("delete");
 };
 </script>
