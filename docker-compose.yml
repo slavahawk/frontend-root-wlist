@@ -1,7 +1,7 @@
 services:
-  vue-build-admin:
+  vue-build-root:
     image: node:lts
-    container_name: admin-w-list-container
+    container_name: root-w-list-container
     working_dir: /usr/src/app
     volumes:
       - .:/usr/src/app # Монтируем текущую директорию в контейнер
