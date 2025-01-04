@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="submitForm">
-    {{ region }}
     <div class="field">
       <label for="name">Название</label>
       <InputText id="name" v-model="region.name" required />
@@ -8,12 +7,12 @@
 
     <div class="field">
       <label for="countryId">Страна</label>
-      {{ countriesOptions }}
-      <Dropdown
+      <Select
         id="countryId"
-        v-model="region.countryId"
+        v-model="selectedCountryId"
         :options="countriesOptions"
-        optionLabel="name"
+        optionLabel="label"
+        optionValue="value"
         placeholder="Выберите страну"
         required
       />
@@ -37,9 +36,13 @@ import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
 
 const props = defineProps<{ region: Region | null }>();
-const region = ref({ name: "", countryId: null }); // добавьте countryId для страны
+const region = ref<Region>({ name: "", countryId: null }); // Делаем типизацию
 
+// Получаем список стран из хранилища
 const { countriesOptions } = storeToRefs(useCountryStore());
+
+// Состояние для выбора страны, инициализируем его null
+const selectedCountryId = ref<number | null>(null);
 
 interface Emit {
   (e: "save", val: Region): void;
@@ -52,15 +55,19 @@ watch(
   () => props.region,
   (newValue) => {
     if (newValue) {
-      region.value = { ...newValue }; // Копируем данные для редактирования
+      region.value = { ...newValue };
+      // Устанавливаем id страны, если country доступна
+      selectedCountryId.value = newValue.country?.id || null;
     } else {
-      region.value = { name: "", countryId: null }; // Очищаем данные для новой записи
+      region.value = { name: "", countryId: null };
+      selectedCountryId.value = null; // Сбросить выбор страны для новой записи
     }
   },
   { immediate: true },
 );
 
 const submitForm = () => {
+  region.value.countryId = selectedCountryId.value; // Устанавливаем countryId перед отправкой
   emit("save", region.value); // Эмитируем событие сохранения
 };
 </script>

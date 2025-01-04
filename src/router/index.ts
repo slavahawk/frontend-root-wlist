@@ -9,6 +9,7 @@ export enum AppRoutes {
   WINE = "Wine",
   GRAPE = "Grape",
   REGION = "Region",
+  COUNTRY = "Country",
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
@@ -17,6 +18,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.WINE]: "/",
   [AppRoutes.GRAPE]: "/grape",
   [AppRoutes.REGION]: "/region",
+  [AppRoutes.COUNTRY]: "/country",
 };
 
 const router = createRouter({
@@ -49,6 +51,12 @@ const router = createRouter({
           path: RoutePath.Region,
           name: AppRoutes.REGION,
           component: () => import("@/views/region/Region.vue"),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: RoutePath.Country,
+          name: AppRoutes.COUNTRY,
+          component: () => import("@/views/country/Country.vue"),
           meta: { requiresAuth: true },
         },
       ],

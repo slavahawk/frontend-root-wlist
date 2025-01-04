@@ -7,7 +7,7 @@ import Logo from "@/assets/images/svg/Logo.vue";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import WineSearchDialog from "@/components/wine/WineSearchDialog.vue"; // Import the new dialog component
+import WineSearchDialog from "@/components/wine/WineSearchDialog.vue";
 
 const { toggleDarkMode, isDarkTheme } = useLayout();
 const { logout } = useAuthStore();
@@ -22,15 +22,15 @@ const items = ref([
     icon: "pi pi-users",
     to: RoutePath.Wine,
   },
-  // {
-  //   label: "Приглашенные",
-  //   icon: "pi pi-users",
-  //   to: RoutePath.Invitation,
-  // },
   {
-    label: "Grape",
+    label: "Виноград",
     icon: "pi pi-users",
     to: RoutePath.Grape,
+  },
+  {
+    label: "Страны",
+    icon: "pi pi-users",
+    to: RoutePath.Country,
   },
   {
     label: "Регионы",

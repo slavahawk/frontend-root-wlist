@@ -1,3 +1,4 @@
+<!-- Родительский компонент -->
 <template>
   <div>
     <div class="flex justify-between mb-4">
@@ -45,6 +46,7 @@
         :region="selectedRegion"
         @save="saveRegion"
         @cancel="isDialogVisible = false"
+        :countriesOptions="countriesOptions"
       />
     </Dialog>
   </div>
@@ -52,13 +54,15 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { useRegionStore } from "@/stores/regionStore.ts"; // Обратите внимание на правильность импорта
-import RegionForm from "./RegionForm.vue"; // Предполагается наличие формы для создания/редактирования региона
+import { useRegionStore } from "@/stores/regionStore.ts";
+import RegionForm from "./RegionForm.vue";
 import { storeToRefs } from "pinia";
 import { useToast } from "primevue/usetoast";
+import { useCountryStore } from "@/stores/countryStore.ts"; // Импортируем хранилище стран
 
 const { fetchRegions, deleteRegion, updateRegion, createRegion } =
   useRegionStore();
+const { countriesOptions } = storeToRefs(useCountryStore()); // Получение стран из хранилища
 
 const { regions, loading } = storeToRefs(useRegionStore());
 const toast = useToast();
@@ -66,15 +70,12 @@ const toast = useToast();
 const isDialogVisible = ref(false);
 const selectedRegion = ref(null);
 
-// Загрузка данных о регионах при инициализации
 onMounted(fetchRegions);
 
-// Обработчик изменения выбора
 const onSelectionChange = (selection) => {
   selectedRegion.value = selection;
 };
 
-// Функция для удаления региона с подтверждением
 const confirmDeleteRegion = (id) => {
   if (confirm("Вы уверены, что хотите удалить этот регион?")) {
     deleteRegion(id).then(() => {
@@ -84,27 +85,27 @@ const confirmDeleteRegion = (id) => {
         detail: "Регион успешно удален",
         life: 3000,
       });
-      fetchRegions(); // Перезагружаем данные
+      fetchRegions();
     });
   }
 };
 
-// Функция для редактирования региона
 const editRegion = (data) => {
   selectedRegion.value = data;
   isDialogVisible.value = true;
 };
 
-// Функция для создания нового региона
 const openCreateDialog = () => {
-  selectedRegion.value = null; // Сбросить выбранный регион перед открытием
-  isDialogVisible.value = true; // Показать диалог
+  selectedRegion.value = null;
+  isDialogVisible.value = true;
 };
 
-// Функция для сохранения изменений
 const saveRegion = async (region) => {
   if (region.id) {
-    await updateRegion(region.id, region);
+    await updateRegion(region.id, {
+      name: region.name,
+      countryId: region.country.id,
+    });
     toast.add({
       severity: "success",
       summary: "Успех",
@@ -112,7 +113,8 @@ const saveRegion = async (region) => {
       life: 3000,
     });
   } else {
-    await createRegion(region);
+    console.log(region);
+    await createRegion({ name: region.name, countryId: region.countryId });
     toast.add({
       severity: "success",
       summary: "Успех",
@@ -122,10 +124,9 @@ const saveRegion = async (region) => {
   }
 
   isDialogVisible.value = false;
-  await fetchRegions(); // Обновляем список регионов после изменения
+  await fetchRegions();
 };
 
-// Функция для сброса формы
 const resetForm = () => {
   selectedRegion.value = null;
 };
