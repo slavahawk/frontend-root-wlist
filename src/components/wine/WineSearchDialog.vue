@@ -55,15 +55,11 @@
           {{ data.isHidden ? "Да" : "Нет" }}
         </template>
       </Column>
-      <!--      <Column header="Действия">-->
-      <!--        <template #body="{ data }">-->
-      <!--          &lt;!&ndash;          <ActionButtons&ndash;&gt;-->
-      <!--          &lt;!&ndash;              :wine="data"&ndash;&gt;-->
-      <!--          &lt;!&ndash;              @edit="showEditDialog(data)"&ndash;&gt;-->
-      <!--          &lt;!&ndash;              @delete="deleteWine(data.id)"&ndash;&gt;-->
-      <!--          &lt;!&ndash;          />&ndash;&gt;-->
-      <!--        </template>-->
-      <!--      </Column>-->
+      <Column header="Действия">
+        <template #body="{ data }">
+          <ActionButtons @delete="deleteWine(data.id)" @edit="editWine(data)" />
+        </template>
+      </Column>
     </DataTable>
     <Paginator
       v-if="winesSearch?.page"
@@ -85,10 +81,13 @@ import { defineProps, reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore.ts";
 import { storeToRefs } from "pinia";
 import { debounce } from "@/utils/debounce";
-import type { WineRequestSearch } from "@/types/wine.ts";
+import type { Wine, WineRequestSearch } from "@/types/wine.ts";
 import Logo from "@/assets/images/logo.png";
+import ActionButtons from "@/components/wine/ActionButtons.vue";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
-const { fetchWinesSearch } = useWineStore();
+const { fetchWinesSearch, deleteWine: wineDelete } = useWineStore();
 const { winesSearch, loadingSearch } = storeToRefs(useWineStore());
 
 defineProps<{
@@ -130,6 +129,40 @@ const loadWines = async () => {
 function handleHide(value: boolean) {
   emit("update:visible", value);
 }
+
+const confirm = useConfirm();
+const toast = useToast();
+
+const deleteWine = (id: number) => {
+  confirm.require({
+    message: "Вы уверены, что хотите удалить вино?",
+    header: "Удалить вино",
+    icon: "pi pi-info-circle",
+    rejectLabel: "Cancel",
+    rejectProps: {
+      label: "Назад",
+      severity: "secondary",
+      outlined: true,
+    },
+    acceptProps: {
+      label: "Удалить",
+      severity: "danger",
+    },
+    accept: () => wineDelete(id),
+    reject: () => {
+      toast.add({
+        severity: "error",
+        summary: "Rejected",
+        detail: "You have rejected",
+        life: 3000,
+      });
+    },
+  });
+};
+
+const editWine = async (wine: Wine) => {
+  console.log(wine);
+};
 </script>
 
 <style scoped>

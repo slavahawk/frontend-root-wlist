@@ -9,7 +9,6 @@
         @click="openCreateDialog"
       />
     </div>
-
     <DataTable
       v-if="!loading"
       :value="regions"

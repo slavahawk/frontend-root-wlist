@@ -93,7 +93,7 @@ import Logo from "@/assets/images/logo.png";
 import FilterSection from "./FilterSection.vue";
 import HeaderSection from "./HeaderSection.vue";
 import ActionButtons from "./ActionButtons.vue";
-import type { CreateWineRequest } from "@/types/wine.ts";
+import type { CreateWineRequest, Wine } from "@/types/wine.ts";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 

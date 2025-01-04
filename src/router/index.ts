@@ -64,23 +64,23 @@ const router = createRouter({
     {
       path: "/:pathMatch(.*)*",
       name: "notfound",
-      component: () => import("@/views/pages/NotFound.vue"),
+      component: () => import("@/views/NotFound.vue"),
     },
 
     {
       path: RoutePath.Login,
       name: AppRoutes.LOGIN,
-      component: () => import("@/views/pages/auth/Login.vue"),
+      component: () => import("@/views/auth/Login.vue"),
     },
     {
       path: "/auth/access",
       name: "accessDenied",
-      component: () => import("@/views/pages/auth/Access.vue"),
+      component: () => import("@/views/auth/Access.vue"),
     },
     {
       path: "/auth/error",
       name: "error",
-      component: () => import("@/views/pages/auth/Error.vue"),
+      component: () => import("@/views/auth/Error.vue"),
     },
   ],
 });
