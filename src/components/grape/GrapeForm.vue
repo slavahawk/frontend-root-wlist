@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import type { Grape } from "@/types/grape";
 
 const props = defineProps<{ grape: Grape | null }>();

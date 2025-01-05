@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import type { Country } from "@/types/country.ts";
 
 const props = defineProps<{ country: Country | null }>();

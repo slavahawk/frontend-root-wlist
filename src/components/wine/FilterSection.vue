@@ -3,6 +3,12 @@
     <div class="flex items-center justify-between mb-4">
       <div class="text-2xl">Фильтры</div>
       <Button
+        :icon="`pi ${filterState ? 'pi-filter-slash' : 'pi-filter'}`"
+        variant="text"
+        @click="$emit('toggleMenu')"
+        v-tooltip.bottom="`${filterState ? 'Скрыть' : 'Раскрыть'} фильтры`"
+      />
+      <Button
         label="Сбросить фильтры"
         icon="pi pi-times"
         size="small"
@@ -63,16 +69,17 @@
   </div>
 </template>
 
-<script setup>
-import { defineEmits, defineProps, reactive } from "vue";
+<script setup lang="ts">
+import { reactive } from "vue";
 import FilterSelect from "@/components/wine/FilterSelect.vue";
 
-const props = defineProps({
-  initialParams: Object,
-  winesFilter: Object,
-});
+const props = defineProps<{
+  initialParams: object;
+  winesFilter: object;
+  filterState: boolean;
+}>();
 
-const emit = defineEmits(["reset", "paramsChange"]);
+const emit = defineEmits(["reset", "paramsChange", "toggleMenu"]);
 
 // Создаем локальный параметр на основе начального параметра
 const localParams = reactive({ ...props.initialParams });

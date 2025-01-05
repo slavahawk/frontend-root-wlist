@@ -4,6 +4,8 @@
       v-if="filterState"
       :initialParams="params"
       :winesFilter="winesFilter"
+      :filterState="filterState"
+      @toggleMenu="() => (filterState = !filterState)"
       @reset="resetFilters"
       @paramsChange="onParamsChange"
     />
@@ -79,7 +81,6 @@
         @update:visible="showDialog = $event"
       />
     </div>
-
     <ConfirmDialog />
   </div>
 </template>

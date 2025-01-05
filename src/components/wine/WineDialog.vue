@@ -243,7 +243,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { z } from "zod";
 import {
   bottleVolumeOptions,

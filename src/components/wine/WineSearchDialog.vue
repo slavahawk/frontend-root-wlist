@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore.ts";
 import { storeToRefs } from "pinia";
 import { debounce } from "@/utils/debounce";
