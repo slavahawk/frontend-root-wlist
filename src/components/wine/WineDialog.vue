@@ -125,9 +125,14 @@
 
       <div class="input-container">
         <label for="vintage">Год урожая:</label>
+        <label class="flex items-center gap-2 mb-2">
+          <ToggleSwitch id="nonVintage" v-model="isNonVintage" />
+          NV
+        </label>
         <DatePicker
           v-model="year"
           view="year"
+          :disabled="isNonVintage"
           :minDate="minDate"
           :maxData="maxDate"
           dateFormat="yy"
@@ -237,7 +242,6 @@
 
       <div class="input-container">
         <label for="image">Загрузить изображение:</label>
-        <!--        :maxFileSize="2000000"-->
         <FileUpload
           id="image"
           name="image"
@@ -280,10 +284,12 @@ import { useRegionStore } from "@/stores/regionStore.ts";
 import { useGrapeStore } from "@/stores/grapeStore.ts";
 import FileUpload from "primevue/fileupload";
 
+// Ссылки на данные из Pinia
 const { countriesOptions } = storeToRefs(useCountryStore());
 const { regionOptions } = storeToRefs(useRegionStore());
 const { grapeOptions } = storeToRefs(useGrapeStore());
 
+// Свойства компонента
 const props = defineProps<{
   isVisible: boolean;
   createMode: boolean;
@@ -296,7 +302,9 @@ const emit = defineEmits<{
   (e: "update:visible", value: boolean): void;
 }>();
 
+// Реактивные ссылки
 const year = ref<Date>(new Date());
+const isNonVintage = ref(false); // Определяет состояние Non-Vintage
 const minDate = new Date(1900, 0, 1);
 const maxDate = ref(new Date());
 const formData = ref<CreateWineRequest & { id?: number }>({
@@ -316,14 +324,18 @@ const formData = ref<CreateWineRequest & { id?: number }>({
   organoleptic: "",
 });
 
+// Реактивные ссылки для изображения
 const imageFile = ref<File | null>(null);
 const imageSrc = ref("");
 
+// Отслеживание изменений года урожая
 watch(year, (val: Date) => {
-  formData.value.vintage = val.getFullYear();
+  if (!isNonVintage.value) {
+    formData.value.vintage = val.getFullYear(); // Устанавливаем год урожая
+  }
 });
 
-// Zod schema for validation
+// Zod схема для валидации
 const schema = z.object({
   name: z.string().nonempty("Имя обязательно."),
   category: z.enum(
@@ -343,7 +355,10 @@ const schema = z.object({
     sugarTypesOptions.map((option) => option.value),
     "Уровень сахара обязателен.",
   ),
-  vintage: z.number().min(1900, "Год урожая не может быть меньше 1900."),
+  vintage: z.union([
+    z.number().min(1900, "Год урожая не может быть меньше 1900."),
+    z.literal("NV"),
+  ]),
   countryId: z.number().min(1, "Страна обязательна."),
   regionId: z.number().min(1, "Регион обязателен."),
   grapeIds: z.array(z.number()).optional(),
@@ -353,6 +368,7 @@ const schema = z.object({
     .nonempty("Органолептические характеристики обязательны."),
   isHidden: z.boolean(),
 });
+
 // Обработчик формы
 const resolver = async ({ values }) => {
   try {
@@ -371,15 +387,16 @@ const resolver = async ({ values }) => {
   }
 };
 
-// Watcher для обновления biodata
+// Отслеживание изменений видимости компонента
 watch(
   () => props.isVisible,
   (newVal) => {
     if (newVal && props.initialData) {
+      isNonVintage.value = props.initialData.vintage === "NV"; // Устанавливаем состояние Non-Vintage
       formData.value = {
         ...props.initialData,
       };
-      year.value = new Date(props.initialData.vintage);
+      year.value = new Date(props.initialData.vintage); // Устанавливаем год (если не NV)
     } else {
       resetForm();
     }
@@ -389,6 +406,11 @@ watch(
 // Функция для сохранения вина
 const saveWine = async ({ valid }) => {
   if (valid) {
+    if (isNonVintage.value) {
+      formData.value.vintage = "NV"; // Устанавливаем в "NV", если чекбокс активен
+    } else {
+      formData.value.vintage = year.value.getFullYear(); // Устанавливаем год
+    }
     emit("save", formData.value, imageFile.value);
     resetForm();
   }
@@ -412,6 +434,7 @@ const resetForm = () => {
     regionId: 0,
     organoleptic: "",
   };
+  isNonVintage.value = false; // Сброс чекбокса
   imageFile.value = null;
   imageSrc.value = null;
   emit("close");
@@ -435,4 +458,13 @@ const handleFileUpload = (event: any) => {
 const updateVisible = (value: boolean) => {
   emit("update:visible", value);
 };
+
+// Установка значения окна в зависимости от Non-Vintage
+watch(isNonVintage, (newVal) => {
+  if (newVal) {
+    formData.value.vintage = "NV"; // Устанавливаем в "NV"
+  } else {
+    formData.value.vintage = year.value.getFullYear(); // Устанавливаем в полноценный год
+  }
+});
 </script>

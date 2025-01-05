@@ -39,11 +39,7 @@
         <Column field="category" header="Категория" sortable></Column>
         <Column field="colour" header="Цвет"></Column>
         <Column field="bottleVolume" header="Объем (л)"></Column>
-        <Column field="alcoholByVolume" header="Алкоголь (%)">
-          <template #body="{ data }">
-            {{ (data.alcoholByVolume * 10).toFixed(1) }}
-          </template>
-        </Column>
+        <Column field="alcoholByVolume" header="Алкоголь (%)"> </Column>
         <Column field="sugarType" header="Уровень сахара"></Column>
         <Column field="vintage" header="Год урожая"></Column>
         <Column field="isHidden" header="Скрыто">
@@ -115,7 +111,7 @@ const formData = ref({
   countryId: 0,
   isHidden: false,
   grapeIds: [],
-  vintage: 2024,
+  vintage: new Date().getFullYear(),
   interestingFacts: "",
   regionId: 0,
   organoleptic: "",
