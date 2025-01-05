@@ -51,7 +51,7 @@
           id="colour"
           name="colour"
           v-model="formData.colour"
-          :options="countriesOptions"
+          :options="сolourOptions"
           option-label="label"
           option-value="value"
         />
