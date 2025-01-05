@@ -33,8 +33,8 @@
           name="category"
           v-model="formData.category"
           :options="categoryOptions"
-          option-label="name"
-          option-value="id"
+          option-label="label"
+          option-value="value"
         />
         <Message
           v-if="$form.category?.invalid"
@@ -88,9 +88,11 @@
         <InputNumber
           id="alcoholByVolume"
           name="alcoholByVolume"
-          v-model.number="formData.alcoholByVolume"
+          v-model="formData.alcoholByVolume"
           :min="0"
           :max="100"
+          :minFractionDigits="0"
+          :maxFractionDigits="2"
         />
         <Message
           v-if="$form.alcoholByVolume?.invalid"
