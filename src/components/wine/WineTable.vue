@@ -104,7 +104,7 @@ const createMode = ref(true);
 const formData = ref({
   id: undefined,
   name: "",
-  category: "RED",
+  category: "SPARKLING",
   colour: "RED",
   bottleVolume: 0,
   alcoholByVolume: 0,
