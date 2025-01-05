@@ -98,7 +98,7 @@ import type { CreateWineRequest, Wine } from "@/types/wine.ts";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
-const filterState = ref(window.innerWidth > 991);
+const filterState = ref(false);
 const showDialog = ref(false);
 const createMode = ref(true);
 const formData = ref({
