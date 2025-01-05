@@ -163,6 +163,7 @@ export const sugarTypesOptions = [
 export const bottleVolumeOptions = [
   { name: "0.25л", id: 0.25 },
   { name: "0.33л", id: 0.33 },
+  { name: "0.375л", id: 0.375 },
   { name: "0.5л", id: 0.5 },
   { name: "0.68л", id: 0.68 },
   { name: "0.7л", id: 0.7 },
