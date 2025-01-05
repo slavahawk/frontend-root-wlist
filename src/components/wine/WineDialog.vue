@@ -283,7 +283,7 @@ const maxDate = ref(new Date());
 const formData = ref<CreateWineRequest & { id?: number }>({
   id: undefined,
   name: "",
-  category: "RED",
+  category: "SPARKLING",
   colour: "RED",
   bottleVolume: 0,
   alcoholByVolume: 0,
