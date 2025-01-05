@@ -51,7 +51,7 @@
           id="colour"
           name="colour"
           v-model="formData.colour"
-          :options="winesFilter.colour"
+          :options="countriesOptions"
           option-label="name"
           option-value="id"
         />
@@ -260,9 +260,6 @@ import { useCountryStore } from "@/stores/countryStore.ts";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import { useGrapeStore } from "@/stores/grapeStore.ts";
 import FileUpload from "primevue/fileupload";
-import { useWineStore } from "@/stores/wineStore.ts";
-
-const { winesFilter } = storeToRefs(useWineStore());
 
 const { countriesOptions } = storeToRefs(useCountryStore());
 const { regionOptions } = storeToRefs(useRegionStore());
