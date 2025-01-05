@@ -53,7 +53,10 @@
         </Column>
         <Column header="Действия">
           <template #body="{ data }">
+            <div v-if="data.isDeleted">Удалено, но Леха хуй сосал</div>
+
             <ActionButtons
+              v-else
               @delete="deleteWine(data.id)"
               @edit="editWine(data)"
             />
@@ -200,7 +203,10 @@ const deleteWine = (id: number) => {
       label: "Удалить",
       severity: "danger",
     },
-    accept: () => wineDelete(id),
+    accept: async () => {
+      await wineDelete(id);
+      await loadWines();
+    },
     reject: () => {
       toast.add({
         severity: "error",
