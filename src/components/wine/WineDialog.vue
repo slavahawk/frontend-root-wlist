@@ -380,7 +380,7 @@ const resetForm = () => {
   formData.value = {
     id: undefined,
     name: "",
-    category: "RED",
+    category: "SPARKLING",
     colour: "RED",
     bottleVolume: 0,
     alcoholByVolume: 0,
