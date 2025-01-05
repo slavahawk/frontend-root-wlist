@@ -147,10 +147,10 @@ export const categoryOptions = [
 ];
 
 export const сolourOptions = [
-  { label: "Красное", value: "RED" },
   { label: "Белое", value: "WHITE" },
   { label: "Оранжевое", value: "ORANGE" },
   { label: "Розовое", value: "ROSE" },
+  { label: "Красное", value: "RED" },
 ];
 
 export const sugarTypesOptions = [

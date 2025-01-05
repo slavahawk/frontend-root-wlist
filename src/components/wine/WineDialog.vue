@@ -84,6 +84,25 @@
       </div>
 
       <div class="input-container">
+        <label for="sugarType">Тип сахара:</label>
+        <Select
+          id="sugarType"
+          name="sugarType"
+          v-model="formData.sugarType"
+          :options="sugarTypesOptions"
+          option-label="label"
+          option-value="value"
+        />
+        <Message
+          v-if="$form.sugarType?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $form.sugarType.error.message }}</Message
+        >
+      </div>
+
+      <div class="input-container">
         <label for="alcoholByVolume">Алкогольное содержание (%):</label>
         <InputNumber
           id="alcoholByVolume"
@@ -283,11 +302,11 @@ const maxDate = ref(new Date());
 const formData = ref<CreateWineRequest & { id?: number }>({
   id: undefined,
   name: "",
-  category: "SPARKLING",
-  colour: "RED",
+  category: undefined,
+  colour: undefined,
   bottleVolume: 0,
   alcoholByVolume: 0,
-  sugarType: "DRY",
+  sugarType: undefined,
   countryId: 0,
   isHidden: false,
   grapeIds: [],
@@ -380,11 +399,11 @@ const resetForm = () => {
   formData.value = {
     id: undefined,
     name: "",
-    category: "SPARKLING",
-    colour: "RED",
+    category: undefined,
+    colour: undefined,
     bottleVolume: 0,
     alcoholByVolume: 0,
-    sugarType: "DRY",
+    sugarType: undefined,
     countryId: 0,
     isHidden: false,
     grapeIds: [],
