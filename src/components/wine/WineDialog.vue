@@ -84,7 +84,7 @@
       </div>
 
       <div class="input-container">
-        <label for="sugarType">Тип сахара:</label>
+        <label for="sugarType">Уровень сахара:</label>
         <Select
           id="sugarType"
           name="sugarType"
@@ -341,7 +341,7 @@ const schema = z.object({
     .max(100, "Алкогольное содержание не может превышать 100."),
   sugarType: z.enum(
     sugarTypesOptions.map((option) => option.value),
-    "Тип сахара обязателен.",
+    "Уровень сахара обязателен.",
   ),
   vintage: z.number().min(1900, "Год урожая не может быть меньше 1900."),
   countryId: z.number().min(1, "Страна обязательна."),
