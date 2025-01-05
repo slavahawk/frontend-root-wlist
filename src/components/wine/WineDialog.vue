@@ -32,7 +32,7 @@
           id="category"
           name="category"
           v-model="formData.category"
-          :options="winesFilter.category"
+          :options="categoryOptions"
           option-label="name"
           option-value="id"
         />
