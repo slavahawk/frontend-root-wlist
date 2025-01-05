@@ -52,8 +52,8 @@
           name="colour"
           v-model="formData.colour"
           :options="countriesOptions"
-          option-label="name"
-          option-value="id"
+          option-label="label"
+          option-value="value"
         />
         <Message
           v-if="$form.colour?.invalid"
