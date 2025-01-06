@@ -141,7 +141,7 @@ export const categoryOptions = [
   { label: "Розовое", value: "ROSE" },
   { label: "Красное", value: "RED" },
   { label: "Десертное", value: "DESSERT" },
-  { label: "Фортифицированное", value: "FORTIFIED" },
+  { label: "Крепленое", value: "FORTIFIED" },
   { label: "Безалкогольное", value: "NON_ALCOHOL" },
 ];
 
