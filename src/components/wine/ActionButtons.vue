@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-2 flex-wrap">
+  <div class="flex">
     <Button
       icon="pi pi-eye"
       variant="text"
