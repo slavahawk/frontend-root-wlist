@@ -85,8 +85,7 @@ export const useWineStore = defineStore("wine", () => {
 
     try {
       const newWine = await WineService.createWine(wineData, image);
-      // wines.value._embedded.rootWineResponseList.push(newWine);
-      return newWine;
+      wines.value._embedded.rootWineResponseList.push(newWine);
     } catch (err) {
       error.value = "Ошибка при создании вина. Попробуйте еще раз.";
       console.error(err);
@@ -101,12 +100,34 @@ export const useWineStore = defineStore("wine", () => {
 
     try {
       const updatedWine = await WineService.updateWine(id, wineData);
-      const index = wines.value.findIndex((wine) => wine.id === id);
+      const index = wines.value?._embedded.rootWineResponseList.findIndex(
+        (wine) => wine.id === id,
+      );
       if (index !== -1) {
-        wines.value[index] = updatedWine;
+        wines.value._embedded.rootWineResponseList[index] = updatedWine;
       }
     } catch (err) {
       error.value = "Ошибка при обновлении вина. Попробуйте еще раз.";
+      console.error(err);
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const updateWineImageAction = async (id: number, image: File) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      await WineService.updateWineImage(id, image);
+      toast.add({
+        severity: "success",
+        summary: "Успех",
+        detail: `Изображение вина под ID ${id} обновлено`,
+        life: 3000,
+      });
+    } catch (err) {
+      error.value = "Ошибка при обновлении изображения. Попробуйте еще раз.";
       console.error(err);
     } finally {
       loading.value = false;
@@ -154,5 +175,6 @@ export const useWineStore = defineStore("wine", () => {
     fetchWinesSearch,
     loadingSearch,
     errorSearch,
+    updateWineImageAction,
   };
 });

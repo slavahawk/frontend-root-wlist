@@ -33,7 +33,7 @@ export interface Wine {
   grapes: Grape[];
   originalImagePath?: string; // Optional
   mediumImagePath?: string; // Optional
-  smallImagePath?: string; // Optional
+  tinyImagePath?: string; // Optional
   interestingFacts?: string; // Optional
   organoleptic?: string; // Optional
   isHidden: boolean;
@@ -77,7 +77,6 @@ export interface CreateWineRequest {
   countryId: number;
   regionId?: number; // Optional
   grapeIds: number[];
-  originalImagePath?: string; // Optional
   interestingFacts?: string; // Optional
   organoleptic?: string; // Optional
   isHidden: boolean;
@@ -146,7 +145,7 @@ export const categoryOptions = [
   { label: "Безалкогольное", value: "NON_ALCOHOL" },
 ];
 
-export const сolourOptions = [
+export const colourOptions = [
   { label: "Белое", value: "WHITE" },
   { label: "Оранжевое", value: "ORANGE" },
   { label: "Розовое", value: "ROSE" },

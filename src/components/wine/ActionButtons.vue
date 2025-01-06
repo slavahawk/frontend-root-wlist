@@ -7,6 +7,12 @@
       v-tooltip.bottom="`Редактировать вино`"
     />
     <Button
+      icon="pi pi-image"
+      variant="text"
+      @click="editWineImage"
+      v-tooltip.bottom="`Изменить изображение`"
+    />
+    <Button
       icon="pi pi-trash"
       @click="deleteWine"
       variant="text"
@@ -21,11 +27,16 @@ import { defineEmits } from "vue";
 
 const emit = defineEmits<{
   (e: "edit"): void;
+  (e: "editImage"): void;
   (e: "delete", id: number): void;
 }>();
 
 const editWine = () => {
   emit("edit");
+};
+
+const editWineImage = () => {
+  emit("editImage");
 };
 
 const deleteWine = () => {

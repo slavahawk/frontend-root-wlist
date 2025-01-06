@@ -20,8 +20,8 @@
         <template #header>
           <HeaderSection
             :filterState="filterState"
-            @toggleMenu="() => (filterState = !filterState)"
-            @showCreateDialog="() => (showDialog = true)"
+            @toggleMenu="filterState = !filterState"
+            @showCreateDialog="showCreateDialog = true"
             :totalItems="wines?.page.totalElements"
           />
         </template>
@@ -29,7 +29,7 @@
         <Column header="Обложка">
           <template #body="{ data }">
             <Avatar
-              :image="data.originalImagePath"
+              :image="data.tinyImagePath"
               size="xlarge"
               shape="circle"
               @error="(e) => (e.target.src = Logo)"
@@ -39,7 +39,7 @@
         <Column field="category" header="Категория" sortable></Column>
         <Column field="colour" header="Цвет"></Column>
         <Column field="bottleVolume" header="Объем (л)"></Column>
-        <Column field="alcoholByVolume" header="Алкоголь (%)"> </Column>
+        <Column field="alcoholByVolume" header="Алкоголь (%)"></Column>
         <Column field="sugarType" header="Уровень сахара"></Column>
         <Column field="vintage" header="Год урожая"></Column>
         <Column field="isHidden" header="Скрыто">
@@ -49,16 +49,17 @@
         </Column>
         <Column header="Действия">
           <template #body="{ data }">
-            <div v-if="data.isDeleted">Удалено, но Леха хуй сосал</div>
-
             <ActionButtons
-              v-else
+              v-if="!data.isDeleted"
               @delete="deleteWine(data.id)"
-              @edit="editWine(data)"
+              @edit="openEditWineDialog(data)"
+              @editImage="openEditImageDialog(data)"
             />
+            <div v-else>Удалено, но Леха хуй сосал</div>
           </template>
         </Column>
       </DataTable>
+
       <Paginator
         v-if="wines.page"
         :first="params.page * params.size"
@@ -71,13 +72,25 @@
           <Button @click="loadWines" type="button" icon="pi pi-refresh" text />
         </template>
       </Paginator>
+
       <WineDialog
-        :isVisible="showDialog"
-        :createMode="createMode"
+        :isVisible="showCreateDialog"
+        @close="showCreateDialog = false"
+        @save="saveCreatedWine"
+      />
+
+      <WineEditDialog
+        :isVisible="showEditDialog"
         :initialData="formData"
-        @close="showDialog = false"
-        @save="saveWine"
-        @update:visible="showDialog = $event"
+        @close="showEditDialog = false"
+        @save="saveEditedWine"
+      />
+
+      <WineEditImageDialog
+        :isVisible="showEditImageDialog"
+        :initialData="selectedWine"
+        @close="showEditImageDialog = false"
+        @update-image="updateWineImage"
       />
     </div>
     <ConfirmDialog />
@@ -88,39 +101,28 @@
 import { reactive, ref } from "vue";
 import { useWineStore } from "@/stores/wineStore";
 import { storeToRefs } from "pinia";
-import WineDialog from "./WineDialog.vue";
-import Logo from "@/assets/images/logo.png";
-import FilterSection from "./FilterSection.vue";
-import HeaderSection from "./HeaderSection.vue";
+import WineEditDialog from "./WineEditDialog.vue";
+import WineEditImageDialog from "./WineEditImageDialog.vue";
 import ActionButtons from "./ActionButtons.vue";
-import type { CreateWineRequest, Wine } from "@/types/wine.ts";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import Logo from "@/assets/images/logo.png";
+import WineDialog from "@/components/wine/WineDialog.vue";
+import FilterSection from "@/components/wine/FilterSection.vue";
+import HeaderSection from "@/components/wine/HeaderSection.vue";
 
 const filterState = ref(false);
-const showDialog = ref(false);
-const createMode = ref(true);
-const formData = ref({
-  id: undefined,
-  name: "",
-  category: undefined,
-  colour: undefined,
-  bottleVolume: 0,
-  alcoholByVolume: 0,
-  sugarType: undefined,
-  countryId: 0,
-  isHidden: false,
-  grapeIds: [],
-  vintage: new Date().getFullYear(),
-  interestingFacts: "",
-  regionId: 0,
-  organoleptic: "",
-});
+const showCreateDialog = ref(false);
+const showEditDialog = ref(false);
+const showEditImageDialog = ref(false);
+const formData = ref(null);
+const selectedWine = ref(null);
 
 const {
   fetchWines,
   createWine,
   updateWine,
+  updateWineImageAction,
   deleteWine: wineDelete,
 } = useWineStore();
 const { wines, loading, winesFilter } = storeToRefs(useWineStore());
@@ -145,17 +147,15 @@ const resetFilters = () => {
 
 const loadWines = async () => {
   try {
-    const wineData = await fetchWines(params);
-    Object.assign(wines.value, wineData);
+    await fetchWines(params);
   } catch (error) {
     console.error("Error loading wines:", error);
   }
 };
 
 const onParamsChange = (newParams) => {
-  // Обновляем params на основе нового состояния
   Object.assign(params, newParams);
-  loadWines(); // Перезагрузка данных вин при изменении параметров
+  loadWines();
 };
 
 const onPageChange = async ({ page, rows }) => {
@@ -164,32 +164,27 @@ const onPageChange = async ({ page, rows }) => {
   await loadWines();
 };
 
-await loadWines();
+const saveEditedWine = async (data) => {
+  await updateWine(data.id, data);
+  showEditDialog.value = false;
+  await loadWines();
+};
 
-const saveWine = async (data: CreateWineRequest, image?: File) => {
-  try {
-    if (createMode.value) {
-      await createWine(data, image);
-    } else {
-      const { id, ...wineData } = formData.value;
-      await updateWine(id, wineData);
-    }
-    showDialog.value = false;
-    await loadWines();
-  } catch (error) {
-    console.error("Error saving wine:", error);
-  }
+const saveCreatedWine = async (data, image) => {
+  await createWine(data, image);
+  showCreateDialog.value = false;
+  await loadWines();
 };
 
 const confirm = useConfirm();
 const toast = useToast();
 
-const deleteWine = (id: number) => {
+const deleteWine = (id) => {
   confirm.require({
     message: "Вы уверены, что хотите удалить вино?",
     header: "Удалить вино",
     icon: "pi pi-info-circle",
-    rejectLabel: "Cancel",
+    rejectLabel: "Отменить",
     rejectProps: {
       label: "Назад",
       severity: "secondary",
@@ -214,7 +209,23 @@ const deleteWine = (id: number) => {
   });
 };
 
-const editWine = async (wine: Wine) => {
-  console.log(wine);
+const openEditWineDialog = (wine) => {
+  formData.value = wine;
+  showEditDialog.value = true;
 };
+
+const openEditImageDialog = (wine) => {
+  selectedWine.value = wine;
+  showEditImageDialog.value = true;
+};
+
+const updateWineImage = async (image) => {
+  if (selectedWine.value) {
+    await updateWineImageAction(selectedWine.value.id, image);
+    showEditImageDialog.value = false;
+    await loadWines();
+  }
+};
+
+await loadWines();
 </script>

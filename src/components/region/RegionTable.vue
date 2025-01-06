@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import RegionForm from "./RegionForm.vue";
 import { storeToRefs } from "pinia";
@@ -62,7 +62,6 @@ import { useCountryStore } from "@/stores/countryStore.ts"; // Импортир�
 const { fetchRegions, deleteRegion, updateRegion, createRegion } =
   useRegionStore();
 const { countriesOptions } = storeToRefs(useCountryStore()); // Получение стран из хранилища
-
 const { regions, loading } = storeToRefs(useRegionStore());
 const toast = useToast();
 

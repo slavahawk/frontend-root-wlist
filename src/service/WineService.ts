@@ -93,6 +93,32 @@ const WineService = {
     }
   },
 
+  async updateWineImage(id: number, image: File): Promise<Wine> {
+    try {
+      const formData = new FormData();
+      formData.append("image", image, image.name);
+
+      const response = await api.patch<Wine>(
+        `/wines/upload-image/${id}`,
+        formData,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Ошибка при обновлении изображения для вина с ID ${id}:`,
+        error,
+      );
+      throw error;
+    }
+  },
+
   async deleteWine(id: number): Promise<void> {
     try {
       await api.delete(`/wines/${id}`);

@@ -1,7 +1,7 @@
 <template>
   <Dialog
     :visible="isVisible"
-    header="Вино"
+    header="Редактирование вина"
     modal
     @hide="resetForm"
     style="min-width: 50%"
@@ -22,8 +22,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.name.error.message }}</Message
         >
+          {{ $form.name.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -41,8 +42,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.category.error.message }}</Message
         >
+          {{ $form.category.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -60,8 +62,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.colour.error.message }}</Message
         >
+          {{ $form.colour.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -71,35 +74,17 @@
           name="bottleVolume"
           v-model="formData.bottleVolume"
           :options="bottleVolumeOptions"
-          option-label="name"
-          option-value="id"
+          option-label="label"
+          option-value="value"
         />
         <Message
           v-if="$form.bottleVolume?.invalid"
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.bottleVolume.error.message }}</Message
         >
-      </div>
-
-      <div class="input-container">
-        <label for="sugarType">Уровень сахара:</label>
-        <Select
-          id="sugarType"
-          name="sugarType"
-          v-model="formData.sugarType"
-          :options="sugarTypesOptions"
-          option-label="label"
-          option-value="value"
-        />
-        <Message
-          v-if="$form.sugarType?.invalid"
-          severity="error"
-          size="small"
-          variant="simple"
-          >{{ $form.sugarType.error.message }}</Message
-        >
+          {{ $form.bottleVolume.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -118,26 +103,48 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.alcoholByVolume.error.message }}</Message
         >
-        <Slider class="mt-4" v-model="formData.alcoholByVolume" />
+          {{ $form.alcoholByVolume.error.message }}
+        </Message>
+      </div>
+
+      <div class="input-container">
+        <label for="sugarType">Уровень сахара:</label>
+        <Select
+          id="sugarType"
+          name="sugarType"
+          v-model="formData.sugarType"
+          :options="sugarTypesOptions"
+          option-label="label"
+          option-value="value"
+        />
+        <Message
+          v-if="$form.sugarType?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+        >
+          {{ $form.sugarType.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
         <label for="vintage">Год урожая:</label>
-        <label class="flex items-center gap-2 mb-2">
-          <ToggleSwitch id="nonVintage" v-model="isNonVintage" />
-          NV
-        </label>
-        <DatePicker
-          v-model="year"
-          view="year"
-          :disabled="isNonVintage"
-          :minDate="minDate"
-          :maxData="maxDate"
-          dateFormat="yy"
-          placeholder="Год урожая"
+        <InputNumber
+          id="vintage"
+          name="vintage"
+          v-model="formData.vintage"
+          :min="1900"
+          :max="new Date().getFullYear()"
         />
+        <Message
+          v-if="$form.vintage?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+        >
+          {{ $form.vintage.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -147,16 +154,17 @@
           name="countryId"
           v-model="formData.countryId"
           :options="countriesOptions"
-          optionLabel="label"
-          optionValue="value"
+          option-label="label"
+          option-value="value"
         />
         <Message
           v-if="$form.countryId?.invalid"
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.countryId.error.message }}</Message
         >
+          {{ $form.countryId.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -166,16 +174,17 @@
           name="regionId"
           v-model="formData.regionId"
           :options="regionOptions"
-          optionLabel="label"
-          optionValue="value"
+          option-label="label"
+          option-value="value"
         />
         <Message
           v-if="$form.regionId?.invalid"
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.regionId.error.message }}</Message
         >
+          {{ $form.regionId.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -185,8 +194,8 @@
           name="grapeIds"
           v-model="formData.grapeIds"
           :options="grapeOptions"
-          optionLabel="label"
-          optionValue="value"
+          option-label="label"
+          option-value="value"
           filter
           placeholder="Выбрать виноград"
         />
@@ -195,8 +204,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.grapeIds.error.message }}</Message
         >
+          {{ $form.grapeIds.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -213,8 +223,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.interestingFacts.error.message }}</Message
         >
+          {{ $form.interestingFacts.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -231,35 +242,14 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.organoleptic.error.message }}</Message
         >
+          {{ $form.organoleptic.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
         <label for="isHidden">Скрыть вино:</label>
         <InputSwitch id="isHidden" v-model="formData.isHidden" />
-      </div>
-
-      <div class="input-container">
-        <label for="image">Загрузить изображение:</label>
-        <FileUpload
-          id="image"
-          name="image"
-          accept="image/*"
-          @select="handleFileUpload"
-          customUpload
-          auto
-          mode="basic"
-        />
-        <Message v-if="imageFile" severity="info" size="small" variant="simple">
-          Загружено: {{ imageFile.name }}
-        </Message>
-        <img
-          v-if="imageSrc"
-          :src="imageSrc"
-          alt="Image"
-          class="shadow-md rounded-xl w-full sm:w-64"
-        />
       </div>
 
       <Button label="Сохранить" type="submit"></Button>
@@ -274,36 +264,25 @@ import {
   bottleVolumeOptions,
   categoryOptions,
   colourOptions,
-  type CreateWineRequest,
   sugarTypesOptions,
 } from "@/types/wine";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import { useGrapeStore } from "@/stores/grapeStore.ts";
-import FileUpload from "primevue/fileupload";
 
-// Ссылки на данные из Pinia
-const { countriesOptions } = storeToRefs(useCountryStore());
-const { regionOptions } = storeToRefs(useRegionStore());
-const { grapeOptions } = storeToRefs(useGrapeStore());
-
-// Свойства компонента
 const props = defineProps<{
   isVisible: boolean;
+  initialData: any; // Замените на правильный тип
 }>();
 
 const emit = defineEmits<{
   (e: "close"): void;
-  (e: "save", data: CreateWineRequest, image: File | null): void;
+  (e: "save", data: any): void; // Замените на правильный тип
+  (e: "update:visible", value: boolean): void;
 }>();
 
-// Реактивные ссылки
-const year = ref<Date>(new Date());
-const isNonVintage = ref(false); // Определяет состояние Non-Vintage
-const minDate = new Date(1900, 0, 1);
-const maxDate = ref(new Date());
-const formData = ref<CreateWineRequest & { id?: number }>({
+const formData = ref({
   id: undefined,
   name: "",
   category: undefined,
@@ -320,16 +299,51 @@ const formData = ref<CreateWineRequest & { id?: number }>({
   organoleptic: "",
 });
 
-// Реактивные ссылки для изображения
-const imageFile = ref<File | null>(null);
-const imageSrc = ref("");
+// Получаем списки опций из Pinia
+const { countriesOptions } = storeToRefs(useCountryStore());
+const { regionOptions } = storeToRefs(useRegionStore());
+const { grapeOptions } = storeToRefs(useGrapeStore());
 
-// Отслеживание изменений года урожая
-watch(year, (val: Date) => {
-  if (!isNonVintage.value) {
-    formData.value.vintage = val.getFullYear(); // Устанавливаем год урожая
+// Обрабатываем изменения видимости
+watch(
+  () => props.isVisible,
+  (newVal) => {
+    if (newVal && props.initialData) {
+      formData.value = { ...props.initialData };
+    } else {
+      resetForm();
+    }
+  },
+);
+
+// Функция сохранения
+const saveWine = async ({ valid }) => {
+  if (valid) {
+    emit("save", formData.value);
+    resetForm();
   }
-});
+};
+
+// Функция сброса формы
+const resetForm = () => {
+  formData.value = {
+    id: undefined,
+    name: "",
+    category: undefined,
+    colour: undefined,
+    bottleVolume: 0,
+    alcoholByVolume: 0,
+    sugarType: undefined,
+    countryId: 0,
+    isHidden: false,
+    grapeIds: [],
+    vintage: new Date().getFullYear(),
+    interestingFacts: "",
+    regionId: 0,
+    organoleptic: "",
+  };
+  emit("close");
+};
 
 // Zod схема для валидации
 const schema = z.object({
@@ -351,10 +365,7 @@ const schema = z.object({
     sugarTypesOptions.map((option) => option.value),
     "Уровень сахара обязателен.",
   ),
-  vintage: z.union([
-    z.number().min(1900, "Год урожая не может быть меньше 1900."),
-    z.literal("NV"),
-  ]),
+  vintage: z.number().min(1900, "Год урожая не может быть меньше 1900."),
   countryId: z.number().min(1, "Страна обязательна."),
   regionId: z.number().min(1, "Регион обязателен."),
   grapeIds: z.array(z.number()).optional(),
@@ -382,64 +393,10 @@ const resolver = async ({ values }) => {
     return { errors: {} };
   }
 };
-
-// Функция для сохранения вина
-const saveWine = async ({ valid }) => {
-  if (valid) {
-    if (isNonVintage.value) {
-      formData.value.vintage = "NV"; // Устанавливаем в "NV", если чекбокс активен
-    } else {
-      formData.value.vintage = year.value.getFullYear(); // Устанавливаем год
-    }
-    emit("save", formData.value, imageFile.value); // Передаем изображение
-    resetForm();
-  }
-};
-
-// Функция для сброса формы
-const resetForm = () => {
-  formData.value = {
-    id: undefined,
-    name: "",
-    category: undefined,
-    colour: undefined,
-    bottleVolume: 0,
-    alcoholByVolume: 0,
-    sugarType: undefined,
-    countryId: 0,
-    isHidden: false,
-    grapeIds: [],
-    vintage: new Date().getFullYear(),
-    interestingFacts: "",
-    regionId: 0,
-    organoleptic: "",
-  };
-  isNonVintage.value = false; // Сброс чекбокса
-  imageFile.value = null;
-  imageSrc.value = null;
-  emit("close");
-};
-
-// Обработчик загрузки изображения
-const handleFileUpload = (event: any) => {
-  const files = event.files;
-  const file = files[0];
-  const reader = new FileReader();
-
-  reader.onload = async (e) => {
-    imageSrc.value = e.target.result;
-  };
-
-  imageFile.value = files.length > 0 ? file : null;
-  reader.readAsDataURL(file);
-};
-
-// Установка значения окна в зависимости от Non-Vintage
-watch(isNonVintage, (newVal) => {
-  if (newVal) {
-    formData.value.vintage = "NV"; // Устанавливаем в "NV"
-  } else {
-    formData.value.vintage = year.value.getFullYear(); // Устанавливаем в полноценный год
-  }
-});
 </script>
+
+<style scoped>
+.input-container {
+  margin-bottom: 1rem;
+}
+</style>

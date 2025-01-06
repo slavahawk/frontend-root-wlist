@@ -16,6 +16,7 @@ declare module 'vue' {
     Avatar: typeof import('primevue/avatar')['default']
     AvatarGroup: typeof import('primevue/avatargroup')['default']
     Badge: typeof import('primevue/badge')['default']
+    BaseWineForm: typeof import('./src/components/wine/BaseWineForm.vue')['default']
     BestSellingWidget: typeof import('./src/components/dashboard/BestSellingWidget.vue')['default']
     Breadcrumb: typeof import('primevue/breadcrumb')['default']
     Button: typeof import('primevue/button')['default']
@@ -130,6 +131,8 @@ declare module 'vue' {
     TreeSelect: typeof import('primevue/treeselect')['default']
     TreeTable: typeof import('primevue/treetable')['default']
     WineDialog: typeof import('./src/components/wine/WineDialog.vue')['default']
+    WineEditDialog: typeof import('./src/components/wine/WineEditDialog.vue')['default']
+    WineEditImageDialog: typeof import('./src/components/wine/WineEditImageDialog.vue')['default']
     WineSearchDialog: typeof import('./src/components/wine/WineSearchDialog.vue')['default']
     WineTable: typeof import('./src/components/wine/WineTable.vue')['default']
   }
