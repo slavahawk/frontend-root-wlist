@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useGrapeStore } from "@/stores/grapeStore";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -66,7 +66,7 @@ const isDialogVisible = ref(false);
 const selectedGrape = ref(null);
 
 // Загрузка данных о винограде при инициализации
-onMounted(fetchGrapes);
+fetchGrapes();
 
 // Обработчик изменения выбора
 const onSelectionChange = (selection) => {

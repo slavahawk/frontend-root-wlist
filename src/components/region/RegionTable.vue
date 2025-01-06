@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import RegionForm from "./RegionForm.vue";
 import { storeToRefs } from "pinia";
@@ -68,7 +68,7 @@ const toast = useToast();
 const isDialogVisible = ref(false);
 const selectedRegion = ref(null);
 
-onMounted(fetchRegions);
+fetchRegions();
 
 const onSelectionChange = (selection) => {
   selectedRegion.value = selection;

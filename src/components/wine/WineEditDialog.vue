@@ -164,6 +164,7 @@
         <Select
           id="regionId"
           name="regionId"
+          showClear
           v-model="formData.regionId"
           :options="regionOptions"
           optionLabel="label"
@@ -284,7 +285,7 @@ const formData = ref({
   grapeIds: [],
   vintage: new Date().getFullYear(),
   interestingFacts: "",
-  regionId: 0,
+  regionId: null,
   organoleptic: "",
 });
 
@@ -314,6 +315,13 @@ watch(
 // Функция сохранения
 const saveWine = async ({ valid }) => {
   if (valid) {
+    // Если regionId не указан, устанавливаем null
+    if (!formData.value.regionId) {
+      formData.value.regionId = null;
+    }
+
+    console.log(formData.value);
+
     emit("save", formData.value);
     resetForm();
   }
@@ -334,7 +342,7 @@ const resetForm = () => {
     grapeIds: [],
     vintage: new Date().getFullYear(),
     interestingFacts: "",
-    regionId: 0,
+    regionId: null,
     organoleptic: "",
   };
   isNonVintage.value = false; // Сброс чекбокса
@@ -363,7 +371,7 @@ const schema = z.object({
   ),
   vintage: z.number().min(1900, "Год урожая не может быть меньше 1900."),
   countryId: z.number().min(1, "Страна обязательна."),
-  regionId: z.number().min(1, "Регион обязателен."),
+  regionId: z.union([z.number().min(1, "Регион обязателен."), z.literal(null)]),
   grapeIds: z.array(z.number()).optional(),
   interestingFacts: z.string().nonempty("Интересные факты обязательны."),
   organoleptic: z
