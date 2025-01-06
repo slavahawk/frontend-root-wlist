@@ -44,7 +44,12 @@
         <Column field="vintage" header="Год урожая"></Column>
         <Column field="isHidden" header="Скрыто">
           <template #body="{ data }">
-            {{ data.isHidden ? "Да" : "Нет" }}
+            <ToggleButton
+              :onLabel="'Да'"
+              :offLabel="'Нет'"
+              :modelValue="data.isHidden"
+              @change="toggleWineVisibility(data)"
+            />
           </template>
         </Column>
         <Column header="Действия">
@@ -118,6 +123,7 @@ import WineDialog from "@/components/wine/WineDialog.vue";
 import FilterSection from "@/components/wine/FilterSection.vue";
 import HeaderSection from "@/components/wine/HeaderSection.vue";
 import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
+import type { Wine } from "@/types/wine.ts";
 
 const filterState = ref(false);
 const showCreateDialog = ref(false);
@@ -148,6 +154,13 @@ const params = reactive({
   vintage: undefined,
   bottleVolume: undefined,
 });
+
+const toggleWineVisibility = async (wine: Wine) => {
+  const { id, ...rest } = wine; // Деструктурируем wine на id и остальные свойства
+  const updatedWine = { ...rest, isHidden: !rest.isHidden }; // Обновляем состояние isHidden
+  await updateWine(id, updatedWine); // Передаем id и обновленные данные без id
+  await loadWines(); // Обновляем список вин
+};
 
 const resetFilters = () => {
   Object.keys(params).forEach((key) => (params[key] = undefined));
