@@ -54,6 +54,7 @@
               @delete="deleteWine(data.id)"
               @edit="openEditWineDialog(data)"
               @editImage="openEditImageDialog(data)"
+              @view="openDetailDialog(data)"
             />
             <div v-else>Удалено, но Леха хуй сосал</div>
           </template>
@@ -92,6 +93,12 @@
         @close="showEditImageDialog = false"
         @update-image="updateWineImage"
       />
+
+      <WineDetailsDialog
+        :isVisible="showDetailDialog"
+        :wine="selectedWine"
+        @close="showDetailDialog = false"
+      />
     </div>
     <ConfirmDialog />
   </div>
@@ -110,11 +117,13 @@ import Logo from "@/assets/images/logo.png";
 import WineDialog from "@/components/wine/WineDialog.vue";
 import FilterSection from "@/components/wine/FilterSection.vue";
 import HeaderSection from "@/components/wine/HeaderSection.vue";
+import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
 
 const filterState = ref(false);
 const showCreateDialog = ref(false);
 const showEditDialog = ref(false);
 const showEditImageDialog = ref(false);
+const showDetailDialog = ref(false);
 const formData = ref(null);
 const selectedWine = ref(null);
 
@@ -212,6 +221,11 @@ const deleteWine = (id) => {
 const openEditWineDialog = (wine) => {
   formData.value = wine;
   showEditDialog.value = true;
+};
+
+const openDetailDialog = (wine) => {
+  selectedWine.value = wine;
+  showDetailDialog.value = true;
 };
 
 const openEditImageDialog = (wine) => {
