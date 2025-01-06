@@ -1,7 +1,7 @@
 <template>
   <Dialog
     :visible="isVisible"
-    header="Редактирование вина"
+    header="Редактировать вино"
     modal
     @hide="resetForm"
     style="min-width: 50%"
@@ -22,9 +22,8 @@
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.name.error.message }}</Message
         >
-          {{ $form.name.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -42,9 +41,8 @@
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.category.error.message }}</Message
         >
-          {{ $form.category.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -62,9 +60,8 @@
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.colour.error.message }}</Message
         >
-          {{ $form.colour.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -74,17 +71,35 @@
           name="bottleVolume"
           v-model="formData.bottleVolume"
           :options="bottleVolumeOptions"
-          option-label="label"
-          option-value="value"
+          option-label="name"
+          option-value="id"
         />
         <Message
           v-if="$form.bottleVolume?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.bottleVolume.error.message }}</Message
         >
-          {{ $form.bottleVolume.error.message }}
-        </Message>
+      </div>
+
+      <div class="input-container">
+        <label for="sugarType">Уровень сахара:</label>
+        <Select
+          id="sugarType"
+          name="sugarType"
+          v-model="formData.sugarType"
+          :options="sugarTypesOptions"
+          option-label="label"
+          option-value="value"
+        />
+        <Message
+          v-if="$form.sugarType?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $form.sugarType.error.message }}</Message
+        >
       </div>
 
       <div class="input-container">
@@ -103,48 +118,26 @@
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.alcoholByVolume.error.message }}</Message
         >
-          {{ $form.alcoholByVolume.error.message }}
-        </Message>
-      </div>
-
-      <div class="input-container">
-        <label for="sugarType">Уровень сахара:</label>
-        <Select
-          id="sugarType"
-          name="sugarType"
-          v-model="formData.sugarType"
-          :options="sugarTypesOptions"
-          option-label="label"
-          option-value="value"
-        />
-        <Message
-          v-if="$form.sugarType?.invalid"
-          severity="error"
-          size="small"
-          variant="simple"
-        >
-          {{ $form.sugarType.error.message }}
-        </Message>
+        <Slider class="mt-4" v-model="formData.alcoholByVolume" />
       </div>
 
       <div class="input-container">
         <label for="vintage">Год урожая:</label>
-        <InputNumber
-          id="vintage"
-          name="vintage"
-          v-model="formData.vintage"
-          :min="1900"
-          :max="new Date().getFullYear()"
+        <label class="flex items-center gap-2 mb-2">
+          <ToggleSwitch inputId="nonVintage" v-model="isNonVintage" />
+          NV
+        </label>
+        <DatePicker
+          v-model="year"
+          view="year"
+          :disabled="isNonVintage"
+          :minDate="minDate"
+          :maxData="maxDate"
+          dateFormat="yy"
+          placeholder="Год урожая"
         />
-        <Message
-          v-if="$form.vintage?.invalid"
-          severity="error"
-          size="small"
-          variant="simple"
-        >
-          {{ $form.vintage.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -154,17 +147,16 @@
           name="countryId"
           v-model="formData.countryId"
           :options="countriesOptions"
-          option-label="label"
-          option-value="value"
+          optionLabel="label"
+          optionValue="value"
         />
         <Message
           v-if="$form.countryId?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.countryId.error.message }}</Message
         >
-          {{ $form.countryId.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -174,17 +166,16 @@
           name="regionId"
           v-model="formData.regionId"
           :options="regionOptions"
-          option-label="label"
-          option-value="value"
+          optionLabel="label"
+          optionValue="value"
         />
         <Message
           v-if="$form.regionId?.invalid"
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.regionId.error.message }}</Message
         >
-          {{ $form.regionId.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -194,8 +185,8 @@
           name="grapeIds"
           v-model="formData.grapeIds"
           :options="grapeOptions"
-          option-label="label"
-          option-value="value"
+          optionLabel="label"
+          optionValue="value"
           filter
           placeholder="Выбрать виноград"
         />
@@ -204,9 +195,8 @@
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.grapeIds.error.message }}</Message
         >
-          {{ $form.grapeIds.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -223,9 +213,8 @@
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.interestingFacts.error.message }}</Message
         >
-          {{ $form.interestingFacts.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -242,9 +231,8 @@
           severity="error"
           size="small"
           variant="simple"
+          >{{ $form.organoleptic.error.message }}</Message
         >
-          {{ $form.organoleptic.error.message }}
-        </Message>
       </div>
 
       <div class="input-container">
@@ -265,6 +253,7 @@ import {
   categoryOptions,
   colourOptions,
   sugarTypesOptions,
+  type Wine,
 } from "@/types/wine";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
@@ -273,7 +262,7 @@ import { useGrapeStore } from "@/stores/grapeStore.ts";
 
 const props = defineProps<{
   isVisible: boolean;
-  initialData: any; // Замените на правильный тип
+  initialData: Wine; // Замените на правильный тип
 }>();
 
 const emit = defineEmits<{
@@ -310,6 +299,12 @@ watch(
   (newVal) => {
     if (newVal && props.initialData) {
       formData.value = { ...props.initialData };
+      if (formData.value.vintage) {
+        // Если есть год урожая, преобразуем его в объект Date
+        year.value = new Date(formData.value.vintage, 0, 1); // Январь первого числа года
+      } else {
+        isNonVintage.value = true; // Устанавливаем флажок
+      }
     } else {
       resetForm();
     }
@@ -342,6 +337,7 @@ const resetForm = () => {
     regionId: 0,
     organoleptic: "",
   };
+  isNonVintage.value = false; // Сброс чекбокса
   emit("close");
 };
 
@@ -393,6 +389,28 @@ const resolver = async ({ values }) => {
     return { errors: {} };
   }
 };
+
+const year = ref<Date>(new Date());
+const isNonVintage = ref(false); // Определяет состояние Non-Vintage
+const minDate = new Date(1900, 0, 1);
+const maxDate = ref(new Date());
+
+// Отслеживание изменений года урожая
+watch(year, (val: Date) => {
+  if (!isNonVintage.value) {
+    formData.value.vintage = val.getFullYear(); // Устанавливаем год урожая
+  }
+});
+
+// Установка значения окна в зависимости от Non-Vintage
+watch(isNonVintage, (newVal) => {
+  if (newVal) {
+    formData.value.vintage = null; // Сбросить vintage
+    year.value = new Date(); // Сбросить year, если Non-Vintage
+  } else {
+    formData.value.vintage = year.value.getFullYear(); // Устанавливаем год урожая
+  }
+});
 </script>
 
 <style scoped>

@@ -126,7 +126,7 @@
       <div class="input-container">
         <label for="vintage">Год урожая:</label>
         <label class="flex items-center gap-2 mb-2">
-          <ToggleSwitch id="nonVintage" v-model="isNonVintage" />
+          <ToggleSwitch input-id="nonVintage" v-model="isNonVintage" />
           NV
         </label>
         <DatePicker
@@ -353,7 +353,7 @@ const schema = z.object({
   ),
   vintage: z.union([
     z.number().min(1900, "Год урожая не может быть меньше 1900."),
-    z.literal("NV"),
+    z.literal(null),
   ]),
   countryId: z.number().min(1, "Страна обязательна."),
   regionId: z.number().min(1, "Регион обязателен."),
@@ -387,7 +387,7 @@ const resolver = async ({ values }) => {
 const saveWine = async ({ valid }) => {
   if (valid) {
     if (isNonVintage.value) {
-      formData.value.vintage = "NV"; // Устанавливаем в "NV", если чекбокс активен
+      formData.value.vintage = null; // Устанавливаем в null, если чекбокс активен
     } else {
       formData.value.vintage = year.value.getFullYear(); // Устанавливаем год
     }
@@ -437,7 +437,7 @@ const handleFileUpload = (event: any) => {
 // Установка значения окна в зависимости от Non-Vintage
 watch(isNonVintage, (newVal) => {
   if (newVal) {
-    formData.value.vintage = "NV"; // Устанавливаем в "NV"
+    formData.value.vintage = null; // Устанавливаем в null
   } else {
     formData.value.vintage = year.value.getFullYear(); // Устанавливаем в полноценный год
   }

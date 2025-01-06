@@ -41,7 +41,11 @@
         <Column field="bottleVolume" header="Объем (л)"></Column>
         <Column field="alcoholByVolume" header="Алкоголь (%)"></Column>
         <Column field="sugarType" header="Уровень сахара"></Column>
-        <Column field="vintage" header="Год урожая"></Column>
+        <Column field="vintage" header="Год урожая">
+          <template #body="{ data }">
+            {{ vintage(data?.vintage) }}
+          </template>
+        </Column>
         <Column field="isHidden" header="Скрыто">
           <template #body="{ data }">
             <ToggleButton
@@ -124,6 +128,7 @@ import FilterSection from "@/components/wine/FilterSection.vue";
 import HeaderSection from "@/components/wine/HeaderSection.vue";
 import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
 import type { Wine } from "@/types/wine.ts";
+import { vintage } from "@/utils/vintage.ts";
 
 const filterState = ref(false);
 const showCreateDialog = ref(false);

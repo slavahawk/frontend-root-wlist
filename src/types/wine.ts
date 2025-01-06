@@ -70,7 +70,7 @@ export interface CreateWineRequest {
   name: string;
   category: WineCategory;
   colour: WineColour;
-  vintage?: number; // Optional
+  vintage?: number | null; // Optional
   sugarType: SugarType;
   bottleVolume: number;
   alcoholByVolume: number;
