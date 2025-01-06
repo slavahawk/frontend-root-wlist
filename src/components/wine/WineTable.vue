@@ -159,7 +159,6 @@ const toggleWineVisibility = async (wine: Wine) => {
   const { id, ...rest } = wine; // Деструктурируем wine на id и остальные свойства
   const updatedWine = { ...rest, isHidden: !rest.isHidden }; // Обновляем состояние isHidden
   await updateWine(id, updatedWine); // Передаем id и обновленные данные без id
-  await loadWines(); // Обновляем список вин
 };
 
 const resetFilters = () => {
@@ -189,13 +188,11 @@ const onPageChange = async ({ page, rows }) => {
 const saveEditedWine = async (data) => {
   await updateWine(data.id, data);
   showEditDialog.value = false;
-  await loadWines();
 };
 
 const saveCreatedWine = async (data, image) => {
   await createWine(data, image);
   showCreateDialog.value = false;
-  await loadWines();
 };
 
 const confirm = useConfirm();

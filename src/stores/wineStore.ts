@@ -86,6 +86,7 @@ export const useWineStore = defineStore("wine", () => {
     try {
       const newWine = await WineService.createWine(wineData, image);
       wines.value._embedded.rootWineResponseList.push(newWine);
+      wines.value.page.totalElements++;
     } catch (err) {
       error.value = "Ошибка при создании вина. Попробуйте еще раз.";
       console.error(err);
