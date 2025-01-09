@@ -352,27 +352,31 @@ const resetForm = () => {
 // Zod схема для валидации
 const schema = z.object({
   name: z.string().nonempty("Имя обязательно."),
-  category: z.enum(
-    categoryOptions.map((option) => option.value),
-    "Категория обязательна.",
-  ),
-  colour: z.enum(
-    colourOptions.map((option) => option.value),
-    "Цвет обязателен.",
-  ),
-  bottleVolume: z.number().min(0, "Объем обязателен."),
+  category: z.string().nonempty("Выберите категорию"),
+  colour: z.string().nonempty("Выберите цвет"),
+  bottleVolume: z.number({
+    message: "Объем бутылки обязателен.",
+  }),
+  sugarType: z.string().nonempty("Выберите уровень сахара"),
   alcoholByVolume: z
-    .number()
+    .number({ message: "Алкогольное содержание обязательно" })
     .min(0, "Алкогольное содержание не может быть отрицательным.")
     .max(100, "Алкогольное содержание не может превышать 100."),
-  sugarType: z.enum(
-    sugarTypesOptions.map((option) => option.value),
-    "Уровень сахара обязателен.",
-  ),
-  vintage: z.number().min(1900, "Год урожая не может быть меньше 1900."),
+  vintage: z
+    .union([
+      z.number().min(1900, "Год урожая не может быть меньше 1900."),
+      z.literal(null),
+    ])
+    .optional(),
+
   countryId: z.number().min(1, "Страна обязательна."),
-  regionId: z.union([z.number().min(1, "Регион обязателен."), z.literal(null)]),
-  grapeIds: z.array(z.number()).optional(),
+  regionId: z
+    .union([z.number().min(1, "Регион обязателен."), z.literal(null)])
+    .optional(),
+  grapeIds: z
+    .array(z.number())
+    .min(1, "Выберите хотя бы один сорт винограда.") // Добавлено требование минимум одно значение
+    .optional(),
   interestingFacts: z.string().nonempty("Интересные факты обязательны."),
   organoleptic: z
     .string()

@@ -22,8 +22,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.name.error.message }}</Message
         >
+          {{ $form.name.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -41,8 +42,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.category.error.message }}</Message
         >
+          {{ $form.category.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -60,8 +62,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.colour.error.message }}</Message
         >
+          {{ $form.colour.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -79,8 +82,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.bottleVolume.error.message }}</Message
         >
+          {{ $form.bottleVolume.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -98,8 +102,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.sugarType.error.message }}</Message
         >
+          {{ $form.sugarType.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -118,8 +123,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.alcoholByVolume.error.message }}</Message
         >
+          {{ $form.alcoholByVolume.error.message }}
+        </Message>
         <Slider class="mt-4" v-model="formData.alcoholByVolume" />
       </div>
 
@@ -155,8 +161,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.countryId.error.message }}</Message
         >
+          {{ $form.countryId.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -175,8 +182,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.regionId.error.message }}</Message
         >
+          {{ $form.regionId.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -196,8 +204,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.grapeIds.error.message }}</Message
         >
+          {{ $form.grapeIds.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -214,8 +223,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.interestingFacts.error.message }}</Message
         >
+          {{ $form.interestingFacts.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -232,8 +242,9 @@
           severity="error"
           size="small"
           variant="simple"
-          >{{ $form.organoleptic.error.message }}</Message
         >
+          {{ $form.organoleptic.error.message }}
+        </Message>
       </div>
 
       <div class="input-container">
@@ -277,12 +288,11 @@ import {
   colourOptions,
   sugarTypesOptions,
 } from "w-list-api";
-import type { CreateWineRequest } from "w-list-api";
+import { type CreateWineRequest } from "w-list-api";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import { useGrapeStore } from "@/stores/grapeStore.ts";
-import FileUpload from "primevue/fileupload";
 
 // Ссылки на данные из Pinia
 const { countriesOptions } = storeToRefs(useCountryStore());
@@ -290,7 +300,7 @@ const { regionOptions } = storeToRefs(useRegionStore());
 const { grapeOptions } = storeToRefs(useGrapeStore());
 
 // Свойства компонента
-const props = defineProps<{
+defineProps<{
   isVisible: boolean;
 }>();
 
@@ -301,17 +311,17 @@ const emit = defineEmits<{
 
 // Реактивные ссылки
 const year = ref<Date>(new Date());
-const isNonVintage = ref(false); // Определяет состояние Non-Vintage
+const isNonVintage = ref(false);
 const minDate = new Date(1900, 0, 1);
 const maxDate = ref(new Date());
 const formData = ref<CreateWineRequest & { id?: number }>({
   id: undefined,
   name: "",
-  category: undefined,
-  colour: undefined,
-  bottleVolume: 0,
+  category: "",
+  colour: "",
+  bottleVolume: "",
   alcoholByVolume: 0,
-  sugarType: undefined,
+  sugarType: "",
   countryId: 0,
   isHidden: false,
   grapeIds: [],
@@ -325,40 +335,34 @@ const formData = ref<CreateWineRequest & { id?: number }>({
 const imageFile = ref<File | null>(null);
 const imageSrc = ref("");
 
-// Отслеживание изменений года урожая
-watch(year, (val: Date) => {
-  if (!isNonVintage.value) {
-    formData.value.vintage = val.getFullYear(); // Устанавливаем год урожая
-  }
-});
-
 // Zod схема для валидации
 const schema = z.object({
   name: z.string().nonempty("Имя обязательно."),
-  category: z.enum(
-    categoryOptions.map((option) => option.value),
-    "Категория обязательна.",
-  ),
-  colour: z.enum(
-    colourOptions.map((option) => option.value),
-    "Цвет обязателен.",
-  ),
-  bottleVolume: z.number().min(0, "Объем обязателен."),
+  category: z.string().nonempty("Выберите категорию"),
+  colour: z.string().nonempty("Выберите цвет"),
+  bottleVolume: z.number({
+    message: "Объем бутылки обязателен.",
+  }),
+  sugarType: z.string().nonempty("Выберите уровень сахара"),
   alcoholByVolume: z
-    .number()
+    .number({ message: "Алкогольное содержание обязательно" })
     .min(0, "Алкогольное содержание не может быть отрицательным.")
     .max(100, "Алкогольное содержание не может превышать 100."),
-  sugarType: z.enum(
-    sugarTypesOptions.map((option) => option.value),
-    "Уровень сахара обязателен.",
-  ),
-  vintage: z.union([
-    z.number().min(1900, "Год урожая не может быть меньше 1900."),
-    z.literal(null),
-  ]),
+  vintage: z
+    .union([
+      z.number().min(1900, "Год урожая не может быть меньше 1900."),
+      z.literal(null),
+    ])
+    .optional(),
+
   countryId: z.number().min(1, "Страна обязательна."),
-  regionId: z.union([z.number().min(1, "Регион обязателен."), z.literal(null)]),
-  grapeIds: z.array(z.number()).optional(),
+  regionId: z
+    .union([z.number().min(1, "Регион обязателен."), z.literal(null)])
+    .optional(),
+  grapeIds: z
+    .array(z.number())
+    .min(1, "Выберите хотя бы один сорт винограда.") // Добавлено требование минимум одно значение
+    .optional(),
   interestingFacts: z.string().nonempty("Интересные факты обязательны."),
   organoleptic: z
     .string()
@@ -370,15 +374,16 @@ const schema = z.object({
 const resolver = async ({ values }) => {
   try {
     schema.parse(values);
-    return { errors: {} };
+    return { errors: {} }; // Если валидация прошла успешно
   } catch (e) {
     if (e instanceof z.ZodError) {
+      console.log(e.errors);
       const errors = e.errors.reduce((acc, error) => {
-        const path = error.path[0];
+        const path = error.path[0]; // Каждое сообщение ошибки ссылается на имя поля
         acc[path] = [{ message: error.message }];
         return acc;
       }, {});
-      return { errors };
+      return { errors }; // Возвращаем ошибки
     }
     return { errors: {} };
   }
@@ -392,14 +397,12 @@ const saveWine = async ({ valid }) => {
     } else {
       formData.value.vintage = year.value.getFullYear(); // Устанавливаем год
     }
-
     // Если regionId не указан, устанавливаем null
     if (!formData.value.regionId) {
       formData.value.regionId = null;
     }
 
     console.log(formData.value);
-
     emit("save", formData.value, imageFile.value); // Передаем изображение
     resetForm();
   }
