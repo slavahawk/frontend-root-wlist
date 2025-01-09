@@ -1,8 +1,6 @@
-// src/stores/countryStore.ts
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import CountryService from "@/service/CountryService";
-import type { Country, CountryRequest } from "@/types/country";
+import { CountryService, type Country, type CountryRequest } from "w-list-api";
 
 export const useCountryStore = defineStore("country", () => {
   const countries = ref<Country[]>([]);
@@ -22,7 +20,7 @@ export const useCountryStore = defineStore("country", () => {
     error.value = null;
 
     try {
-      countries.value = await CountryService.getAllCountries();
+      countries.value = await CountryService.getAll();
     } catch (err) {
       error.value = "Ошибка при получении стран. Попробуйте еще раз.";
       console.error(err);
@@ -36,7 +34,7 @@ export const useCountryStore = defineStore("country", () => {
     error.value = null;
 
     try {
-      selectedCountry.value = await CountryService.getCountryById(id);
+      selectedCountry.value = await CountryService.getById(id);
     } catch (err) {
       error.value = "Ошибка при получении страны. Попробуйте еще раз.";
       console.error(err);
@@ -50,7 +48,7 @@ export const useCountryStore = defineStore("country", () => {
     error.value = null;
 
     try {
-      const newCountry = await CountryService.createCountry(countryData);
+      const newCountry = await CountryService.create(countryData);
       countries.value.push(newCountry);
     } catch (err) {
       error.value = "Ошибка при создании страны. Попробуйте еще раз.";
@@ -65,17 +63,13 @@ export const useCountryStore = defineStore("country", () => {
     error.value = null;
 
     try {
-      const updatedCountry = await CountryService.updateCountry(
-        id,
-        countryData,
-      );
+      const updatedCountry = await CountryService.update(id, countryData);
       const index = countries.value.findIndex((country) => country.id === id);
       if (index !== -1) {
         countries.value[index] = updatedCountry;
       }
     } catch (err) {
       error.value = "Ошибка при обновлении страны. Попробуйте еще раз.";
-      console.error(err);
     } finally {
       loading.value = false;
     }
@@ -86,11 +80,10 @@ export const useCountryStore = defineStore("country", () => {
     error.value = null;
 
     try {
-      await CountryService.deleteCountry(id);
+      await CountryService.delete(id);
       countries.value = countries.value.filter((country) => country.id !== id);
     } catch (err) {
       error.value = "Ошибка при удалении страны. Попробуйте еще раз.";
-      console.error(err);
     } finally {
       loading.value = false;
     }

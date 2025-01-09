@@ -127,7 +127,7 @@ import WineDialog from "@/components/wine/WineDialog.vue";
 import FilterSection from "@/components/wine/FilterSection.vue";
 import HeaderSection from "@/components/wine/HeaderSection.vue";
 import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
-import type { Wine } from "@/types/wine.ts";
+import type { Wine } from "w-list-api";
 import { vintage } from "@/utils/vintage.ts";
 
 const filterState = ref(false);

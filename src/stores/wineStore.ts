@@ -1,21 +1,22 @@
 // src/stores/wineStore.ts
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import WineService from "@/service/WineService";
-import type {
-  CreateWineRequest,
-  Wine,
-  WineFilters,
-  WineRequest,
-  WineRequestSearch,
-  WineResponses,
-} from "@/types/wine";
+import {
+  type CreateWineRequest,
+  type Wine,
+  type WineFilter,
+  type WineRequest,
+  type WineResponse,
+  WineService,
+} from "w-list-api";
+
 import { useToast } from "primevue/usetoast";
+import type { SearchWineRequest } from "w-list-api";
 
 export const useWineStore = defineStore("wine", () => {
-  const wines = ref<WineResponses>();
-  const winesFilter = ref<WineFilters>();
-  const winesSearch = ref<WineResponses>();
+  const wines = ref<WineResponse>();
+  const winesFilter = ref<WineFilter>();
+  const winesSearch = ref<WineResponse>();
   const selectedWine = ref<Wine | null>(null);
   const loading = ref(false);
   const loadingSearch = ref(false);
@@ -28,7 +29,7 @@ export const useWineStore = defineStore("wine", () => {
     error.value = null;
 
     try {
-      wines.value = await WineService.getAllWines(requestParams);
+      wines.value = await WineService.getAll(requestParams);
     } catch (err) {
       error.value = "Ошибка при получении вин. Попробуйте еще раз.";
       console.error(err);
@@ -37,12 +38,12 @@ export const useWineStore = defineStore("wine", () => {
     }
   };
 
-  const fetchWinesSearch = async (params: WineRequestSearch) => {
+  const fetchWinesSearch = async (params: SearchWineRequest) => {
     loadingSearch.value = true;
     errorSearch.value = null;
 
     try {
-      winesSearch.value = await WineService.getWineSearch(params);
+      winesSearch.value = await WineService.search(params);
     } catch (err) {
       error.value = "Ошибка при получении вин. Попробуйте еще раз.";
       console.error(err);
@@ -56,7 +57,7 @@ export const useWineStore = defineStore("wine", () => {
     error.value = null;
 
     try {
-      winesFilter.value = await WineService.getWineFilters();
+      winesFilter.value = await WineService.getFilter();
     } catch (err) {
       error.value = "Ошибка при получении вин. Попробуйте еще раз.";
       console.error(err);
@@ -70,7 +71,7 @@ export const useWineStore = defineStore("wine", () => {
     error.value = null;
 
     try {
-      selectedWine.value = await WineService.getWineById(id);
+      selectedWine.value = await WineService.getById(id);
     } catch (err) {
       error.value = "Ошибка при получении вина. Попробуйте еще раз.";
       console.error(err);
@@ -84,7 +85,7 @@ export const useWineStore = defineStore("wine", () => {
     error.value = null;
 
     try {
-      const newWine = await WineService.createWine(wineData, image);
+      const newWine = await WineService.create(wineData, image);
       wines.value._embedded.rootWineResponseList.push(newWine);
       wines.value.page.totalElements++;
     } catch (err) {
@@ -100,7 +101,7 @@ export const useWineStore = defineStore("wine", () => {
     error.value = null;
 
     try {
-      const updatedWine = await WineService.updateWine(id, wineData);
+      const updatedWine = await WineService.update(id, wineData);
       const index = wines.value?._embedded.rootWineResponseList.findIndex(
         (wine) => wine.id === id,
       );
@@ -120,7 +121,7 @@ export const useWineStore = defineStore("wine", () => {
     error.value = null;
 
     try {
-      await WineService.updateWineImage(id, image);
+      await WineService.updateImage(id, image);
       toast.add({
         severity: "success",
         summary: "Успех",
@@ -140,7 +141,7 @@ export const useWineStore = defineStore("wine", () => {
     error.value = null;
 
     try {
-      await WineService.deleteWine(id);
+      await WineService.delete(id);
       toast.add({
         severity: "success",
         summary: "Удалено",

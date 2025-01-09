@@ -81,7 +81,7 @@ import { reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore.ts";
 import { storeToRefs } from "pinia";
 import { debounce } from "@/utils/debounce";
-import type { Wine, WineRequestSearch } from "@/types/wine.ts";
+import type { Wine, SearchWineRequest } from "w-list-api";
 import Logo from "@/assets/images/logo.png";
 import ActionButtons from "@/components/wine/ActionButtons.vue";
 import { useConfirm } from "primevue/useconfirm";
@@ -94,7 +94,7 @@ defineProps<{
   visible: boolean;
 }>();
 
-const params = reactive<WineRequestSearch>({
+const params = reactive<SearchWineRequest>({
   name: "",
   page: 0,
   size: 12,

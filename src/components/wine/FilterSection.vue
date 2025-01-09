@@ -72,7 +72,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import FilterSelect from "@/components/wine/FilterSelect.vue";
-import type { WineFilters } from "@/types/wine.ts";
+import type { WineFilters } from "w-list-api";
 
 const props = defineProps<{
   initialParams: object;

@@ -1,8 +1,6 @@
-// src/stores/grapeStore.ts
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import GrapeService from "@/service/GrapeService";
-import type { Grape, GrapeRequest } from "@/types/grape";
+import { GrapeService, type Grape, type GrapeRequest } from "w-list-api";
 
 export const useGrapeStore = defineStore("grape", () => {
   const grapes = ref<Grape[]>([]);
@@ -22,7 +20,7 @@ export const useGrapeStore = defineStore("grape", () => {
     error.value = null;
 
     try {
-      grapes.value = await GrapeService.getAllGrapes();
+      grapes.value = await GrapeService.getAll();
     } catch (err) {
       error.value = "Ошибка при получении винограда. Попробуйте еще раз.";
       console.error(err);
@@ -36,7 +34,7 @@ export const useGrapeStore = defineStore("grape", () => {
     error.value = null;
 
     try {
-      selectedGrape.value = await GrapeService.getGrapeById(id);
+      selectedGrape.value = await GrapeService.getById(id);
     } catch (err) {
       error.value = "Ошибка при получении винограда. Попробуйте еще раз.";
       console.error(err);
@@ -50,7 +48,7 @@ export const useGrapeStore = defineStore("grape", () => {
     error.value = null;
 
     try {
-      const newGrape = await GrapeService.createGrape(grapeData);
+      const newGrape = await GrapeService.create(grapeData);
       grapes.value.push(newGrape);
     } catch (err) {
       error.value = "Ошибка при создании винограда. Попробуйте еще раз.";
@@ -65,7 +63,7 @@ export const useGrapeStore = defineStore("grape", () => {
     error.value = null;
 
     try {
-      const updatedGrape = await GrapeService.updateGrape(id, grapeData);
+      const updatedGrape = await GrapeService.update(id, grapeData);
       const index = grapes.value.findIndex((grape) => grape.id === id);
       if (index !== -1) {
         grapes.value[index] = updatedGrape;
@@ -83,7 +81,7 @@ export const useGrapeStore = defineStore("grape", () => {
     error.value = null;
 
     try {
-      await GrapeService.deleteGrape(id);
+      await GrapeService.delete(id);
       grapes.value = grapes.value.filter((grape) => grape.id !== id);
     } catch (err) {
       error.value = "Ошибка при удалении винограда. Попробуйте еще раз.";

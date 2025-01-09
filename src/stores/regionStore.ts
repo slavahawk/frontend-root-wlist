@@ -1,8 +1,11 @@
-// src/stores/regionStore.ts
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import RegionService from "@/service/RegionService";
-import type { Region, RegionRequest } from "@/types/region";
+import {
+  RegionService,
+  type Region,
+  type CreateRegionRequest,
+  type UpdateRegionRequest,
+} from "w-list-api";
 
 export const useRegionStore = defineStore("region", () => {
   const regions = ref<Region[]>([]);
@@ -22,7 +25,7 @@ export const useRegionStore = defineStore("region", () => {
     error.value = null;
 
     try {
-      regions.value = await RegionService.getAllRegions();
+      regions.value = await RegionService.getAll();
     } catch (err) {
       error.value = "Ошибка при получении регионов. Попробуйте еще раз.";
       console.error(err);
@@ -36,7 +39,7 @@ export const useRegionStore = defineStore("region", () => {
     error.value = null;
 
     try {
-      selectedRegion.value = await RegionService.getRegionById(id);
+      selectedRegion.value = await RegionService.getById(id);
     } catch (err) {
       error.value = "Ошибка при получении региона. Попробуйте еще раз.";
       console.error(err);
@@ -45,12 +48,12 @@ export const useRegionStore = defineStore("region", () => {
     }
   };
 
-  const createRegion = async (regionData: RegionRequest) => {
+  const createRegion = async (regionData: CreateRegionRequest) => {
     loading.value = true;
     error.value = null;
 
     try {
-      const newRegion = await RegionService.createRegion(regionData);
+      const newRegion = await RegionService.create(regionData);
       regions.value.push(newRegion);
     } catch (err) {
       error.value = "Ошибка при создании региона. Попробуйте еще раз.";
@@ -60,12 +63,12 @@ export const useRegionStore = defineStore("region", () => {
     }
   };
 
-  const updateRegion = async (id: number, regionData: RegionRequest) => {
+  const updateRegion = async (id: number, regionData: UpdateRegionRequest) => {
     loading.value = true;
     error.value = null;
 
     try {
-      const updatedRegion = await RegionService.updateRegion(id, regionData);
+      const updatedRegion = await RegionService.update(id, regionData);
       const index = regions.value.findIndex((region) => region.id === id);
       if (index !== -1) {
         regions.value[index] = updatedRegion;
@@ -83,7 +86,7 @@ export const useRegionStore = defineStore("region", () => {
     error.value = null;
 
     try {
-      await RegionService.deleteRegion(id);
+      await RegionService.delete(id);
       regions.value = regions.value.filter((region) => region.id !== id);
     } catch (err) {
       error.value = "Ошибка при удалении региона. Попробуйте еще раз.";

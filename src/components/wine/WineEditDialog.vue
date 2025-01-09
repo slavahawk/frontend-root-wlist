@@ -249,13 +249,13 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import { z } from "zod";
+import { type Wine } from "w-list-api";
 import {
   bottleVolumeOptions,
   categoryOptions,
   colourOptions,
   sugarTypesOptions,
-  type Wine,
-} from "@/types/wine";
+} from "w-list-api";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
 import { useRegionStore } from "@/stores/regionStore.ts";

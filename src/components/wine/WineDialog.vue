@@ -275,9 +275,9 @@ import {
   bottleVolumeOptions,
   categoryOptions,
   colourOptions,
-  type CreateWineRequest,
   sugarTypesOptions,
-} from "@/types/wine";
+} from "w-list-api";
+import type { CreateWineRequest } from "w-list-api";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
 import { useRegionStore } from "@/stores/regionStore.ts";

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { initializeAuth } from "@/api/api";
+import { initializeAuth } from "w-list-api";
 
 initializeAuth();
 </script>

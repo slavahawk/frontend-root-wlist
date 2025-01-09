@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { defineProps } from "vue";
-import type { Wine } from "@/types/wine.ts";
+import type { Wine } from "w-list-api";
 
 defineProps<{
   isVisible: boolean;

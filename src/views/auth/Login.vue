@@ -106,7 +106,7 @@ import { z } from "zod";
 import FloatingConfigurator from "@/components/FloatingConfigurator.vue";
 import { useAuthStore } from "@/stores/authStore.ts";
 import Logo from "@/assets/images/svg/Logo.vue";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/const/localstorage.ts";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "w-list-api";
 
 const authStore = useAuthStore();
 
