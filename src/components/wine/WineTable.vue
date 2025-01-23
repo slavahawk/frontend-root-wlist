@@ -9,6 +9,7 @@
       @reset="resetFilters"
       @paramsChange="onParamsChange"
     />
+
     <div class="flex-1">
       <DataTable
         :value="wines._embedded?.rootWineResponseList"
@@ -104,7 +105,7 @@
       />
 
       <WineDetailsDialog
-        :isVisible="showDetailDialog"
+        v-model:show="showDetailDialog"
         :wine="selectedWine"
         @close="showDetailDialog = false"
       />
@@ -128,7 +129,7 @@ import FilterSection from "@/components/wine/FilterSection.vue";
 import HeaderSection from "@/components/wine/HeaderSection.vue";
 import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
 import type { Wine } from "w-list-api";
-import { vintage } from "@/utils/vintage.ts";
+import { vintage } from "w-list-utils";
 
 const filterState = ref(false);
 const showCreateDialog = ref(false);
@@ -167,8 +168,17 @@ const toggleWineVisibility = async (wine: Wine) => {
 };
 
 const resetFilters = () => {
-  Object.keys(params).forEach((key) => (params[key] = undefined));
-  loadWines();
+  // Сбрасываем все параметры к начальным значениям
+  Object.keys(params).forEach((key) => {
+    if (key === "page") {
+      params[key] = 0; // Сбрасываем page до 0
+    } else if (key === "size") {
+      params[key] = 10; // Сбрасываем size до 10
+    } else {
+      params[key] = undefined; // Остальные параметры сбрасываем до undefined
+    }
+  });
+  loadWines(); // Загружаем вина после сброса фильтров
 };
 
 const loadWines = async () => {

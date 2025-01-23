@@ -15,6 +15,9 @@ export const useCountryStore = defineStore("country", () => {
     }));
   });
 
+  const getCountryNameById = (countryId: number): string | null =>
+    countries.value.find((c: Country) => c.id === countryId)?.name ?? null;
+
   const fetchCountries = async () => {
     loading.value = true;
     error.value = null;
@@ -105,5 +108,6 @@ export const useCountryStore = defineStore("country", () => {
     deleteCountry,
     clearSelectedCountry,
     countriesOptions,
+    getCountryNameById,
   };
 });

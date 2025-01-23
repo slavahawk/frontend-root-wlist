@@ -1,71 +1,53 @@
 <template>
-  <Dialog
-    :visible="isVisible"
-    header="Информация о вине"
-    modal
-    style="min-width: 60%"
-    @update:visible="$emit('close')"
-  >
-    <div class="wine-detail">
-      <img :src="wine.originalImagePath" alt="Wine Image" class="wine-image" />
-      <div class="detail-content">
-        <h3 class="wine-title">{{ wine.name }}</h3>
-        <p><strong>Категория:</strong> {{ wine.category }}</p>
-        <p><strong>Цвет:</strong> {{ wine.colour }}</p>
-        <p><strong>Объем:</strong> {{ wine.bottleVolume }} л</p>
-        <p>
-          <strong>Алкогольное содержание:</strong> {{ wine.alcoholByVolume }} %
-        </p>
-        <p><strong>Уровень сахара:</strong> {{ wine.sugarType }}</p>
-        <p><strong>Год урожая:</strong> {{ wine.vintage }}</p>
-        <p><strong>Скрыто:</strong> {{ wine.isHidden ? "Да" : "Нет" }}</p>
-        <p><strong>Интересные факты:</strong> {{ wine.interestingFacts }}</p>
-        <p>
-          <strong>Органолептические характеристики:</strong>
-          {{ wine.organoleptic }}
-        </p>
-      </div>
-    </div>
-  </Dialog>
+  <Drawer v-model:visible="isVisible" header=" " position="full">
+    <WineCard
+      :originalImagePath="wine.originalImagePath"
+      :name="wine.name"
+      :alcohol-by-volume="wine.alcoholByVolume"
+      :interesting-facts="wine.interestingFacts"
+      :organoleptic="wine.organoleptic"
+      :vintage="vintage(wine.vintage)"
+      :sugar-type="getSugarTypeLabelByValue(wine.sugarType)"
+      :country="getCountryNameById(wine.countryId)"
+      :category="getCategoryLabelByValue(wine.category)"
+      :colour="getColourLabelByValue(wine.colour)"
+      :region="getRegionNameById(wine.regionId)"
+    />
+  </Drawer>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from "vue";
-import type { Wine } from "w-list-api";
+import { computed } from "vue";
+import {
+  type Wine,
+  getColourLabelByValue,
+  getCategoryLabelByValue,
+  getSugarTypeLabelByValue,
+} from "w-list-api";
+import { WineCard } from "w-list-components";
+import { vintage } from "w-list-utils";
+import { useRegionStore } from "@/stores/regionStore.ts";
+import { useCountryStore } from "@/stores/countryStore.ts";
 
-defineProps<{
-  isVisible: boolean;
+const { getRegionNameById } = useRegionStore();
+const { getCountryNameById } = useCountryStore();
+const emit = defineEmits<{
+  (e: "update:show", bol: boolean): void;
+}>();
+
+const props = defineProps<{
+  show: boolean;
   wine: Wine; // Определите более точный тип для объекта вина
 }>();
+
+const isVisible = computed({
+  get() {
+    return props.show;
+  },
+  set(value) {
+    emit("update:show", value);
+  },
+});
 </script>
 
-<style scoped>
-.wine-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-}
-
-.wine-image {
-  max-width: 300px; /* Ограничиваем размер изображения */
-  height: auto;
-  border-radius: 10px; /* Закругление углов изображения */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для изображения */
-  margin-bottom: 1rem;
-}
-
-.detail-content {
-  background-color: #f9f9f9; /* Легкий фон для информации */
-  border-radius: 10px; /* Закругление углов блока информации */
-  padding: 1rem;
-  width: 100%; /* Занять всю ширину родителя */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для блока информации */
-}
-
-.wine-title {
-  font-size: 1.5rem; /* Размер заголовка */
-  margin-bottom: 0.5rem; /* Отступ снизу */
-  text-align: center; /* Центрирование заголовка */
-}
-</style>
+<style scoped></style>

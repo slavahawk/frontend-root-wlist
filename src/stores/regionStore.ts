@@ -20,6 +20,9 @@ export const useRegionStore = defineStore("region", () => {
     }));
   });
 
+  const getRegionNameById = (regionId: number): string | null =>
+    regions.value.find((c: Region) => c.id === regionId)?.name ?? null;
+
   const fetchRegions = async () => {
     loading.value = true;
     error.value = null;
@@ -112,5 +115,6 @@ export const useRegionStore = defineStore("region", () => {
     updateRegion,
     deleteRegion,
     clearSelectedRegion,
+    getRegionNameById,
   };
 });

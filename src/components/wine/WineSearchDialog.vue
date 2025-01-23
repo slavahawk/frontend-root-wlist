@@ -21,14 +21,6 @@
       selectionMode="single"
     >
       <template #empty>No wines found.</template>
-      <!--      <template #header>-->
-      <!--        <HeaderSection-->
-      <!--            :filterState="filterState"-->
-      <!--            @toggleMenu="() => (filterState = !filterState)"-->
-      <!--            @showCreateDialog="() => (showDialog = true)"-->
-      <!--            :totalItems="wines?.page.totalElements"-->
-      <!--        />-->
-      <!--      </template>-->
       <Column field="name" header="Имя" sortable></Column>
       <Column header="Обложка">
         <template #body="{ data }">
@@ -57,7 +49,12 @@
       </Column>
       <Column header="Действия">
         <template #body="{ data }">
-          <ActionButtons @delete="deleteWine(data.id)" @edit="editWine(data)" />
+          <ActionButtons
+            @delete="deleteWine(data.id)"
+            @edit="openEditWineDialog(data)"
+            @editImage="openEditImageDialog(data)"
+            @view="openDetailDialog(data)"
+          />
         </template>
       </Column>
     </DataTable>
@@ -74,20 +71,47 @@
       </template>
     </Paginator>
   </Dialog>
+
+  <WineEditDialog
+    :isVisible="showEditDialog"
+    :initialData="formData"
+    @close="showEditDialog = false"
+    @save="saveEditedWine"
+  />
+
+  <WineEditImageDialog
+    :isVisible="showEditImageDialog"
+    :initialData="selectedWine"
+    @close="showEditImageDialog = false"
+    @update-image="updateWineImage"
+  />
+
+  <WineDetailsDialog
+    v-model:show="showDetailDialog"
+    :wine="selectedWine"
+    @close="showDetailDialog = false"
+  />
 </template>
 
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore.ts";
 import { storeToRefs } from "pinia";
-import { debounce } from "@/utils/debounce";
-import type { Wine, SearchWineRequest } from "w-list-api";
+import { debounce } from "w-list-utils";
+import type { SearchWineRequest } from "w-list-api";
 import Logo from "@/assets/images/logo.png";
 import ActionButtons from "@/components/wine/ActionButtons.vue";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import WineEditDialog from "@/components/wine/WineEditDialog.vue";
+import WineEditImageDialog from "@/components/wine/WineEditImageDialog.vue";
+import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
 
-const { fetchWinesSearch, deleteWine: wineDelete } = useWineStore();
+const {
+  fetchWinesSearch,
+  deleteWine: wineDelete,
+  updateWineImageAction,
+} = useWineStore();
 const { winesSearch, loadingSearch } = storeToRefs(useWineStore());
 
 defineProps<{
@@ -160,8 +184,38 @@ const deleteWine = (id: number) => {
   });
 };
 
-const editWine = async (wine: Wine) => {
-  console.log(wine);
+const showEditDialog = ref(false);
+const showEditImageDialog = ref(false);
+const showDetailDialog = ref(false);
+const formData = ref(null);
+const selectedWine = ref(null);
+
+const openEditWineDialog = (wine) => {
+  formData.value = wine;
+  showEditDialog.value = true;
+};
+
+const openDetailDialog = (wine) => {
+  selectedWine.value = wine;
+  showDetailDialog.value = true;
+};
+
+const openEditImageDialog = (wine) => {
+  selectedWine.value = wine;
+  showEditImageDialog.value = true;
+};
+
+const updateWineImage = async (image) => {
+  if (selectedWine.value) {
+    await updateWineImageAction(selectedWine.value.id, image);
+    showEditImageDialog.value = false;
+    await loadWines();
+  }
+};
+
+const saveEditedWine = async (data) => {
+  await updateWine(data.id, data);
+  showEditDialog.value = false;
 };
 </script>
 
