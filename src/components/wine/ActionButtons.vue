@@ -29,8 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits } from "vue";
-
 const emit = defineEmits<{
   (e: "view"): void;
   (e: "edit"): void;
