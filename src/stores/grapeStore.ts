@@ -1,6 +1,6 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import { GrapeService, type Grape, type GrapeRequest } from "w-list-api";
+import { type Grape, type GrapeRequest, GrapeService } from "w-list-api";
 
 export const useGrapeStore = defineStore("grape", () => {
   const grapes = ref<Grape[]>([]);
@@ -14,6 +14,9 @@ export const useGrapeStore = defineStore("grape", () => {
       label: grape.name,
     }));
   });
+
+  const getGrapeNameById = (grapeId: number): string | null =>
+    grapes.value.find((c: Grape) => c.id === grapeId)?.name ?? null;
 
   const fetchGrapes = async () => {
     loading.value = true;
@@ -107,5 +110,6 @@ export const useGrapeStore = defineStore("grape", () => {
     updateGrape,
     deleteGrape,
     clearSelectedGrape,
+    getGrapeNameById,
   };
 });

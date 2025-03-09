@@ -1,12 +1,13 @@
 <template>
   <Drawer v-model:visible="isVisible" header=" " position="full">
     <WineCard
-      :originalImagePath="wine.originalImagePath"
+      :img="wine.originalImagePath"
       :name="wine.name"
       :alcohol-by-volume="wine.alcoholByVolume"
       :interesting-facts="wine.interestingFacts"
       :organoleptic="wine.organoleptic"
       :vintage="vintage(wine.vintage)"
+      :grapes="getGrapeNameById(wine.grapeIds)"
       :sugar-type="getSugarTypeLabelByValue(wine.sugarType)"
       :country="getCountryNameById(wine.countryId)"
       :category="getCategoryLabelByValue(wine.category)"
@@ -28,9 +29,11 @@ import { WineCard } from "w-list-components";
 import { vintage } from "w-list-utils";
 import { useRegionStore } from "@/stores/regionStore.ts";
 import { useCountryStore } from "@/stores/countryStore.ts";
+import { useGrapeStore } from "@/stores/grapeStore.ts";
 
 const { getRegionNameById } = useRegionStore();
 const { getCountryNameById } = useCountryStore();
+const { getGrapeNameById } = useGrapeStore();
 const emit = defineEmits<{
   (e: "update:show", bol: boolean): void;
 }>();
