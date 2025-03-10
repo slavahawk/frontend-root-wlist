@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import {
   type Wine,
   getColourLabelByValue,
@@ -43,6 +43,9 @@ const props = defineProps<{
   wine: Wine; // Определите более точный тип для объекта вина
 }>();
 
+watchEffect(() => {
+  console.log(props.wine?.interestingFacts);
+});
 const isVisible = computed({
   get() {
     return props.show;
