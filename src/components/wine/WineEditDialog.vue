@@ -377,10 +377,10 @@ const schema = z.object({
     .array(z.number())
     .min(1, "Выберите хотя бы один сорт винограда.") // Добавлено требование минимум одно значение
     .optional(),
-  interestingFacts: z.string().nonempty("Интересные факты обязательны."),
-  organoleptic: z
-    .string()
-    .nonempty("Органолептические характеристики обязательны."),
+  // interestingFacts: z.string().nonempty("Интересные факты обязательны."),
+  // organoleptic: z
+  //   .string()
+  //   .nonempty("Органолептические характеристики обязательны."),
   isHidden: z.boolean(),
 });
 
