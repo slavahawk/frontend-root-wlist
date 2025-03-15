@@ -28,6 +28,19 @@
       </div>
 
       <div class="input-container">
+        <label for="ruName">Русское имя:</label>
+        <InputText id="ruName" name="ruName" v-model="formData.ruName" />
+        <Message
+          v-if="$form.ruName?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+        >
+          {{ $form.ruName.error.message }}
+        </Message>
+      </div>
+
+      <div class="input-container">
         <label for="category">Категория:</label>
         <Select
           id="category"
@@ -317,6 +330,7 @@ const maxDate = ref(new Date());
 const formData = ref<CreateWineRequest & { id?: number }>({
   id: undefined,
   name: "",
+  ruName: "",
   category: "",
   colour: "",
   bottleVolume: "",
@@ -413,6 +427,7 @@ const resetForm = () => {
   formData.value = {
     id: undefined,
     name: "",
+    ruName: "",
     category: undefined,
     colour: undefined,
     bottleVolume: 0,
