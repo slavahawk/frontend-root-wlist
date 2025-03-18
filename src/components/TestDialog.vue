@@ -7,6 +7,10 @@
     style="min-width: 400px"
   >
     <div>
+      <p>
+        Пример с годом должен быть: Chablis "Sainte Claire", Jean-Marc Brocard
+        2023
+      </p>
       <div>
         <InputText v-model="text" style="width: 100%" />
       </div>
