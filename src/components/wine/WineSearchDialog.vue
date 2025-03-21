@@ -110,6 +110,7 @@ import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
 const {
   fetchWinesSearch,
   deleteWine: wineDelete,
+  updateWine: wineUpdate,
   updateWineImageAction,
 } = useWineStore();
 const { winesSearch, loadingSearch } = storeToRefs(useWineStore());
@@ -214,7 +215,7 @@ const updateWineImage = async (image) => {
 };
 
 const saveEditedWine = async (data) => {
-  await updateWine(data.id, data);
+  await wineUpdate(data.id, data);
   showEditDialog.value = false;
 };
 </script>

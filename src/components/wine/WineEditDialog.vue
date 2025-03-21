@@ -42,6 +42,7 @@
       <div class="input-container">
         <label for="category">Категория:</label>
         <Select
+          filter
           id="category"
           name="category"
           v-model="formData.category"
@@ -61,6 +62,7 @@
       <div class="input-container">
         <label for="colour">Цвет:</label>
         <Select
+          filter
           id="colour"
           name="colour"
           v-model="formData.colour"
@@ -80,6 +82,7 @@
       <div class="input-container">
         <label for="bottleVolume">Объем (л):</label>
         <Select
+          filter
           id="bottleVolume"
           name="bottleVolume"
           v-model="formData.bottleVolume"
@@ -99,6 +102,7 @@
       <div class="input-container">
         <label for="sugarType">Уровень сахара:</label>
         <Select
+          filter
           id="sugarType"
           name="sugarType"
           v-model="formData.sugarType"
@@ -156,6 +160,7 @@
       <div class="input-container">
         <label for="countryId">Страна:</label>
         <Select
+          filter
           id="countryId"
           name="countryId"
           v-model="formData.countryId"
@@ -175,6 +180,7 @@
       <div class="input-container">
         <label for="regionId">Регион:</label>
         <Select
+          filter
           id="regionId"
           name="regionId"
           showClear
@@ -333,8 +339,6 @@ const saveWine = async ({ valid }) => {
     if (!formData.value.regionId) {
       formData.value.regionId = null;
     }
-
-    console.log(formData.value);
 
     emit("save", formData.value);
     resetForm();

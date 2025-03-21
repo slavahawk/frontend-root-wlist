@@ -45,6 +45,7 @@
         <Select
           id="category"
           name="category"
+          filter
           v-model="formData.category"
           :options="categoryOptions"
           option-label="label"
@@ -66,6 +67,7 @@
           id="colour"
           name="colour"
           v-model="formData.colour"
+          filter
           :options="colourOptions"
           option-label="label"
           option-value="value"
@@ -86,6 +88,7 @@
           id="bottleVolume"
           name="bottleVolume"
           v-model="formData.bottleVolume"
+          filter
           :options="bottleVolumeOptions"
           option-label="name"
           option-value="id"
@@ -107,6 +110,7 @@
           name="sugarType"
           v-model="formData.sugarType"
           :options="sugarTypesOptions"
+          filter
           option-label="label"
           option-value="value"
         />
@@ -166,6 +170,7 @@
           name="countryId"
           v-model="formData.countryId"
           :options="countriesOptions"
+          filter
           optionLabel="label"
           optionValue="value"
         />
@@ -187,6 +192,7 @@
           showClear
           v-model="formData.regionId"
           :options="regionOptions"
+          filter
           optionLabel="label"
           optionValue="value"
         />
