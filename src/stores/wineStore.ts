@@ -1,4 +1,3 @@
-// src/stores/wineStore.ts
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import {
@@ -9,9 +8,10 @@ import {
   type WineResponse,
   WineService,
 } from "w-list-api";
-
+import { handleError } from "@/helper/handleError.ts";
 import { useToast } from "primevue/usetoast";
 import type { SearchWineRequest } from "w-list-api";
+import { checkData } from "@/helper/checkData.ts";
 
 export const useWineStore = defineStore("wine", () => {
   const wines = ref<WineResponse>();
@@ -20,139 +20,146 @@ export const useWineStore = defineStore("wine", () => {
   const selectedWine = ref<Wine | null>(null);
   const loading = ref(false);
   const loadingSearch = ref(false);
-  const error = ref<string | null>(null);
-  const errorSearch = ref<string | null>(null);
   const toast = useToast();
 
+  const setLoading = (state: boolean) => {
+    loading.value = state;
+  };
+
+  const setLoadingSearch = (state: boolean) => {
+    loadingSearch.value = state;
+  };
+
   const fetchWines = async (requestParams: WineRequest) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      wines.value = await WineService.getAll(requestParams);
+      const data = await WineService.getAll(requestParams);
+      checkData(data);
+      wines.value = data;
+      return data;
     } catch (err) {
-      error.value = "Ошибка при получении вин. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const fetchWinesSearch = async (params: SearchWineRequest) => {
-    loadingSearch.value = true;
-    errorSearch.value = null;
+    setLoadingSearch(true);
 
     try {
-      winesSearch.value = await WineService.search(params);
+      const data = await WineService.search(params);
+      checkData(data);
+      winesSearch.value = data;
+      return data;
     } catch (err) {
-      error.value = "Ошибка при получении вин. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loadingSearch.value = false;
+      setLoadingSearch(false);
     }
   };
 
   const fetchWinesFilter = async () => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      winesFilter.value = await WineService.getFilter();
+      const data = await WineService.getFilter();
+      checkData(data);
+      winesFilter.value = data;
+      return data;
     } catch (err) {
-      error.value = "Ошибка при получении вин. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
-    }
-  };
-
-  const fetchWineById = async (id: number) => {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      selectedWine.value = await WineService.getById(id);
-    } catch (err) {
-      error.value = "Ошибка при получении вина. Попробуйте еще раз.";
-      console.error(err);
-    } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const createWine = async (wineData: CreateWineRequest, image: File) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      const newWine = await WineService.create(wineData, image);
-      wines.value._embedded.rootWineResponseList.push(newWine);
+      const data = await WineService.create(wineData, image);
+      checkData(data);
+      wines.value._embedded.rootWineResponseList.unshift(data);
       wines.value.page.totalElements++;
+      toast.add({
+        severity: "success",
+        summary: "Вино создано",
+        life: 3000,
+      });
+      return data;
     } catch (err) {
-      error.value = "Ошибка при создании вина. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const updateWine = async (id: number, wineData: CreateWineRequest) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      const updatedWine = await WineService.update(id, wineData);
+      const data = await WineService.update(id, wineData);
+      checkData(data);
       const index = wines.value?._embedded.rootWineResponseList.findIndex(
         (wine) => wine.id === id,
       );
       if (index !== -1) {
-        wines.value._embedded.rootWineResponseList[index] = updatedWine;
+        wines.value._embedded.rootWineResponseList[index] = data;
       }
+
+      toast.add({
+        severity: "success",
+        summary: "Успех",
+        detail: `Обновлено ${data?.name}`,
+        life: 3000,
+      });
+      return data;
     } catch (err) {
-      error.value = "Ошибка при обновлении вина. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const updateWineImageAction = async (id: number, image: File) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      await WineService.updateImage(id, image);
+      const data = await WineService.updateImage(id, image);
+      checkData(data);
       toast.add({
         severity: "success",
         summary: "Успех",
         detail: `Изображение вина под ID ${id} обновлено`,
         life: 3000,
       });
+      return data;
     } catch (err) {
-      error.value = "Ошибка при обновлении изображения. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const deleteWine = async (id: number) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      await WineService.delete(id);
-      toast.add({
-        severity: "success",
-        summary: "Удалено",
-        detail: `Вино под ID ${id} удалено`,
-        life: 3000,
-      });
+      const data = await WineService.delete(id);
+      if (data.status === 204) {
+        toast.add({
+          severity: "success",
+          summary: "Удалено",
+          detail: `Вино под ID ${id} удалено`,
+          life: 3000,
+        });
+      }
     } catch (err) {
-      error.value = "Ошибка при удалении вина. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
@@ -165,10 +172,8 @@ export const useWineStore = defineStore("wine", () => {
     winesFilter,
     selectedWine,
     loading,
-    error,
     fetchWines,
     fetchWinesFilter,
-    fetchWineById,
     createWine,
     updateWine,
     deleteWine,
@@ -176,7 +181,6 @@ export const useWineStore = defineStore("wine", () => {
     winesSearch,
     fetchWinesSearch,
     loadingSearch,
-    errorSearch,
     updateWineImageAction,
   };
 });

@@ -8,7 +8,6 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import WineSearchDialog from "@/components/wine/WineSearchDialog.vue";
-import TestDialog from "@/components/TestDialog.vue";
 
 const { toggleDarkMode, isDarkTheme } = useLayout();
 const { logout } = useAuthStore();
@@ -75,7 +74,6 @@ const showSearch = ref(false);
           @click="showSearch = true"
         />
         <div class="layout-config-menu">
-          <TestDialog />
           <Button @click="toggleDarkMode" link>
             <i
               :class="[

@@ -18,12 +18,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watchEffect } from "vue";
+import { computed } from "vue";
 import {
-  type Wine,
-  getColourLabelByValue,
   getCategoryLabelByValue,
+  getColourLabelByValue,
   getSugarTypeLabelByValue,
+  type Wine,
 } from "w-list-api";
 import { WineCard } from "w-list-components";
 import { vintage } from "w-list-utils";
@@ -43,9 +43,6 @@ const props = defineProps<{
   wine: Wine; // Определите более точный тип для объекта вина
 }>();
 
-watchEffect(() => {
-  console.log(props.wine?.interestingFacts);
-});
 const isVisible = computed({
   get() {
     return props.show;

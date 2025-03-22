@@ -46,7 +46,6 @@ declare module 'vue' {
     Select: typeof import('primevue/select')['default']
     SelectButton: typeof import('primevue/selectbutton')['default']
     Slider: typeof import('primevue/slider')['default']
-    TestDialog: typeof import('./src/components/TestDialog.vue')['default']
     Textarea: typeof import('primevue/textarea')['default']
     Toast: typeof import('primevue/toast')['default']
     ToggleButton: typeof import('primevue/togglebutton')['default']
@@ -59,6 +58,7 @@ declare module 'vue' {
     WineTable: typeof import('./src/components/wine/WineTable.vue')['default']
   }
   export interface ComponentCustomProperties {
+    KeyFilter: typeof import('primevue/keyfilter')['default']
     StyleClass: typeof import('primevue/styleclass')['default']
     Tooltip: typeof import('primevue/tooltip')['default']
   }

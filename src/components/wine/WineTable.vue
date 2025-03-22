@@ -159,6 +159,7 @@ const params = reactive({
   grapeId: undefined,
   vintage: undefined,
   bottleVolume: undefined,
+  sort: "createdAt,desc",
 });
 
 const toggleWineVisibility = async (wine: Wine) => {
@@ -201,13 +202,13 @@ const onPageChange = async ({ page, rows }) => {
 };
 
 const saveEditedWine = async (data) => {
-  await updateWine(data.id, data);
-  showEditDialog.value = false;
+  const result = await updateWine(data.id, data);
+  if (result) showEditDialog.value = false;
 };
 
 const saveCreatedWine = async (data, image) => {
-  await createWine(data, image);
-  showCreateDialog.value = false;
+  const result = await createWine(data, image);
+  if (result) showCreateDialog.value = false;
 };
 
 const confirm = useConfirm();

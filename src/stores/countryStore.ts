@@ -1,12 +1,15 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import { CountryService, type Country, type CountryRequest } from "w-list-api";
+import { handleError } from "@/helper/handleError.ts";
+import { useToast } from "primevue/usetoast";
+import { checkData } from "@/helper/checkData.ts";
 
 export const useCountryStore = defineStore("country", () => {
   const countries = ref<Country[]>([]);
   const selectedCountry = ref<Country | null>(null);
   const loading = ref(false);
-  const error = ref<string | null>(null);
+  const toast = useToast();
 
   const countriesOptions = computed(() => {
     return countries.value.map((country) => ({
@@ -15,80 +18,72 @@ export const useCountryStore = defineStore("country", () => {
     }));
   });
 
+  const setLoading = (state: boolean) => {
+    loading.value = state;
+  };
+
   const getCountryNameById = (countryId: number): string | null =>
     countries.value.find((c: Country) => c.id === countryId)?.name ?? null;
 
   const fetchCountries = async () => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      countries.value = await CountryService.getAll();
+      const data = await CountryService.getAll();
+      checkData(data);
+      countries.value = data;
+      return data;
     } catch (err) {
-      error.value = "Ошибка при получении стран. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
-    }
-  };
-
-  const fetchCountryById = async (id: number) => {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      selectedCountry.value = await CountryService.getById(id);
-    } catch (err) {
-      error.value = "Ошибка при получении страны. Попробуйте еще раз.";
-      console.error(err);
-    } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const createCountry = async (countryData: CountryRequest) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      const newCountry = await CountryService.create(countryData);
-      countries.value.push(newCountry);
+      const data = await CountryService.create(countryData);
+      checkData(data);
+      countries.value.unshift(data);
+      return data;
     } catch (err) {
-      error.value = "Ошибка при создании страны. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const updateCountry = async (id: number, countryData: CountryRequest) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      const updatedCountry = await CountryService.update(id, countryData);
+      const data = await CountryService.update(id, countryData);
+      checkData(data);
       const index = countries.value.findIndex((country) => country.id === id);
       if (index !== -1) {
-        countries.value[index] = updatedCountry;
+        countries.value[index] = data;
       }
+      return data;
     } catch (err) {
-      error.value = "Ошибка при обновлении страны. Попробуйте еще раз.";
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const deleteCountry = async (id: number) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      await CountryService.delete(id);
+      const data = await CountryService.delete(id);
+      checkData(data);
       countries.value = countries.value.filter((country) => country.id !== id);
     } catch (err) {
-      error.value = "Ошибка при удалении страны. Попробуйте еще раз.";
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
@@ -100,9 +95,7 @@ export const useCountryStore = defineStore("country", () => {
     countries,
     selectedCountry,
     loading,
-    error,
     fetchCountries,
-    fetchCountryById,
     createCountry,
     updateCountry,
     deleteCountry,

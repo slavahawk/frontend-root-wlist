@@ -6,96 +6,100 @@ import {
   type CreateRegionRequest,
   type UpdateRegionRequest,
 } from "w-list-api";
+import { handleError } from "@/helper/handleError.ts";
+import { useToast } from "primevue/usetoast";
+import { checkData } from "@/helper/checkData.ts";
 
 export const useRegionStore = defineStore("region", () => {
   const regions = ref<Region[]>([]);
   const selectedRegion = ref<Region | null>(null);
   const loading = ref(false);
-  const error = ref<string | null>(null);
+  const toast = useToast();
 
-  const regionOptions = computed(() => {
-    return regions.value.map((region) => ({
+  const regionOptions = computed(() =>
+    regions.value.map((region) => ({
       value: region.id,
       label: region.name,
-    }));
-  });
+    })),
+  );
+
+  const setLoading = (state: boolean) => {
+    loading.value = state;
+  };
 
   const getRegionNameById = (regionId: number): string | null =>
-    regions.value.find((c: Region) => c.id === regionId)?.name ?? null;
+    regions.value.find((region) => region.id === regionId)?.name ?? null;
 
-  const fetchRegions = async () => {
-    loading.value = true;
-    error.value = null;
-
+  const fetchRegions = async (countryId?: number, name?: string) => {
+    setLoading(true);
     try {
-      regions.value = await RegionService.getAll();
+      const data = await RegionService.getAll(countryId, name);
+      checkData(data);
+      regions.value = data;
+      return data;
     } catch (err) {
-      error.value = "Ошибка при получении регионов. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const fetchRegionById = async (id: number) => {
-    loading.value = true;
-    error.value = null;
-
+    setLoading(true);
     try {
-      selectedRegion.value = await RegionService.getById(id);
+      const data = await RegionService.getById(id);
+      checkData(data);
+      selectedRegion.value = data;
+      return data;
     } catch (err) {
-      error.value = "Ошибка при получении региона. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const createRegion = async (regionData: CreateRegionRequest) => {
-    loading.value = true;
-    error.value = null;
-
+    setLoading(true);
     try {
-      const newRegion = await RegionService.create(regionData);
-      regions.value.push(newRegion);
+      const data = await RegionService.create(regionData);
+      checkData(data);
+      regions.value.push(data);
+      return data;
     } catch (err) {
-      error.value = "Ошибка при создании региона. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const updateRegion = async (id: number, regionData: UpdateRegionRequest) => {
-    loading.value = true;
-    error.value = null;
-
+    setLoading(true);
     try {
-      const updatedRegion = await RegionService.update(id, regionData);
+      const data = await RegionService.update(id, regionData);
+      checkData(data);
       const index = regions.value.findIndex((region) => region.id === id);
       if (index !== -1) {
-        regions.value[index] = updatedRegion;
+        regions.value[index] = data;
       }
+      return data;
     } catch (err) {
-      error.value = "Ошибка при обновлении региона. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const deleteRegion = async (id: number) => {
-    loading.value = true;
-    error.value = null;
-
+    setLoading(true);
     try {
-      await RegionService.delete(id);
+      const data = await RegionService.delete(id);
+      checkData(data);
       regions.value = regions.value.filter((region) => region.id !== id);
+      return data;
     } catch (err) {
-      error.value = "Ошибка при удалении региона. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
@@ -108,7 +112,6 @@ export const useRegionStore = defineStore("region", () => {
     regionOptions,
     selectedRegion,
     loading,
-    error,
     fetchRegions,
     fetchRegionById,
     createRegion,

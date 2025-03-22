@@ -1,5 +1,5 @@
-export const checkData = (data: any, error = "Not data") => {
+export const checkData = (data: any) => {
   if (!data) {
-    throw new Error(error);
+    throw new Error("No data provided");
   }
 };

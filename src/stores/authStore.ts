@@ -25,7 +25,7 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       const data = await AuthService.login({ email, password });
 
-      checkData(data, "User data not found in response");
+      checkData(data);
 
       isAuthenticated.value = true;
       localStorage.setItem(ACCESS_TOKEN, data.details.accessToken);
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore("auth", () => {
     isLoad.value = true;
     try {
       const data = await AuthService.register(body);
-      checkData(data, "User data not found in response");
+      checkData(data);
       toast.add({
         severity: "success",
         summary: "Регистрация успешна",

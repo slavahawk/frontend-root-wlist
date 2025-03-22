@@ -1,12 +1,15 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import { type Grape, type GrapeRequest, GrapeService } from "w-list-api";
+import { checkData } from "@/helper/checkData.ts";
+import { handleError } from "@/helper/handleError.ts";
+import { useToast } from "primevue/usetoast";
 
 export const useGrapeStore = defineStore("grape", () => {
   const grapes = ref<Grape[]>([]);
   const selectedGrape = ref<Grape | null>(null);
   const loading = ref(false);
-  const error = ref<string | null>(null);
+  const toast = useToast();
 
   const grapeOptions = computed(() => {
     return grapes.value.map((grape) => ({
@@ -15,56 +18,43 @@ export const useGrapeStore = defineStore("grape", () => {
     }));
   });
 
+  const setLoading = (state: boolean) => {
+    loading.value = state;
+  };
+
   const getGrapeNameById = (grapeId: number): string | null =>
     grapes.value.find((c: Grape) => c.id === grapeId)?.name ?? null;
 
   const fetchGrapes = async () => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
-      grapes.value = await GrapeService.getAll();
+      const data = await GrapeService.getAll();
+      checkData(data);
+      grapes.value = data;
+      return data;
     } catch (err) {
-      error.value = "Ошибка при получении винограда. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
-    }
-  };
-
-  const fetchGrapeById = async (id: number) => {
-    loading.value = true;
-    error.value = null;
-
-    try {
-      selectedGrape.value = await GrapeService.getById(id);
-    } catch (err) {
-      error.value = "Ошибка при получении винограда. Попробуйте еще раз.";
-      console.error(err);
-    } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const createGrape = async (grapeData: GrapeRequest) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
       const newGrape = await GrapeService.create(grapeData);
       grapes.value.push(newGrape);
     } catch (err) {
-      error.value = "Ошибка при создании винограда. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const updateGrape = async (id: number, grapeData: GrapeRequest) => {
-    loading.value = true;
-    error.value = null;
-
+    setLoading(true);
     try {
       const updatedGrape = await GrapeService.update(id, grapeData);
       const index = grapes.value.findIndex((grape) => grape.id === id);
@@ -72,25 +62,22 @@ export const useGrapeStore = defineStore("grape", () => {
         grapes.value[index] = updatedGrape;
       }
     } catch (err) {
-      error.value = "Ошибка при обновлении винограда. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
   const deleteGrape = async (id: number) => {
-    loading.value = true;
-    error.value = null;
+    setLoading(true);
 
     try {
       await GrapeService.delete(id);
       grapes.value = grapes.value.filter((grape) => grape.id !== id);
     } catch (err) {
-      error.value = "Ошибка при удалении винограда. Попробуйте еще раз.";
-      console.error(err);
+      handleError(err, toast);
     } finally {
-      loading.value = false;
+      setLoading(false);
     }
   };
 
@@ -103,9 +90,7 @@ export const useGrapeStore = defineStore("grape", () => {
     grapeOptions,
     selectedGrape,
     loading,
-    error,
     fetchGrapes,
-    fetchGrapeById,
     createGrape,
     updateGrape,
     deleteGrape,
