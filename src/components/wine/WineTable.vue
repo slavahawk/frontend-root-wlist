@@ -66,7 +66,7 @@
               @editImage="openEditImageDialog(data)"
               @view="openDetailDialog(data)"
             />
-            <div v-else>Удалено, но Леха хуй сосал</div>
+            <div v-else>Удалено</div>
           </template>
         </Column>
       </DataTable>
