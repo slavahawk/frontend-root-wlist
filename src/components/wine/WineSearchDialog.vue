@@ -41,7 +41,13 @@
         </template>
       </Column>
       <Column field="sugarType" header="Тип сахара"></Column>
-      <Column field="vintage" header="Год урожая"></Column>
+      <Column field="vintage" header="Год урожая">
+        <template #body="{ data }">
+          <div v-if="showVintage(data.category)">
+            {{ vintage(data?.vintage) }}
+          </div>
+        </template>
+      </Column>
       <Column field="isHidden" header="Скрыто">
         <template #body="{ data }">
           {{ data.isHidden ? "Да" : "Нет" }}
@@ -96,8 +102,8 @@
 import { reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore.ts";
 import { storeToRefs } from "pinia";
-import { debounce } from "w-list-utils";
-import type { SearchWineRequest } from "w-list-api";
+import { debounce, vintage } from "w-list-utils";
+import { type SearchWineRequest, showVintage } from "w-list-api";
 import Logo from "@/assets/images/logo.png";
 import ActionButtons from "@/components/wine/ActionButtons.vue";
 import { useConfirm } from "primevue/useconfirm";

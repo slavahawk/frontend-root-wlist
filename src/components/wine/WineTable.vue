@@ -47,7 +47,9 @@
         <Column field="sugarType" header="Тип сахара"></Column>
         <Column field="vintage" header="Год урожая">
           <template #body="{ data }">
-            {{ vintage(data?.vintage) }}
+            <div v-if="showVintage(data.category)">
+              {{ vintage(data?.vintage) }}
+            </div>
           </template>
         </Column>
         <Column field="isHidden" header="Скрыто">
@@ -123,7 +125,7 @@ import WineDialog from "@/components/wine/WineDialog.vue";
 import FilterSection from "@/components/wine/FilterSection.vue";
 import HeaderSection from "@/components/wine/HeaderSection.vue";
 import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
-import type { CreateWineRequest, Wine } from "w-list-api";
+import { type CreateWineRequest, showVintage, type Wine } from "w-list-api";
 import { vintage } from "w-list-utils";
 
 const filterState = ref(false);

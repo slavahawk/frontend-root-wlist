@@ -187,14 +187,17 @@
             </div>
           </div>
 
-          <div class="input-container">
+          <div
+            class="input-container"
+            :disabled="disabledVintage"
+            :class="{ disabled: disabledVintage }"
+          >
             <label for="vintage">Год урожая:</label>
             <div class="flex items-center gap-2">
               <label class="flex items-center gap-2">
                 <ToggleSwitch input-id="nonVintage" v-model="isNonVintage" />
                 NV
               </label>
-
               <InputText
                 class="flex-1"
                 v-keyfilter.num
@@ -209,7 +212,7 @@
 
           <div class="grid grid-cols-2 gap-2">
             <div class="input-container">
-              <label for="alcoholByVolume">Алкогольное содержание (%):</label>
+              <label for="alcoholByVolume">Алкоголь, %:</label>
               <InputNumber
                 id="alcoholByVolume"
                 name="alcoholByVolume"
@@ -338,6 +341,8 @@ import {
   type CreateWineRequest,
   sugarTypesOptions,
   type Wine,
+  WineCategoryEnum,
+  showVintage,
 } from "w-list-api";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore";
@@ -412,6 +417,19 @@ watchEffect(() => {
   if (props.show) updateFormData();
 });
 
+const disabledVintage = ref(false);
+watch(
+  () => formData.value.category,
+  (val: WineCategoryEnum) => {
+    const bol = showVintage(val);
+
+    if (!bol) {
+      formData.value.vintage = null;
+    }
+    disabledVintage.value = !bol;
+  },
+);
+
 // Следим за изменениями countryId и загружаем регионы
 watch(
   () => formData.value.countryId,
@@ -430,8 +448,8 @@ const schema = z.object({
   sugarType: z.string().nonempty("Выберите Тип сахара"),
   alcoholByVolume: z
     .number()
-    .min(0, "Алкогольное содержание не может быть отрицательным.")
-    .max(100, "Алкогольное содержание не может превышать 100."),
+    .min(0, "Алкоголь не может быть отрицательным.")
+    .max(100, "Алкоголь не может превышать 100."),
   vintage: z
     .union([
       z.number().min(1900, "Год урожая не может быть меньше 1900."),
@@ -522,3 +540,11 @@ watch(isNonVintage, (newVal) => {
   formData.value.vintage = newVal ? null : new Date().getFullYear();
 });
 </script>
+
+<style scoped>
+.disabled {
+  pointer-events: none;
+  background: var(--p-select-disabled-background);
+  border-radius: 6px;
+}
+</style>
