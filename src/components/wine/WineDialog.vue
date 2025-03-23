@@ -26,32 +26,30 @@
     >
       <div class="flex gap-4">
         <div class="flex-1">
-          <div class="grid grid-cols-2 gap-2">
-            <div class="input-container">
-              <label for="name">Имя:</label>
-              <InputText id="name" name="name" v-model="formData.name" />
-              <Message
-                v-if="$form.name?.invalid"
-                severity="error"
-                size="small"
-                variant="simple"
-              >
-                {{ $form.name.error.message }}
-              </Message>
-            </div>
+          <div class="input-container">
+            <label for="name">Имя:</label>
+            <InputText id="name" name="name" v-model="formData.name" />
+            <Message
+              v-if="$form.name?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+            >
+              {{ $form.name.error.message }}
+            </Message>
+          </div>
 
-            <div class="input-container">
-              <label for="ruName">Русское имя:</label>
-              <InputText id="ruName" name="ruName" v-model="formData.ruName" />
-              <Message
-                v-if="$form.ruName?.invalid"
-                severity="error"
-                size="small"
-                variant="simple"
-              >
-                {{ $form.ruName.error.message }}
-              </Message>
-            </div>
+          <div class="input-container">
+            <label for="ruName">Русское имя:</label>
+            <InputText id="ruName" name="ruName" v-model="formData.ruName" />
+            <Message
+              v-if="$form.ruName?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+            >
+              {{ $form.ruName.error.message }}
+            </Message>
           </div>
 
           <div class="grid grid-cols-2 gap-2">
