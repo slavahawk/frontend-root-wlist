@@ -22,7 +22,10 @@
           <HeaderSection
             :filterState="filterState"
             @toggleMenu="filterState = !filterState"
-            @showCreateDialog="showCreateDialog = true"
+            @showCreateDialog="
+              formData = null;
+              showEditWine = true;
+            "
             :totalItems="wines?.page.totalElements"
           />
         </template>
@@ -41,7 +44,7 @@
         <Column field="colour" header="Цвет"></Column>
         <Column field="bottleVolume" header="Объем (л)"></Column>
         <Column field="alcoholByVolume" header="Алкоголь (%)"></Column>
-        <Column field="sugarType" header="Уровень сахара"></Column>
+        <Column field="sugarType" header="Тип сахара"></Column>
         <Column field="vintage" header="Год урожая">
           <template #body="{ data }">
             {{ vintage(data?.vintage) }}
@@ -85,16 +88,9 @@
       </Paginator>
 
       <WineDialog
-        :isVisible="showCreateDialog"
-        @close="showCreateDialog = false"
-        @save="saveCreatedWine"
-      />
-
-      <WineEditDialog
-        :isVisible="showEditDialog"
+        v-model:show="showEditWine"
         :initialData="formData"
-        @close="showEditDialog = false"
-        @save="saveEditedWine"
+        @save="saveCreatedWine"
       />
 
       <WineEditImageDialog
@@ -118,7 +114,6 @@
 import { reactive, ref } from "vue";
 import { useWineStore } from "@/stores/wineStore";
 import { storeToRefs } from "pinia";
-import WineEditDialog from "./WineEditDialog.vue";
 import WineEditImageDialog from "./WineEditImageDialog.vue";
 import ActionButtons from "./ActionButtons.vue";
 import { useConfirm } from "primevue/useconfirm";
@@ -128,12 +123,11 @@ import WineDialog from "@/components/wine/WineDialog.vue";
 import FilterSection from "@/components/wine/FilterSection.vue";
 import HeaderSection from "@/components/wine/HeaderSection.vue";
 import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
-import type { Wine } from "w-list-api";
+import type { CreateWineRequest, Wine } from "w-list-api";
 import { vintage } from "w-list-utils";
 
 const filterState = ref(false);
-const showCreateDialog = ref(false);
-const showEditDialog = ref(false);
+const showEditWine = ref(false);
 const showEditImageDialog = ref(false);
 const showDetailDialog = ref(false);
 const formData = ref(null);
@@ -201,14 +195,17 @@ const onPageChange = async ({ page, rows }) => {
   await loadWines();
 };
 
-const saveEditedWine = async (data) => {
-  const result = await updateWine(data.id, data);
-  if (result) showEditDialog.value = false;
+const saveCreatedWine = async (data: CreateWineRequest, image?: File) => {
+  const result = formData.value?.id
+    ? await updateWine(data.id, data)
+    : await createWine(data, image);
+
+  if (result) showEditWine.value = false;
 };
 
-const saveCreatedWine = async (data, image) => {
-  const result = await createWine(data, image);
-  if (result) showCreateDialog.value = false;
+const openEditImageDialog = (wine) => {
+  selectedWine.value = wine;
+  showEditImageDialog.value = true;
 };
 
 const confirm = useConfirm();
@@ -246,17 +243,12 @@ const deleteWine = (id) => {
 
 const openEditWineDialog = (wine) => {
   formData.value = wine;
-  showEditDialog.value = true;
+  showEditWine.value = true;
 };
 
 const openDetailDialog = (wine) => {
   selectedWine.value = wine;
   showDetailDialog.value = true;
-};
-
-const openEditImageDialog = (wine) => {
-  selectedWine.value = wine;
-  showEditImageDialog.value = true;
 };
 
 const updateWineImage = async (image) => {

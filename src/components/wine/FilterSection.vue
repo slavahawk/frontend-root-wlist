@@ -30,7 +30,7 @@
         @change="emitParamsChange"
       />
       <FilterSelect
-        label="Уровень сахара"
+        label="Тип сахара"
         v-model="localParams.sugarType"
         :options="winesFilter?.sugarType"
         @change="emitParamsChange"

@@ -40,7 +40,7 @@
           {{ (data.alcoholByVolume * 10).toFixed(1) }}
         </template>
       </Column>
-      <Column field="sugarType" header="Уровень сахара"></Column>
+      <Column field="sugarType" header="Тип сахара"></Column>
       <Column field="vintage" header="Год урожая"></Column>
       <Column field="isHidden" header="Скрыто">
         <template #body="{ data }">
@@ -72,10 +72,9 @@
     </Paginator>
   </Dialog>
 
-  <WineEditDialog
-    :isVisible="showEditDialog"
+  <WineDialog
+    v-model:show="showEditDialog"
     :initialData="formData"
-    @close="showEditDialog = false"
     @save="saveEditedWine"
   />
 
@@ -103,9 +102,9 @@ import Logo from "@/assets/images/logo.png";
 import ActionButtons from "@/components/wine/ActionButtons.vue";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
-import WineEditDialog from "@/components/wine/WineEditDialog.vue";
 import WineEditImageDialog from "@/components/wine/WineEditImageDialog.vue";
 import WineDetailsDialog from "@/components/wine/WineDetailsDialog.vue";
+import WineDialog from "@/components/wine/WineDialog.vue";
 
 const {
   fetchWinesSearch,

@@ -52,7 +52,6 @@ declare module 'vue' {
     ToggleSwitch: typeof import('primevue/toggleswitch')['default']
     WineDetailsDialog: typeof import('./src/components/wine/WineDetailsDialog.vue')['default']
     WineDialog: typeof import('./src/components/wine/WineDialog.vue')['default']
-    WineEditDialog: typeof import('./src/components/wine/WineEditDialog.vue')['default']
     WineEditImageDialog: typeof import('./src/components/wine/WineEditImageDialog.vue')['default']
     WineSearchDialog: typeof import('./src/components/wine/WineSearchDialog.vue')['default']
     WineTable: typeof import('./src/components/wine/WineTable.vue')['default']
