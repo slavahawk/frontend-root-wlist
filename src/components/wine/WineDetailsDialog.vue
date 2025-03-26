@@ -11,6 +11,7 @@
       :sugar-type="getSugarTypeLabelByValue(wine.sugarType)"
       :country="getCountryNameById(wine.countryId)"
       :category="getCategoryLabelByValue(wine.category)"
+      :categoryId="wine.category"
       :colour="getColourLabelByValue(wine.colour)"
       :region="getRegionNameById(wine.regionId)"
     />
