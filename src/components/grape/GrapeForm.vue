@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import type { Grape } from "w-list-api";
+import type { Grape } from "wlist-types";
 
 const props = defineProps<{ grape: Grape | null }>();
 const grape = ref({ name: "" });

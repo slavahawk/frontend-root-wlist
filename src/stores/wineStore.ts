@@ -1,17 +1,17 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import {
-  type CreateWineRequest,
-  type Wine,
-  type WineFilter,
-  type WineRequest,
-  type WineResponse,
-  WineService,
-} from "w-list-api";
+import { WineService } from "w-list-api";
 import { handleError } from "@/helper/handleError.ts";
 import { useToast } from "primevue/usetoast";
-import type { SearchWineRequest } from "w-list-api";
-import { checkData } from "@/helper/checkData.ts";
+import type {
+  SearchWineRequest,
+  CreateWineRequest,
+  Wine,
+  WineFilter,
+  WineRequest,
+  WineResponse,
+} from "wlist-types";
+import { checkData } from "w-list-utils";
 
 export const useWineStore = defineStore("wine", () => {
   const wines = ref<WineResponse>();

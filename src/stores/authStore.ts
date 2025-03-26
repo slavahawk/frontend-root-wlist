@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 import { AppRoutes } from "@/router";
 import { AuthService, ACCESS_TOKEN, REFRESH_TOKEN } from "w-list-api";
 import { handleError } from "@/helper/handleError.ts";
-import { checkData } from "@/helper/checkData.ts";
+import { checkData } from "w-list-utils";
 
 export const useAuthStore = defineStore("auth", () => {
   const user = ref<any | null>(null);

@@ -1,9 +1,10 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import { CountryService, type Country, type CountryRequest } from "w-list-api";
+import { CountryService } from "w-list-api";
+import { type Country, type CountryRequest } from "wlist-types";
 import { handleError } from "@/helper/handleError.ts";
 import { useToast } from "primevue/usetoast";
-import { checkData } from "@/helper/checkData.ts";
+import { checkData } from "w-list-utils";
 
 export const useCountryStore = defineStore("country", () => {
   const countries = ref<Country[]>([]);

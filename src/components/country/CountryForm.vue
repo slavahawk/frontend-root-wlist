@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import type { Country } from "w-list-api";
+import type { Country } from "wlist-types";
 
 const props = defineProps<{ country: Country | null }>();
 const country = ref({ name: "" });

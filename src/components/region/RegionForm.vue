@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import type { Region } from "w-list-api";
+import type { Region } from "wlist-types";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore.ts";
 

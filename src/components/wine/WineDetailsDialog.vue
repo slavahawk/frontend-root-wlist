@@ -23,8 +23,8 @@ import {
   getCategoryLabelByValue,
   getColourLabelByValue,
   getSugarTypeLabelByValue,
-  type Wine,
 } from "w-list-api";
+import { type Wine } from "wlist-types";
 import { WineCard } from "w-list-components";
 import { vintage } from "w-list-utils";
 import { useRegionStore } from "@/stores/regionStore.ts";

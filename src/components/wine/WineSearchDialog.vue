@@ -102,8 +102,8 @@
 import { reactive, ref, watch } from "vue";
 import { useWineStore } from "@/stores/wineStore.ts";
 import { storeToRefs } from "pinia";
-import { debounce, vintage } from "w-list-utils";
-import { type SearchWineRequest, showVintage } from "w-list-api";
+import { debounce, vintage, showVintage } from "w-list-utils";
+import { type SearchWineRequest } from "wlist-types";
 import Logo from "@/assets/images/logo.png";
 import ActionButtons from "@/components/wine/ActionButtons.vue";
 import { useConfirm } from "primevue/useconfirm";

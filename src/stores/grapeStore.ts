@@ -1,7 +1,8 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
-import { type Grape, type GrapeRequest, GrapeService } from "w-list-api";
-import { checkData } from "@/helper/checkData.ts";
+import { GrapeService } from "w-list-api";
+import { type Grape, type GrapeRequest } from "wlist-types";
+import { checkData } from "w-list-utils";
 import { handleError } from "@/helper/handleError.ts";
 import { useToast } from "primevue/usetoast";
 

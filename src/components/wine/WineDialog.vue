@@ -338,12 +338,14 @@ import {
   bottleVolumeOptions,
   categoryOptions,
   colourOptions,
-  type CreateWineRequest,
   sugarTypesOptions,
+} from "w-list-api";
+import {
   type Wine,
   WineCategoryEnum,
-  showVintage,
-} from "w-list-api";
+  type CreateWineRequest,
+} from "wlist-types";
+import { showVintage } from "w-list-utils";
 import { storeToRefs } from "pinia";
 import { useCountryStore } from "@/stores/countryStore";
 import { useRegionStore } from "@/stores/regionStore";

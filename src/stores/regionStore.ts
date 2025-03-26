@@ -1,14 +1,14 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
+import { RegionService } from "w-list-api";
 import {
-  RegionService,
   type Region,
   type CreateRegionRequest,
   type UpdateRegionRequest,
-} from "w-list-api";
+} from "wlist-types";
 import { handleError } from "@/helper/handleError.ts";
 import { useToast } from "primevue/usetoast";
-import { checkData } from "@/helper/checkData.ts";
+import { checkData } from "w-list-utils";
 
 export const useRegionStore = defineStore("region", () => {
   const regions = ref<Region[]>([]);
