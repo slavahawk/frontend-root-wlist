@@ -210,50 +210,50 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-2">
-            <div class="input-container">
-              <label for="alcoholByVolume">Алкоголь, %:</label>
-              <InputNumber
-                id="alcoholByVolume"
-                name="alcoholByVolume"
-                v-model="formData.alcoholByVolume"
-                :min="0"
-                :max="100"
-                :minFractionDigits="0"
-                :maxFractionDigits="2"
-              />
-              <Message
-                v-if="$form.alcoholByVolume?.invalid"
-                severity="error"
-                size="small"
-                variant="simple"
-              >
-                {{ $form.alcoholByVolume.error.message }}
-              </Message>
-            </div>
-            <div class="input-container">
-              <label for="grapeIds">Виноград:</label>
-              <MultiSelect
-                id="grapeIds"
-                name="grapeIds"
-                v-model="formData.grapeIds"
-                :options="grapeOptions"
-                optionLabel="label"
-                optionValue="value"
-                filter
-                placeholder="Выбрать виноград"
-              />
-              <Message
-                v-if="$form.grapeIds?.invalid"
-                severity="error"
-                size="small"
-                variant="simple"
-              >
-                {{ $form.grapeIds.error.message }}
-              </Message>
-            </div>
+          <div class="input-container">
+            <label for="alcoholByVolume">Алкоголь, %:</label>
+            <InputNumber
+              id="alcoholByVolume"
+              name="alcoholByVolume"
+              v-model="formData.alcoholByVolume"
+              :min="0"
+              :max="100"
+              :minFractionDigits="0"
+              :maxFractionDigits="2"
+            />
+            <Message
+              v-if="$form.alcoholByVolume?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+            >
+              {{ $form.alcoholByVolume.error.message }}
+            </Message>
           </div>
 
+          <div class="input-container">
+            <label for="grapeIds">Виноград:</label>
+            <MultiSelect
+              id="grapeIds"
+              name="grapeIds"
+              v-model="formData.grapeIds"
+              :options="grapeOptions"
+              optionLabel="label"
+              optionValue="value"
+              display="chip"
+              showClear
+              filter
+              placeholder="Выбрать виноград"
+            />
+            <Message
+              v-if="$form.grapeIds?.invalid"
+              severity="error"
+              size="small"
+              variant="simple"
+            >
+              {{ $form.grapeIds.error.message }}
+            </Message>
+          </div>
           <div class="input-container">
             <label for="interestingFacts">Интересные факты:</label>
             <Textarea
