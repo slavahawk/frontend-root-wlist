@@ -232,11 +232,11 @@
           </div>
 
           <div class="input-container">
-            <label for="grapeIds">Виноград:</label>
+            <label for="grapeData">Виноград:</label>
             <MultiSelect
-              id="grapeIds"
-              name="grapeIds"
-              v-model="formData.grapeIds"
+              id="grapeData"
+              name="grapeData"
+              v-model="formData.grapes"
               :options="grapeOptions"
               optionLabel="label"
               optionValue="value"
@@ -382,11 +382,11 @@ const imageFile = ref<File | null>(null);
 const imageSrc = ref("");
 const isNonVintage = ref(false);
 const regionDisabled = ref(true);
-const formData = ref<CreateWineRequest>({
+const formData = ref<any>({
   ...props.initialData,
   vintage: props.initialData?.vintage ?? new Date().getFullYear(),
   isHidden: props.initialData?.isHidden ?? false,
-  grapeIds: props.initialData?.grapeIds || [],
+  grapes: props.initialData?.grapeData.map((g) => g.grapeId) || [],
 });
 
 // Функция для обновления formData
@@ -405,7 +405,7 @@ const updateFormData = () => {
     sugarType: data?.sugarType || "",
     countryId: data?.countryId || 0,
     isHidden: data?.isHidden || false,
-    grapeIds: data?.grapeIds || [],
+    grapes: data?.grapeData.map((g) => g.grapeId) || [],
     vintage: data?.vintage,
     interestingFacts: data?.interestingFacts || "",
     regionId: data?.regionId ?? null,
@@ -493,8 +493,17 @@ const resolver = async ({ values }) => {
 // Функция для сохранения вина
 const saveWine = async ({ valid }) => {
   if (valid) {
-    formData.value.vintage = isNonVintage.value ? null : formData.value.vintage;
-    emit("save", formData.value, imageFile.value);
+    const result = { ...formData.value };
+
+    result.vintage = isNonVintage.value ? null : result.vintage;
+    result.grapeData =
+      result.grapes?.map((g, index) => ({ grapeId: g, position: index + 1 })) ||
+      [];
+
+    // Remove the grapes field from result, if it exists
+    delete result.grapes;
+
+    emit("save", result, imageFile.value);
   }
 };
 
@@ -511,7 +520,7 @@ const resetForm = () => {
     sugarType: undefined,
     countryId: 0,
     isHidden: false,
-    grapeIds: [],
+    grapes: [],
     vintage: new Date().getFullYear(),
     interestingFacts: "",
     regionId: null,
